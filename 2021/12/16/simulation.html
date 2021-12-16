@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Markov chains, Monte Carlo methods, pattern theory | statistical mechanics and spin glasses</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Markov chains, Monte Carlo methods, pattern theory" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html" />
+<meta property="og:url" content="https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html" />
+<meta property="og:site_name" content="statistical mechanics and spin glasses" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-16T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"…","url":"https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html","@type":"BlogPosting","headline":"Markov chains, Monte Carlo methods, pattern theory","dateModified":"2021-12-16T00:00:00-06:00","datePublished":"2021-12-16T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/stat-mech/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://the-ninth-wave.github.io/stat-mech/feed.xml" title="statistical mechanics and spin glasses" /><link rel="shortcut icon" type="image/x-icon" href="/stat-mech/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/stat-mech/">statistical mechanics and spin glasses</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/stat-mech/about/">About Me</a><a class="page-link" href="/stat-mech/search/">Search</a><a class="page-link" href="/stat-mech/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Markov chains, Monte Carlo methods, pattern theory</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-16T00:00:00-06:00" itemprop="datePublished">
+        Dec 16, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      52 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/the-ninth-wave/stat-mech/tree/master/_notebooks/2021-12-16-simulation.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/stat-mech/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/the-ninth-wave/stat-mech/master?filepath=_notebooks%2F2021-12-16-simulation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/stat-mech/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/the-ninth-wave/stat-mech/blob/master/_notebooks/2021-12-16-simulation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/stat-mech/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-12-16-simulation.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ These notes serve as background for an ongoing project with a good friend, <a href="https://github.com/connorsempek">Connor Sempek</a>. We are following <a href="http://bit-player.org/2021/three-months-in-monte-carlo">this</a> blog post by <a href="http://bit-player.org/about-the-author">Brian Hayes</a>. Our current objective is to re-create Hayes' simulations of Ising model dynamics. The underlying canvas of the model is two-dimensional, so the simulation can be thought of as a way to generate a sequence of <code>100x100</code> pixel images, with pixel values either black or white. The Ising model dynamics update the current image by changing the value of one pixel at a time. The purpose of these notes is to get a better understanding of how long the simulation must be run so that, for a sparse enough subsequence of the images:</p>
+<ul>
+<li><p>each is sampled approximately from the <a href="https://en.wikipedia.org/wiki/Gibbs_measure">Gibbs probability measure</a> governing the Ising model, and</p>
+</li>
+<li><p>these are nearly independent.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The latter property is important for a longer term goal of the project, which is to use these subsequences of images as a computer vision dataset. Importantly, the Gibbs measure we are sampling from always depends on a global temperature parameter $T$, leading to natural classification and regression tasks.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Here is a starting point for formulating a classification task. Suppose that we can simulate Ising model dynamics well at two <em>distinct</em> temperatures. It feels natural to choose one of these, say $T_1$, above the critical temperature $T_c$ of the model, and the other, $T_2$ below it. We then create two image datasets $\mathcal{D}_1$ and $\mathcal{D}_2$ of equal size by simulating as described by the two points above. Merging these datasets to form what we call $\mathcal{D}$ leads to a natural classification problem: given an element $x \in \mathcal{D}$ chosen uniformly at random, determine whether it came from $\mathcal{D}_1$ or $\mathcal{D}_2$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The relevance of the Ising model to vision has been explored heavily, it seems. A lot of the text below draws from Govind Menon's <a href="https://www.dam.brown.edu/people/menon/publications/pt-2020.pdf">pattern theory</a> notes, where a chapter is devoted to this "energetic" perspective applied to character recognition tasks. Menon's notes also reference a 1984 <a href="http://www.peterbeerli.com/classes/images/a/a1/Geman_geman_1984.pdf">paper</a> which develops a way to perform image restoration and enhancement using the Ising model. This makes it a natural model to experiment with, and there are a few directions I'd like to explore longer term:</p>
+<ol>
+<li>At the lower temperature, $T_2$, simulating the model is akin to an optimization problem: as $T \to 0$, the Gibbs measure concentrates on the set of lowest-energy states, or <em>ground states</em>. Any simulation designed to sample from a low-temperature Gibbs measure needs to navigate the energy landscape of the system from some starting point to a low altitude, with the temperature dictating a small range of desirable low altitudes $\equiv$ low energies. This is effectively an optimization problem with cost function corresponding to the energy landscape. There is also an optimization inherent to the process of training any neural network on the classification task suggested. The question I would like to explore, loosely, is whether there are useful connections between these optimization problems. </li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>We will train a simple convolutional architecture on the dataset $\mathcal{D}$. Whether it is through pooling layers, or the local averaging inherent in the convolution operation, these architectures seem to apply a kind of <a href="https://en.wikipedia.org/wiki/Coarse-grained_modeling">coarse-graining</a> to input signals $x \in \mathcal{D}$. This has prompted investigation into the connections between deep learning and the <a href="https://en.wikipedia.org/wiki/Renormalization_group">renormalization group</a> of physics. The latter feels like a kind of microscope for theoretical physicists $-$ the renormalization group formalizes a sequence of scaling transformations acting on a physical system, typically zooming out and thereby coarse-graining the preceding image of the system. This parallels feeding the image of the system into a "deep" sequence of convolutional layers. Two references for this are a 2013 <a href="https://arxiv.org/abs/1301.3124">paper</a> of Cédric Bény, and a 2014 <a href="https://arxiv.org/abs/1410.3831v1">paper</a> of Pankaj Mehta and David Schwab, and I imagine there is more recent work on this to explore. Dataset $\mathcal{D}$ is both an image dataset and a natural input to the renormalization group. It will give us an opportunity to better understand these connections, in particular we can start by repeating the experiments the latter paper runs on the Ising model.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>A goal less directly related to ML is to augment the simulation to reproduce the simulations of Lubetzky and Sly on <em>information percolation</em> (<a href="https://math.nyu.edu/~eyal/papers/cutoffbhZd.pdf">main article</a> with visualization, and <a href="https://cims.nyu.edu/~eyal/papers/cutoffbh_expo.pdf">this</a> is a shorter expository version, still technical). Information percolation stacks each time-slice of the simulation described above (at some fixed temperature) into a 'space-time cylinder'. Multi-colored edges or 'bonds' are drawn <em>between</em> pixels in successive time-slices, based on how the simulation dynamics progress. The color of the bonds reflects different possibilities for how the update step is executed at a given pixel: sometimes, the randomness involved in the update is completely independent of everything else, and this is how the simulation gradually loses its memory of its starting point. The information percolation process outputs a graph or network inside the space-time cylinder encoding all aspects of the simulation. The relevance of information percolation is that becoming decoupled from the simulation starting point has the interpretation that the top slice of the space-time cylinder is <em>not</em> connected to the bottom slice through the information perecolation process. This is a way to graphically represent the 'mixing' undergone by the Ising dynamics. Lubetzky and Sly use this perspective to deduce lower bounds on how long the simulation dynamics must be run in order to sample effectively from the Gibbs measure of the Ising model. So this is a tool relevant to both bullet points above, and could look cool to simulate and visualize.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<p><em>references</em></p>
+<ul>
+<li><p>Krauth (2006) <em>statistical mechanics: algorithms and computations</em></p>
+</li>
+<li><p>Menon (2020) <em><a href="http://www.dam.brown.edu/people/menon/publications/pt-2020.pdf">pattern theory</a></em></p>
+</li>
+</ul>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The Monte Carlo method is increasingly becoming part of the discipline it is meant to study. The Monte Carlo method is a statistical, <em>"almost experimental"</em>, approach to computing integrals using random positions, called <strong>samples</strong>. Below, we introduce some sampling techniques for continuous and discrete variables. We also discuss the basic principles of statistical data analysis: how to extract results from well-behaved simulations. We also discuss at length the simulations where something goes wrong.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ In probabilistic terms, the integrals we desire to approximate correespond to the expected value of some observable, $\mathcal{O} : \mathcal{S} \to \mathbb{R}$. Here we assume some implicit probability measure $\mu$ on $\mathcal{S}$, the latter called the <strong>state space</strong>. Formally, the expected value $\mathbb{E} \mathcal{O}$ corresponds to the integral
+$$
+\mathbb{E} \mathcal{O} = \int_{ \mathcal{S} } \mathcal{O}(s) \,  \mu( \textrm{d} s )
+$$
+We write this expectation either as $\mathbb{E} \mathcal{O}$, or as $\langle \mathcal{O} \rangle$, the latter notation more common in physics.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ We want to simulate most of the objects discussed throughout the notes, so we lose no generality in assuming that $\mathcal{S}$ is finite. $\mathcal{S}$ will be treated as a continuous object when it is more natural, or becomes convenient.</p>
+<blockquote><p>I am tempted to jump to conclusions in the following way:first, note that if $\mathcal{S}$ is finite with $\# \mathcal{S} = M$, then $\mu$ corresponds to its probability mass function $p = (p_1, \dots, p_M)$. In this case, the above integral becomes the $\sum_{i=1}^M o_i p_i$ for a given vector $o = (o_1, \dots, o_M)$. The conclusion I jumped to was that approximating this sum happens first by estimating each $p_i$ through a statistic (like a histogram) $\hat{p}$ of some long-running simulation, and then taking a dot product of $\hat{p}$ with $o$. &gt; To be clear, in both direct sampling and Markov chain sampling, it seems instead that our approximation comes from taking measurements of a system as it evolves, and only after it has been allowed to evolve for some time. The measurements applied to each state of $\mathcal{S}$ are encoded in the measurement of the system, and the probability vector $p$ (of $\mu$) is encoded in the system evolution itself.</p>
+</blockquote>
+<p>$\quad$ We wish to distinguish between two distinct sampling approaches:<strong>direct sampling</strong> and <strong>Markov chain sampling</strong>. We postpone the definition of a Markov chain until later; for now it is understood as a random walk.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="...-direct-sampling-...">... direct sampling ...<a class="anchor-link" href="#...-direct-sampling-..."> </a></h2><p><em>(Krauth $\S$ 1.1.1)</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Krauth explains direct sampling through a game played with small pebbles. The playing field is a large circle is inscribed into a large square, both drawn in the sand. In direct sampling, one has 'access' to the measure $\mu$ sampling from $\mathcal{S}$. In the context of the game, we will assume we can directly sample from $\mu$, which denotes the uniform measure on the square 
+$$
+\mathcal{S} \equiv \textsf{square} = [-1,1]^2   \,,
+$$ 
+a 'birds-eye' view of the playing field. Not only this, but we assume that we can also sample directly from $\mu$ multiple times, <em>independently</em>.</p>
+<blockquote><p>The observable considered in the game is related to its goal, namely to compute an approximation of the number $\pi$. The observable $\mathcal{O} :\mathcal{S} \to \mathbb{R}$ is the indicator function of the unit disc, $\textsf{disc} = \{ s = (x,y) \in \textsf{square} : x^2 + y^2 \leq 1 \}$
+$$
+\mathcal{O} \equiv \mathbf{1}_{ \textsf{disc}} =
+\begin{cases}
+1 &amp; \quad s \in \textsf{disc} \\
+0 &amp; \quad \textrm{otherwise}
+\end{cases} 
+$$</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ A player throws pebbles at the square, successively. Through the direct sampling, these land uniformly at random. The sampling is performed independently across draws from $\mu$. In particular, no pebble throw ever misses the square. Let $S_1, \dots, S_N$ denote the collection of locations sampled from $\textsf{square}$ in the above procedure: each $S_i$ is a random ordered pair $S_i = (x_i, y_i) \in \textsf{square}$, where all coordinates are mutually independent, $\textrm{Unif}([-1,1])$ random variables.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ To describe how the samples $S_i$ are used to approximate the value of $\pi$, we introduce the <strong>empirical measure</strong> $\mu_N^{\textrm{direct}}$, a random probability measure on $\mathcal{S}$, defined to encode the locations $S_1, \dots, S_N$: 
+$$
+\mu_N^{\textrm{direct}} := \frac{1}{N} \sum_{i=1}^N \delta_{S_i},
+$$
+where in general $\delta_S$ denotes the delta mass at the random point $S$.  Measures are in a sense dual to sets, and the <strong>delta mass</strong> $\delta_X$ is a measure acting on sets in the following way: given measurable $B \subset \textsf{square}$, we have
+$$
+\delta_S = 
+\begin{cases}
+1 &amp; \quad \textrm{ if } S \in B, \\
+0 &amp; \quad \textrm{ otherwise. }
+\end{cases}
+$$
+The empirical measure $\mu_N^{\textrm{direct}}$, by definition, acts on sets $B \subset \mathcal{S}$ by reporting the fraction of the direct samples $S_i$ landing in $B$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ There is a sense in which the measures $\mu_N^{\textrm{direct}}$ 'converge' to $\mu$, and the game, or simulation, is designed to exploit this. Let us enumerate the states of $\mathcal{S} = \{s_1, \dots, s_M \}$. In practice, the size of $M$ will be determined by the 'resolution' of the floating points used in sampling. In accordance with the observable $\mathcal{O}$, the set we choose for $B$ is $\textsf{disc}$. This is because
+$$
+\mu_N^{\textrm{direct}}( \textsf{disc} ) = \frac{1}{N} \sum_{i=1}^N \delta_{S_i}( \textsf{disc} ) \equiv \frac{1}{N} \sum_{i=1}^M \mathcal{O}(S_i)
+$$
+The sense in which $\mu_N^{\textrm{direct}}$ converges to $\mu$ implies, in particular, that the sequence of numbers $\mu_N^{\textrm{direct}}(\textsf{disc})$ converges to $\mu( \textsf{disc} )$ as $N \to \infty$. This convergence can also be seen as a consequence of a law of large numbers.</p>
+<p>In the present context, the relevant subset of $\textsf{square}$ is the disc of radius one, centered at the origin. We refer to this as $\textsf{disc}$. The output of the first algorithm below is</p>
+$$
+4 \cdot \mu_N^{\textrm{direct}}(\textsf{disc}) \approx 4 \cdot \mu( \textsf{disc}) \equiv 4 \cdot \frac{ \pi}{4} 
+$$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the probability that a pebble sampled from $\mu$ lands in $\textsf{disc}$.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The next function embodies the 'direct' sampling we supposedly have access to, with the independence assumptions described above.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="method-...-Unif">method ... Unif<a class="anchor-link" href="#method-...-Unif"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">Unif</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Algorithm 1.1 is translated from pseudocode (as it is presented in Krauth) to Python.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Algorithm-1.1-...-direct_pi">Algorithm 1.1 ... direct_pi<a class="anchor-link" href="#Algorithm-1.1-...-direct_pi"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">direct_pi</span><span class="p">(</span><span class="n">N</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">):</span>
+
+    <span class="n">N_hits</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    the for loop is basically about computing the sum in</span>
+<span class="sd">    \mu_N(disc), stored in N_hits</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+
+        <span class="c1"># initialize Unif([-1,1]) r.v.&#39;s</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Unif</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Unif</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="n">rad_sq</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">rad_sq</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+
+            <span class="n">N_hits</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    \mu_N(disc) is then computed by dividing by N</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">N_hits</span> <span class="o">/</span> <span class="n">N</span>
+
+    <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">ratio</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">direct_pi</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3.134</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In Krauth, Table 1.1 gives results of five runs of the above with <code>N = 4000</code>. We return to this table later to compare with Monte Carlo methods.</p>
+<table>
+<thead><tr>
+<th>run</th>
+<th><code>N_hits</code></th>
+<th>estimate of $\pi$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3156</td>
+<td>3.156</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3150</td>
+<td>3.150</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3127</td>
+<td>3.127</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3171</td>
+<td>3.171</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3148</td>
+<td>3.148</td>
+</tr>
+</tbody>
+</table>
+<p>Krauth remarks that none of the results of this table have fallen in the error bounds known since Archimedes. Another remark of Krauth: <em>"The people adopt a sensible rule: they decide on the total number of throws, before they start the game."</em> (This is as in the above python code.) <em>"They understood that one must not stop a stochastic calculation simply because the current result appears accurate, nor should they continue to play because the answer they get isn't close enough to their idealized target."</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="...-Markov-chain-sampling-...">... Markov-chain sampling ...<a class="anchor-link" href="#...-Markov-chain-sampling-..."> </a></h2><p><em>( Krauth $\S$ 1.1.2 )</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ We now consider a new game being played on the same field, with different rules. We again take a birds-eye view of the playing field, so our state space is again $\mathcal{S} = \textsf{square}$. The game starts with a person at the corner of the helipad, corresponding to coordinates $(1,1)$ in $\mathcal{S}$. In Krauth's description, in each coordinate, the walker takes a step via adding independent, $\textrm{Unif}([-\delta, \delta])$ random variables. Thus it is possible for a next step which takes the person outside the square. If this is the case, instead of taking the step, the walker does nothing. This step still 'counts' in the aggregation we will perform. Krauth describes this procedure in terms of the pebbles: the person takes another pebble from their bag and places it on top of the one pebble (or perhaps pebble pile) marking their current location.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ After an 'in-bounds' step is taken, the walker places a pebble at their current position. Each walker is equipped with a bag of infinitely many pebbles. These two cases describe the way the new game is played. We make one modification to this, which is that</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ In the present setting, the <strong>samples</strong> $X_1, \dots, X_N$ are not independent, but rather have the structure of a Markov chain, specifically a random walk with independent increments. Let us use $\xi_1, \dots, \xi_N$ denote these independent increments. In Krauth's description, each of these is a $\textrm{Unif}([-\delta, \delta])$ random variable. For reasons that Krauth discusses later, and we will comment on this, we instead assume that each $\xi_j$ is a discrete random variable uniformly distributed on the two-element set $\{ -\delta, \delta \}$. We have distinguished the starting point of the sampling at $X_0 = (1,1)$. Following the above description, one then has
+$$
+X_1 = 
+\begin{cases}
+X_0 + \xi_1\,, &amp; \quad \textrm{ if } X_0 + \xi_1 \in \textsf{square}\\
+X_0 &amp; \quad \textrm{ otherwise }
+\end{cases}
+$$</p>
+<p>and in general,</p>
+$$
+X_j = 
+\begin{cases}
+X_{j-1} + \xi_j\,, &amp; \quad \textrm{ if } X_{j-1} + \xi_j \in \textsf{square}\\
+X_{j-1} &amp; \quad \textrm{ otherwise }
+\end{cases}
+$$<p>for all $j = 1, \dots, N$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ For this new sequence of random $X_i$, we can define the analogous object to $\mu_N^{\textrm{direct}}$, 
+$$
+\mu_N^{\textrm{Markov}} := \frac{1}{N} \sum_{i=1}^N \delta_{X_i}
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The algorithm below returns an approximation to $\pi$ via the same kind of ratio</p>
+$$
+\pi \approx 4 \cdot \mu_N^{\textrm{Markov}}(\textsf{disc}) 
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ One might be tempted to use random initial conditions, assigning independent $\textrm{Unif}([-1,1])$ random variables to the two coordinates. We avoid this because the Markov chain methods become most useful when no direct sampling method exists. It is for exactly this reason that we also avoid directly sampling from $\textrm{Unif}([-\delta, \delta])$ random variables: such objects are a linear transformation away from directly sampling from the $\textrm{Unif}([-1,1])$ distribution, perhaps at lower resolution.</p>
+<p>$\quad$  Consequently, our Markov-chain sampling simulations start at the corner $(1,1)$ for concreteness. They can also be assumed to start from where a previous simulation left off. Following this convention throughout these notes, we usually focus on going from configuration $i$ to configuration $i+1$. This is the defining property of (discrete-time) Markov chains: the transition probabilities of the process depend only on the current position.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Algorithm-1.2-...-markov-pi-(unmodified)">Algorithm 1.2 ... markov-pi (unmodified)<a class="anchor-link" href="#Algorithm-1.2-...-markov-pi-(unmodified)"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">markov_pi</span><span class="p">(</span> <span class="n">delta</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">40000</span> <span class="p">):</span>
+
+    <span class="c1"># initial conditions</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">N_hits</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">num_rej_moves</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of &quot;rejected&quot; moves</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+
+        <span class="c1"># get coordinate increments</span>
+        <span class="n">del_x_big</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Unif</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="n">del_y_big</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Unif</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="n">del_x</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">del_x_big</span>
+
+        <span class="n">del_y</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">del_y_big</span>
+
+        <span class="c1">#print(del_x, del_y)</span>
+
+        <span class="c1"># potential new coordinates</span>
+        <span class="n">x_new</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">del_x</span>
+
+        <span class="n">y_new</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">del_y</span>
+
+        <span class="c1"># to determine if step leads into disc</span>
+        <span class="n">rad_sq_new</span> <span class="o">=</span> <span class="p">(</span> <span class="n">x_new</span> <span class="o">**</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">+</span> <span class="p">(</span> <span class="n">y_new</span> <span class="o">**</span> <span class="mi">2</span> <span class="p">)</span>
+
+        <span class="c1"># ditto for square</span>
+        <span class="n">x_in</span> <span class="o">=</span> <span class="n">x_new</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">x_new</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="n">y_in</span> <span class="o">=</span> <span class="n">y_new</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y_new</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="n">in_square</span> <span class="o">=</span> <span class="n">x_in</span> <span class="ow">and</span> <span class="n">y_in</span> 
+
+        <span class="c1"># if move is accepted</span>
+        <span class="k">if</span> <span class="n">in_square</span><span class="p">:</span>
+
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x_new</span>
+
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y_new</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">num_rej_moves</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># if in disc, +1 to number of hits</span>
+        <span class="k">if</span> <span class="n">rad_sq_new</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+
+            <span class="n">N_hits</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># we add in this output to </span>
+    <span class="c1"># better understand how to pick </span>
+    <span class="c1"># delta</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;fraction of successful moves: &quot;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span> <span class="n">num_rej_moves</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span> <span class="n">N_hits</span> <span class="o">/</span> <span class="n">N</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">markov_pi</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fraction of successful moves:  0.9751
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3.0945</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Let us discuss how to choose the  'throwing range' is $\delta$. It is akin to (largest possible) step size for the walker. Roughly, if $\delta$ is too small, the acceptance rate may be high, but the claim is that the walk will not be able to explore enough to well-approximate the integral. Choosing $\delta$ too large means the walk will have a hard time making successful moves, also hindering exploration. Krauth: <em>"The time-honored rule of thumb consists in choosing $\delta$ neither too large, nor too small, so that the acceptance rate turns our to be on the order of $\frac{1}{2}$."</em> I didn't observe results agreeing with their rule of thumb. I found much more success with $\delta = 0.05$ versus their recommendation of $0.3$. I did however observe the approximation worsen as the step size was taken larger past $\delta = 1$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Algorithm-1.2'-...-markov-pi-(modified)">Algorithm 1.2' ... markov-pi (modified)<a class="anchor-link" href="#Algorithm-1.2'-...-markov-pi-(modified)"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">markov_pi_modified</span><span class="p">(</span> <span class="n">delta</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">40000</span> <span class="p">):</span>
+
+    <span class="c1"># initial conditions</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">N_hits</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">num_rej_moves</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of &quot;rejected&quot; moves</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        we use uniform random variables, out of convenience but not to</span>
+<span class="sd">        determine coordinate steps directly with these. Instead, we </span>
+<span class="sd">        extract a pair of fair coin tosses from two uniform random</span>
+<span class="sd">        variables. We use these coin tosses only to determine the sign</span>
+<span class="sd">        of the increment in each coordinate. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># generate indep uniforms</span>
+        <span class="n">U_1</span> <span class="o">=</span> <span class="n">Unif</span><span class="p">()</span>
+
+        <span class="n">U_2</span> <span class="o">=</span> <span class="n">Unif</span><span class="p">()</span>
+
+        <span class="c1"># use these as coin tosses to determine </span>
+        <span class="c1"># del_x...</span>
+
+        <span class="k">if</span> <span class="n">U_1</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+        
+            <span class="n">del_x</span> <span class="o">=</span> <span class="n">delta</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">del_x</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta</span>
+
+        <span class="k">if</span> <span class="n">U_2</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+
+            <span class="n">del_y</span> <span class="o">=</span> <span class="n">delta</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">del_y</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta</span>
+
+        <span class="c1"># potential new coordinates</span>
+        <span class="n">x_new</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">del_x</span>
+
+        <span class="n">y_new</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">del_y</span>
+
+        <span class="c1"># to determine if step leads into disc</span>
+        <span class="n">rad_sq_new</span> <span class="o">=</span> <span class="p">(</span> <span class="n">x_new</span> <span class="o">**</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">+</span> <span class="p">(</span> <span class="n">y_new</span> <span class="o">**</span> <span class="mi">2</span> <span class="p">)</span>
+
+        <span class="c1"># ditto for square</span>
+        <span class="n">x_in</span> <span class="o">=</span> <span class="n">x_new</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">x_new</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="n">y_in</span> <span class="o">=</span> <span class="n">y_new</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y_new</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="n">in_square</span> <span class="o">=</span> <span class="n">x_in</span> <span class="ow">and</span> <span class="n">y_in</span> 
+
+        <span class="c1"># if move is accepted</span>
+        <span class="k">if</span> <span class="n">in_square</span><span class="p">:</span>
+
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x_new</span>
+
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y_new</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">num_rej_moves</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># if in disc, +1 to number of hits</span>
+        <span class="k">if</span> <span class="n">rad_sq_new</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+
+            <span class="n">N_hits</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># we add in this output to </span>
+    <span class="c1"># better understand how to pick </span>
+    <span class="c1"># delta</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;fraction of successful moves: &quot;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span> <span class="n">num_rej_moves</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span> <span class="n">N_hits</span> <span class="o">/</span> <span class="n">N</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">markov_pi_modified</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fraction of successful moves:  0.953025
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3.1668</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<p><strong>Q</strong> $\quad$ In both the Glauber and Metropolis dynamics for the evolution of the Ising model, the spin variable to be updated ( i.e. the vertex $v \in \mathbb{T}$ sampled ) is chosen uniformly, through <em>direct sampling</em>. What if this is instead done through Markov-chain sampling?</p>
+<p>Also: instead of rejecting the moves outside the box, we can play with periodic boundary conditions for the walks in both simulations.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="...-discussion-...">... discussion ...<a class="anchor-link" href="#...-discussion-..."> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The Monte Carlo 'games' described above epitomize the two basic approaches to sampling from a probability measure $\mu$ on some space $\mathcal{S}$. Both approaches to the sampling evaluate an observable $\mathcal{O} : \mathcal{S} \to \mathbb{R}$. In our examples, $\mathcal{S} = \textsf{square}$, and the observable $\mathcal{O}$ is the indicator function of the disc within the square:
+$$
+\mathbf{1}_{\textsf{disc}}(s) = \begin{cases}
+1 &amp; \quad s \in \textsf{disc} \\
+0 &amp; \quad \textrm{otherwise}
+\end{cases} \,, \quad \mathbf{1}_{\textsf{disc}} : \textsf{square} \to \mathbb{R} 
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In either sampling case, we can define $\mathcal{O}_i := \mathcal{O}(X_i)$, and note that one evaluates</p>
+$$
+\frac{N_{\textrm{hits}}}{N} = \frac{1}{N} \sum_{i=1}^N \mathcal{O}_i \approx \langle \mathcal{O} \rangle,
+$$<p>where the brackets $\langle \, \cdot \, \rangle$ denote the expected value of $\mathcal{O}$ taken with respect to the probability measure $\mu$, which in this case is uniform on $[-1,1]^2$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Krauth remarks that $\langle \mathcal{O} \rangle$ is an integral,
+$$
+\langle \mathcal{O} \rangle = \int_{-1}^1 \textrm{d} x \int_{-1}^1 \textrm{d}y \, \mu (x,y) \mathcal{O}(x,y)
+$$
+In his notes, Krauth includes a denominator on the right-hand side above, it is:
+$$
+\int_{-1}^1 \textrm{d} x \int_{-1}^1 \textrm{d}y \, \mu (x,y) 
+$$</p>
+<p>My understanding of $\mu(x,y)$ is that it is used to denote the density of probability measure $\mu$, so it integrates to one. Within the above bounds of integration, it can be taken as a constant, namely $1/4$, which is the reciprocal of the area of $[-1,1]^2$. Regardless, there is an integral to be computed, and this is an aspect Krauth remarks on next.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The density $\mu(x,y)$ doesn't appear in the approximation $\tfrac{1}{N} \sum_{i=1}^N \mathcal{O}_i$, Krauth: <em>"...rather than being evaluated, it is sampled. This is what defines the Monte Carlo method."</em> Krauth goes on to point out that the multiple integrals also disappear. <em>"This means that the Monte Carlo method allows the evaluation of high-dimensional integrals, such as appear in statistical physics and other domains, if we can only think of how to generate the samples."</em></p>
+<p>$\quad$ The multiple integral above is integration in two variables, so it doesn't feel like it is genuinely a 'high-dimensional' integral to compute. On the other hand, we are already know of a kind of Markov chain on a high-dimensional space, namely the Glauber dynamics for the Ising model on $\mathbb{T}$, the two-dimensional torus $( \mathbb{Z}\, /\, (n\cdot \mathbb{Z}) )^2$.  All in all, it seems that one is approximating an integral in an arbitrary number of dimensions (number of spins in the case of Ising model) through what is essentially a path integral. The path integral is a sum of observables of the system, as the system evolves.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Krauth: <em>"Direct sampling, the approach inspired by the game, is like pure gold: a subroutine provides an independent hit at the distribution function $\pi$. Notwithstanding thee randomness in the problem, direct sampling, in computation, plays a role similar to exact solutions in analyitcal work, and the two are closely related. In direct sampling, there is no throwing-range issue, no worrying about initial conditions, and there is a straightforward error analysis -- at least if $\mu$ and $\mathcal{O}$ are well behaved. Many successsful Monte Carlo algorithms contain exact sampling as a key ingredient."</em></p>
+<p>$\quad$ <em>"Markov-chain sampling, on the other hand, forces us to be much more careful with all aspects of our calculation. The critical issue here is the correlation time, during which the position of the walker retains a memory of the starting configuration. This time can become astronomical. In the usual applications, onee is often satisfied with a handful of independent samples, obtained through week-long calculations, but it can require much throught and experience to ensure that even this modest goal is achieved. We shall continue our discussion of these methods in a later section. We first look briefly at the history of stochastic computing."</em></p>
+<p>before this, we draw background on Markov chains and Gibbs measures from Menon.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="...-Markov-chains-...">... Markov chains ...<a class="anchor-link" href="#...-Markov-chains-..."> </a></h2><p><em>(Menon $\S$ 1.1, 1.2)</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ We model the world as a space of random signals. The world is filled with observers, which record part of these signals and then form inferences about the world. The process of inference is modeled with a Bayesian paradigm. We assume an observer has a stochastic model capable of generating signals similar to the true signal. Inference reduces to tuning the model parameters to obtain the best match between the generated and observed signals.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ These notes explore stochastic models of progressively increasing complexity, in tandem with numeraical algorithms for optimization. The simplest class of stochastic models we consider are Markov chains. Suppose we are given a finite set $\mathcal{S}$ called the <strong>state space</strong> of the Markov chain. This will sometimes (such as in text-modeling instances) be called the <strong>alphabet</strong>, in which case we may use $\mathcal{A}$ in place of $\mathcal{S}$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-stochastic-process-)"><strong>Definition.</strong> ( stochastic process )<a class="anchor-link" href="#Definition.-(-stochastic-process-)"> </a></h3><p>$\quad$ A <strong>stochastic process</strong> is a collection of random variables.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ We study a stochastic process $(X_t)_{t \in \mathbb{N}}$ taking values in the given finite set $\mathcal{S}$. Thus, the temporal (given by the index $t$ in the stochastic process) and the spatial (given by the state value in $\mathcal{S}$ of the process) aspects of this process are discrete.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-Markov-chain-)"><strong>Definition.</strong> ( Markov chain )<a class="anchor-link" href="#Definition.-(-Markov-chain-)"> </a></h3><p>$\quad$ The stochastic process $(X_t)_{t \in \mathbb{N}}$ is a <strong>Markov chain</strong> if for all $t$, $\mathbb{P} ( X_{t +1} | X_1, \dots, X_t ) = \mathbb{P} (X_{t+1} | X_t )
+$.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ As the above definition indicates, the modeling assumption in Markov process theory is that the future of the process depends on the current state, but not the past. This is the probabilistic analogue of the idea of Newtonian determinism, and is encoded in the <em>forward equation</em> below. Stationary Markov chains are thus characterized by their <strong>transition matrix</strong> 
+$$
+Q(s, \tilde{s}) = \mathbb{P}( X_2 = \tilde{s} | X_1 = s )\,,
+$$ 
+with entries indexed by pairs of states $s, \tilde{s} \in \mathcal{S}$. Another interpretation of the Markov property is that the future and past are independent, conditional on the present. We typically simplify the structure of Markov chains with the following assumption.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-stationary-Markov-chain-)"><strong>Definition.</strong> ( stationary Markov chain )<a class="anchor-link" href="#Definition.-(-stationary-Markov-chain-)"> </a></h3><p>$\quad$ The Markov chain $(X_t)$ is <strong>stationary</strong> if $\mathbb{P}(X_{t+1} | X_t ) = \mathbb{P} (X_2 | X_1 )$ for all $t \in \mathbb{N}$.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The most basic statistic associated to the Markov chain is the pmf( $\equiv$ probability mass function ), or law of the random variable $X_t$. The mass assigned to state $s \in \mathcal{S}$ under this law is denoted
+$$
+m_t(s) := \mathbb{P}(X_t = s) \,,
+$$
+and one obtains the following recurrence relation using the so-called law of total probability, along with the definitions of $m_t$ and $Q$:
+$$
+\begin{align}
+m_{t+1}(\tilde{s}) &amp;= \mathbb{P} ( X_{t+1} = \tilde{s}) \\
+&amp;= \sum_{s \in \mathcal{S}} \mathbb{P}( X_{t+1} = \tilde{s}, \, X_t = s ) \\
+&amp;= \sum_{s \in \mathcal{S}} \mathbb{P} (X_{t+1} = \tilde{s} | X_t = s ) \mathbb{P}(X_t = s)  \\
+&amp;= \sum_{s \in \mathcal{S}} Q(s,\tilde{s}) m_t(s),
+\end{align}
+$$
+when we assume the chain is stationary. This calculation yields the <strong>forward equation</strong> 
+$$
+m_{t+1} = m_t Q , \quad t \in \mathbb{N}
+$$
+using the convention that the pmf $m_t$ of $X_t$ is regarded as a row vector.  The forward equation is linear and explicitly solvable when the chain is stationary. We proceed inductively to find
+$$
+m_t = m_1 Q^t , \quad t \in \mathbb{N} \,,
+$$
+and one of the central questions in Markov chain theory is to understand the behavior of $m_t$ as $t\to\infty$. This question explains the importance of the eigenvalue spectrum of $Q$ to Markov chain theory: diagonalizing $Q$ is an efficient way to compute $Q^t$ for $t$ large, and the spectrum of $Q$ largely governs the long term behavior of the system.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="...-equilibrium-measures,-ergodicity,-random-walks-...">... equilibrium measures, ergodicity, random walks ...<a class="anchor-link" href="#...-equilibrium-measures,-ergodicity,-random-walks-..."> </a></h2><p><em>(Menon $\S$ 1.2)</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-equilibrium-/-stationary-distribution-)"><strong>Definition.</strong> ( equilibrium / stationary distribution )<a class="anchor-link" href="#Definition.-(-equilibrium-/-stationary-distribution-)"> </a></h3><p>$\quad$ Let $Q$ be the transition matrix of a stationary Markov chain $X = (X_t)$ with state space $\mathcal{S}$, and let $m$ be a probability measure on $\mathcal{S}$, whose pmf we also denote $m$. The measure $m$ is an <strong>equilibrium distribution</strong> or equivalently, a <strong>stationary distribution</strong> for $X$ if 
+$$
+m = m Q,
+$$
+and if $m$ satisfies the normalization conditions $m(s) \geq 0$ for all $s \in \mathcal{S}$ and $\sum_{s \in \mathcal{S}} m(s) =1$.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The above definition is of central importance to our simulation goals. The reason is that, for Markov chains with a unique stationary distribution $m$, the measures $m_t \equiv \mathbb{P}(X_t = \cdot )$ converge to $m$, in an appropriate sense, as $t \to \infty$. When we simulate a Markov chain, we are sampling from $m_t$, and we want to run the simulation long enough (taking $t$ large enough) so that $m_t \approx m$. This is how a Markov chain Monte Carlo (MCMC) simulation can be used to approximate sampling from $m$. In practice, instead of starting with some Markov chain dynamics, we will always start with a measure $m$ on $\mathcal{S}$, which we would like to sample from.</p>
+<p>$\quad$ The MCMC method then requires <em>finding</em> a stationary, ergodic Markov chain $X$ with state space $\mathcal{S}$, whose stationary measure coincides with $m$. This is how $X$ is used to simulate sampling from $m$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ In Krauth's pebble games, there was some discussion of initial conditions of a Markov chain: in the second pebble game, the person playing always had to start at a prescribed corner of the square. These are <em>deterministic</em> initial conditions. In practice, we agreed to assume simulations will start deterministically, or from where a previous simulation left off. In theory, it is useful to have a mathematical object associated to the <strong>initial conditions</strong> of a Markov chain: a probability measure on $\mathcal{S}$, denoted $m_0$. When initial conditions are deterministic, and start at some distinguished state $s_* \in \mathcal{S}$, the probability measure $m_0$ corresponds to the $\delta$-mass $\delta_{s_*}$. When $m_0$ is general, it models starting from where some simulation left off, whose information we have no (or only partial) access to.</p>
+<p>$\quad$ The first equation in the above definition can be understood as describing the evolution of a Markov chain $X$ whose initial conditions are the stationary distribution $m$ associated to $X$. In this case $m_t = m$ for all $t$ if $m_1 = m$. That is, while the values of $X_t$ change with time (it's a stochastic process) its probability mass function does not. Thus the equilibrium distribution of a Markov chain captures the intuitive idea of a dynamic equilibrium .</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Considering the task of computing $m$ given $Q$: observe that $m$ is a left eigenvector of $Q$ with eigenvalue $1$. Further, $1$ must always be an eigenvalue of $Q$ since it corresponds to the right eigenvector $(1, \dots, 1)^T$. Thus, if we know how to solve for eigenvectors, we can determine $m$. Menon: <em>"What is interesting in practice is the converse: for large transition matrices, say when $\# \mathcal{S}$ is $10^6 \times 10^6$, it is more efficient to use Markov chains to approximate $m$, than to use naive linear algebra This observation plays an important role in web crawlers and search engines."</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Returning to the main question of the Ising simulation: knowing how long to run the MCMC simulation for, or knowing how quickly $m_t$ converges to $m$ is related to how fast the Markov chain <em>mixes</em>. We now explore two examples of Markov chains whose state space is the symmetric group $\mathfrak{S}_{52}$. Each group element can be thought of as a possible shuffling of a standard deck of playing cards. The group identity of $\mathfrak{S}_{52}$ corresponds to some distinguished initial ordering. For each of the two shuffling methods described, the main question can be rephrased as: <em>"how many shuffles does it take to obtain a truly random (uniform) distribution if one begins with a perfectly ordered deck of cards?"</em>  The following term will be used.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-ergodic-Markov-chain-)"><strong>Definition.</strong> ( ergodic Markov chain )<a class="anchor-link" href="#Definition.-(-ergodic-Markov-chain-)"> </a></h3><p>$\quad$ A stationary Markov chain $X$ with state space $\mathcal{S}$ and transition matrix $Q$ is <strong>ergodic</strong> if it has a unique equilibrium distribution. A sufficient condition for ergodicity of $X$ is if for every pair $s, \tilde{s} \in \mathcal{S}$ there is a positive integer $j(s,\tilde{s})$ such that $Q^{j(s,\tilde{s})} &gt;0 $.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Many other conditions are known that ensure ergodicity. For example, if all terms of $Q$ are strictly positive, it is possible for any state to get to any other state, and this ensures that the Markov chain is ergodic. This assumption is too restrictive in practice, since we are mainly intersted in Markov chains making 'local' moves such as random walks in a large state space. This behavior is captured by the sufficient condition given in the above definition. Intuitively, it means that every state can visit every other state given enough time. We assume this property always holds.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Physicsts define the term ergodic ( describing Markov chain $(X_t)_{t\in \mathbb{N}}$ ) to mean the following.</p>
+$$
+\lim_{T \to \infty} \sum_{t =1}^T \mathcal{O}(X_t) = \mathbb{E}_m\mathcal{O},
+$$<p>where $m = m Q$ and $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is arbitrary.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ This formulation has the interpretation that a Markov chain is ergodic when the left-hand side, the <em>time-average</em>, is equal to the <em>spatial-average</em> (with respect to the equilibrium measure), which is the right hand side. For Markov chains ergodic in the first sense, the second notion of ergodicity follows from an <em>ergodic theorem</em>. Menon notes the following bottlenecks and simplifications:</p>
+<ul>
+<li><p>$\mathcal{S}$ may be very large. For example (in shuffling dynamics we soon describe), $\mathcal{S}$ may be the permutation group.</p>
+</li>
+<li><p>$Q$ may be a sparse matrix.</p>
+</li>
+<li><p>As discussed previously, we often don't need $m$ explicitly, we instead want to evaluate $\mathbb{E}_m \mathcal{O}$, where $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is some observable.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Example.-(-simple-random-walk-)"><strong>Example.</strong> ( simple random walk )<a class="anchor-link" href="#Example.-(-simple-random-walk-)"> </a></h3><p>$\quad$ Let $G = (\textrm{V},\textrm{E})$ be a finite graph with vertex set $\textrm{V}$ and edge set $\textrm{E}$. Given $x,y \in \textrm{V}$, write $x \sim y$ if the edge $\{ x, y \}$ lies in $\textrm{E}$. Let $\textrm{deg}(x) \triangleq \sum_{x \sim y } 1$ be the degree of vertex $x$. A <strong>simple random walk</strong> on $G$ is a Markov chain with state space $\textrm{V}$ and transition matrix
+$$</p>
+<h1 id="Q(x,y)">Q(x,y)<a class="anchor-link" href="#Q(x,y)"> </a></h1>
+<pre><code>    \begin{cases}
+    \frac{1}{\textrm{deg}(x)}, &amp; \quad \text{ if } x \sim y \\
+    0 &amp; \quad \text{ otherwise. }
+    \end{cases}
+</code></pre>
+<p>$$
+We leave the initial conditions ambiguous in this definition.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Example.-(-random-walks-in-the-permutation-group-)"><strong>Example.</strong> ( random walks in the permutation group )<a class="anchor-link" href="#Example.-(-random-walks-in-the-permutation-group-)"> </a></h3><p>$\quad$ Let $\mathfrak{S}_n$ denote the permutation group on $n$ symbols. To be clear, let</p>
+$$
+[n] := \{ \, 1, \dots, n \, \},
+$$<p>and recall that a permutation on $[n]$ is a bijection from $[n]$ to itself. The group structure on the collection of such functions, denoted $\mathfrak{S}_n$, is given by function composition. Below we describe two distinct rules for Markovian dynamics on $\mathfrak{S}_n$. Each set of dynamics can be thought of as arising from forgetting the implicit Cayley graph structure on $\mathfrak{S}_n$: this is the complete graph on $n!$ vertices. Below, we consider adjacency structures on $\mathfrak{S}_n$ distinct from this and from one another.</p>
+<p>$\quad$ Through the adjacency matrix from the previous example, these new graph structures (writing $\sim'$ and $\sim''$ in this example) on $\mathfrak{S}_n$ induce simple random walk dynamics, and so each describes a concrete Markov chain on $\mathfrak{S}_n$, modulo initial conditions.</p>
+<ol>
+<li><p>We declare permutations $\sigma$ and $\tau$ adjacent and write $\sigma \sim' \tau$ if $\sigma$ and $\tau$ are related by a transposition of adjacent elements. The $'$-degree of each permutation in this graph is $n-1$.</p>
+</li>
+<li><p>We declare permutations $\sigma$ and $\tau$ adjacent and write $\sigma \sim'' \tau$ if $\sigma$ and $\tau$ are related by a transposition, not necessarily of adjacent elements. The $''$-degree of each permutation in this graph is ${n \choose 2}$.</p>
+</li>
+</ol>
+<p>These are examples of <em>distinct</em> ergodic random walks on the same state space, namely $\mathfrak{S}_n$, both of which have the uniform measure, let us still denote this $\mu$, as their equilibrium measure. The simulation 'purpose' of both random walks is thus to sample from this uniform measure, and the distinctness of the two walks raises the question of whether one method does the sampling better.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="...-Shannon's-model-of-text-...">... Shannon's model of text ...<a class="anchor-link" href="#...-Shannon's-model-of-text-..."> </a></h2><p><em>( Menon $\S$ 1.3 )</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The main idea in Shannon's model (of text / written language) is that text is text is a stationary, ergodic stochastic process $(X_t)$ taking values in an alphabet
+$$
+\mathcal{A} \triangleq \{\, a, \,b,\, c,\, \dots\,,\, z,\, \_ \,\}
+$$
+This model is easily augmented to include punctuation and case, but we ignore these concepts in the first approximation. Note that we are not assuming that this process is a Markov chain. As discussed, the alphabet is the state space $\mathcal{S}$ from previous sections, but we use this terminology and notation to emphasize the language modeling aspect of the discussion. Note also that stationarity is distinct from the Markov property, in that neither property implies the other.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-stationary-stochastic-process-)"><strong>Definition.</strong> ( stationary stochastic process )<a class="anchor-link" href="#Definition.-(-stationary-stochastic-process-)"> </a></h3><p>$\quad$ A discrete time stochastic process $X \equiv (X_t)$ is <strong>stationary</strong> if all abitrarily large, but finite, marginal probabilities are invariant under arbitrary shifts in time. More precisely,</p>
+$$
+\mathbb{P} (\, X_1 = s_1, \dots, X_n = s_n\,) 
+    = 
+        \mathbb{P} ( \,X_{1+k} = s_1, \dots, X_{n+k} = s_n \,)
+$$<p>for all positive integers $k$ and $n$.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Intuitively, this means that if we were to observe strings of length $n$, their statistics are not changed by shifting them forward in time by an integer $k$. For such processes, the notion of ergodicity again means that <em>time averages</em> are equal to <em>spatial averages</em>. From the perspective of observables $\mathcal{O} : \mathcal{S}^n \to \mathbb{R}$, which through the above definition requires have an arbitrarily large 'memory' $n$ of the process, one has
+$$
+\lim_{T \to \infty} \frac{1}{T} \sum_{t =0 }^{T-1} \mathcal{O}(X_{t+1}, \dots, X_{t+n}) =
+\mathbb{E}  \mathcal{O}( X_1, \dots, X_n) 
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Menon: <em>"The above assumptions are introduced to conform to the idea that written text contains many heirarchical structures: letters are joined by phonetic rules to form words, words are linked by the rules of grammar into sentences, sentences are organized into paragraphs, and so on. Strange as it may seem at first sight, these rules can be effectively modeled as a stochastic process. The use of stationary ergodic processes provides us with a definition flexible enough to include heirarchical structures (though these may be complex to write down), and simple enough to computationally test."</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ As discussed, written text is modeled by a stationary stochastic process $Y$, whose law is denoted
+$$
+\mathbb{P}_{\textrm{true}} .
+$$
+The subscript '$\textrm{true}$' indicates that we view $Y$ not as an approximation to language, but as a stream of 'correctly written' English text, generated in real-time. This idealization is vague, but the main point is to identify the written language $\mathcal{L}$, in this case English, with a concrete mathematical object. In this case, the object is the stationary, stochastic process $Y$. The law $\mathbb{P}_{\textrm{true}}$ of this process is the analogue of $\mu$ in two previous contexts: the uniform measure on $\mathcal{S} = \textsf{square}$, and the uniform measure on $\mathcal{S} = \mathfrak{S}_{52}$. In either previous case, the purpose of the Markov chains involved was to approximately sample from $\mu$. Below, we discuss a family of Markov chains for approximately sampling from $\mu = \mathbb{P}_{\textrm{true}}$. The way in which this sampling happens seems distinct from before, and worth remarking on after introducing the approximating Markov chains.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ In practice, the probabilities relative to $\mathbb{P}_{\textrm{true}}$ below are approximated by mining a large corpus (e.g. the works of Shakespeare) to approximate $\mathbb{P}_{\textrm{true}}(a_1, \dots, a_n)$ for an arbitrary string $(a_1, \dots, a_n) \in \mathcal{A}^n$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Example.-(-digram-model-)"><strong>Example.</strong> ( digram model )<a class="anchor-link" href="#Example.-(-digram-model-)"> </a></h3><p><em>( or 2-gram model )</em></p>
+<p>$\quad$ This is a Markov chain with state space $\mathcal{A} = \{ \, a,\, b, \, c, \, \dots \, , \,z, \, \_ \}$.</p>
+$$
+Q^{(2)}(x,y) = \mathbb{P}_{\textrm{true}} (\,X_2 = y | X_1 = x\,),
+$$<p>which is to say, we form the character-to-character transition probabilities of a Markov process using the marginals of the full stationary process being approximated.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ We can get better approximations by allowing the Markov chain above to retain more of its history. This means defining a Markov process on $\mathcal{A}^n$ for some $ n \geq 2$. When $n=2$, we obtain the so-called trigram model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Example.-(-trigram-model-)"><strong>Example.</strong> ( trigram model )<a class="anchor-link" href="#Example.-(-trigram-model-)"> </a></h3><p><em>( or 3-gram model )</em></p>
+<p>$\quad$ This is a Markov chain with state space $\mathcal{A}^2$, which we style as</p>
+$$
+\{ aa, \,ab,\,, \dots, az, \dots, \_a, \, \dots, \, \_\,\_ \} 
+$$<p>Let $x = a_1a_2$ and $y = b_1b_2$. In order to form a text of three letters from $x$ and $y$, we must ensure that $x$ and $y$ agree on their overlap, that is when $a_2 = b_1$, so that $x$ and $y$ combine to give us the string $a_1a_2b_2$. With this restriction on $x$ and $y$, we obtain the associated transition matrix</p>
+$$
+Q^{(3)} (x,y) 
+= 
+\frac{
+\mathbb{P}_{\textrm{true}} ( a_1 a_2 b_2 )
+}
+{
+\mathbb{P}_{\textrm{true}} (a_1 a_2) 
+}
+$$<p>and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
+<blockquote><p>Because of the compatability requirement of $a_2 = b_1$, the above Markov chain can still be viewed as a stochastic process taking values in $\mathcal{A}$, it is just no longer a Markov chain from this perspective. This is the sense, however, in which this model is approximating $\mathbb{P}_{\textrm{true}}$.</p>
+</blockquote>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Example.-(-$(n+1$)-gram-model-)"><strong>Example.</strong> ( $(n+1$)-gram model )<a class="anchor-link" href="#Example.-(-$(n+1$)-gram-model-)"> </a></h3><p>$\quad$ A Markov chain with state space $\mathcal{A}^{n}$. A state $x$, say $x = (a_1, \dots, a_n)$ can be followed by a string $y = (b_1, \dots, b_n)$ only if $a_2 = b_1, a_3 = b_2, \dots, a_n = b_{n-1}$. This induces transition matrix</p>
+$$
+Q^{(n+1)} (x,y) 
+= 
+\frac{
+\mathbb{P}_{\textrm{true}} ( a_1 a_2 \dots a_n b_n )
+}
+{
+\mathbb{P}_{\textrm{true}} (a_1 a_2 \dots a_n) 
+}
+$$<p>as above.</p>
+<blockquote><p>Following the previous remark, for similar compatibility reasons, this Markov chain can also be interpreted as a stationary stochastic process taking values in $\mathcal{A}$, and as before, this is the sense in which the above process approximates $\mathbb{P}_{\textrm{true}}$.</p>
+<hr />
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Menon: <em>"Shannon proved that as $n \to \infty$, the law of text generated by the above Markov approximations converges to the law of the true language. Note however that a good proof may not correspond to a good algorithm. For example, as $n$ increases, the size of the state space ( of the approximating Markov process ) grows exponentially. Thus the dimensions of the transition matrix are $\#\mathcal{A}^{2n}$, and worse yet, the size of the training data ( to determine $Q^{(n+1)}$ by mining ) also expands exponentially."</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ <em>"This follows the rules of everyday language. Once $n$ gets large enough, say $5$ or $6$ in practice, it is much more efficient to make our fundamental unit words, rather than letters, since the number of true words of length $5$ is much lower than the $26^5$ combinations that are possible. This reflects the true nature of the space $\</em>$ character. In effect, we are still using the digram model, though we have switched to a new 'alphabet' whose fundamental units are words."_</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="...-information-theory-...">... information theory ...<a class="anchor-link" href="#...-information-theory-..."> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>references</em></p>
+<ul>
+<li>Ivan Matic, <em>Information Theory. Sanov's Theorem</em> (notes from July 21, 2018)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Before going further, let us return to the object $\mathbb{P}_{\textrm{true}}$, playing the role of $\mu$ in previous examples. When recalling previous examples, we identifid $\mu$ as the uniform measure on $\mathcal{S}$, in either case. To be formal, $\mu = \mathbb{P}_{\textsf{true}}$ is a probability measure on $\mathcal{S}^\infty \equiv \mathcal{A}^\infty$,
+$$
+\mathcal{A}^\infty := \{ a \equiv (a_j)_{j=1}^\infty : a_j \in \mathcal{A} \textrm{ for all } j \}\,,
+$$
+the space of infinite sequences of elements of $\mathcal{A}$. Any discrete-time $\mathcal{A}$-valued stochastic process, given some initial conditions which we ignore, induces a probability measure on $\mathcal{A}^\infty$. This latter space has the interpretation of a 'path-space', as it is meant to contain all possible trajectories of the process.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The digram model naturally gives rise to a Markov chain with state space $\mathcal{A}$. Let us say that it induces measure $\mathbb{P}_{(2)}$ on $\mathcal{A}^\infty$. The trigram model is defined as a Markov chain with state space $\mathcal{A}^2$, but following the above remark, can be interpreted as a stationary stochastic process taking values in $\mathcal{A}$, inducing a measure $\mathbb{P}_{(3)}$ on the path-space $\mathcal{A}^\infty$. In general, the $(n+1)$-gram model induces measure $\mathbb{P}_{(n+1)}$ on $\mathcal{A}^\infty$. My interpretation of what Menon says at the beginning of the most recent quote, is <em>"Shannon proved that..."</em> $\mathbb{P}_{(n+1)}$ converges to $\mathbb{P}_{\textrm{true}}$, in an appropriate sense.</p>
+<blockquote><p>The approximation of $\mathbb{P}_{\textrm{true}}$ by $\mathbb{P}_{(n+1)}$ does <em>not at all</em> seeem to be an approximation of the same nature was is described in Krauth. By this I mean that $\mathcal{A}$-valued Markov chains do not play the same role in each case. In earlier cases, they served as a way to approximately sample from a probability measure on $\mathcal{A}$. In the present context, these objects induce a probability measure on the <em>path-space</em> $\mathcal{A}^\infty$, towards approximating $\mathbb{P}_{\textrm{true}}$, the probability measure on $\mathcal{A}^\infty$ encoding the '$\textrm{true}$' language.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ I want to take a detour through some notes of <a href="https://mfe.baruch.cuny.edu/maticivan/">Ivan Matic</a>, because I think they add to the above discussion, as well as to Menon's upcoming discussion of entropy. Menon: <em>"the entropy of a random variable describes its uncertainty. In particular, the notion of an optimal code tells us that entropy describes the optimal search procedure to determine the value of $X$ through a series of yes / no questions."</em> Matic's notes touch on this optimality, from the perspective of data compression.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ To integrate Matic's perspective, he starts by imagining <em>"...we want to store some big quantity of data, such as a picture, a text document, or a book. We start with a collection of uncompressed data, and we identify the smallest building blocks of each datum as symbols. The set of all symbols is called the alphabet."</em> Matic also denotes this alphabet as $\mathcal{A}$.</p>
+<blockquote><p>It feels worth remarking that languages like Chinese are pictoral, and that Chinese characters can be decomposed into 'brushstrokes'. A space character <code>_</code> perhaps corresponds to moving to the next character. I think this lends itself to the notion that pictoral data can be decomposed into symbols. For images in general, I think 'contours' become the analogue of brushstrokes. Perhaps an efficient way to use a space character <code>_</code> is as denoting the start of a new transparent canvas layer, sitting over the previously drawn layers (copying the functionality of applications like photoshop). My impression of $3$-dim spatial data (e.g. virtual environments for games) is that environment information is efficiently stored in surfaces, the higher-dimensional analogue (by one dimension) of contours.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>The above decomposition reminds me of something I heard about the clustering algorithm <a href="https://towardsdatascience.com/t-sne-clearly-explained-d84c537f53a">t-SNE</a>: when applid to MNIST, the number of clusters the algorithm found was more than the number of categories (labeled by digits $0 - 9$). Some digits corresponded to multiple clusters <em>because</em> of there being distinct ways to write this digit, with or without a horizontal slash in the case of $7$, for example. In a sense, the clustering worked too well.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ A raw, uncompressed datum will be called a <strong>signal</strong>. The signal is sampled from the measure $\mathbb{P}_{\mathcal{L}}$ on $\mathcal{A}^\infty$ corresponding to abstract language $\mathcal{L}$ with alphabet $\mathcal{A}$. This measure corresponds to a stochastic process $(X_t)_{t \geq 1}$, which we suppose is stationary. Because of the 'optimal encoding' perspective, it is important to be able to quantify the relationship between the lengths of a signal and its encoding. In particular, we assume some upper bound $M$ on the signal length to begin with, modeling signals as elements of $\mathcal{A}^M$ for some $M \in \mathbb{N}$. When referring to $\mathbb{P}_{\mathcal{L}}$ in this context, it is understood as the projection of this measure onto $\mathcal{A}^M$, corresponding to the 'truncated' process $(X_t)_{t = 1}^{M}$. Elements of $\mathcal{A}^M$ will also be called signals (Matic calls them <em>messages</em>).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ We begin in an even simpler setting than the above language models. Here, we suppose $\mathbb{P}_{\mathcal{L}}$ corresponds to an i.i.d. sequence of random variables $(X_t)_{t = 1}^M$, where each $X_t$ has the same distribution as some 'model' random variable $X$, corresponding to probability measure $m$ on $\mathcal{A}$. Because $\mathcal{A}$ is finite, so is the space of signals $\mathcal{A}^M$. A lossless data compression is an injective function on this signal space.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-lossless-data-compression-)"><strong>Definition.</strong> ( lossless data compression )<a class="anchor-link" href="#Definition.-(-lossless-data-compression-)"> </a></h3><p>A <strong>lossless data compression</strong> is an injective function
+$$
+f : \mathcal{A}^M \to \bigcup_{j=1}^N \{ 0 , 1 \} ^j
+$$
+for some $N \in \mathbb{N}$.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Given some lossless data compression $f$, and for each signal $s \equiv (s_1, \dots, s_M) \in \mathcal{A}^M$, we let $\textsf{length}_f(s)$ denote the length of the signal encoding $f(s)$. Letting $\mathbb{E}$ denote expectation with respect to the 'model' random variable $X$, desirable propereties of the compression $f$ make
+$$
+\mathbb{E} \, \textsf{length}_f(X) 
+$$
+as small as possible. Heuristically, this means <strong>(1)</strong> identifying the signals in $\mathcal{A}^M$ which are <em>typical</em> and <em>atypical</em>, according to the sampling $(X_t)_{t=1}^M$, and then <strong>(2)</strong> using shorter binary sequences to encode typical signals, leaving longer binary sequences for atypical signals. This means the expectation is placing as little probablistic mass as possible on the longest encodings.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Let us use $m$ to denote the probability measure on $\mathcal{A}$ induced by the random variable $X$, our template for the i.i.d. sequence. Enumerating $\mathcal{A}$ as $\{ a_1, \dots, a_n\}$, let us write $m_i$ for the number $m( \{ a_i \})$. We identify $m$ with the vector $(m_1, \dots, m_n)$, which is the probability mass function of $X$. It is $m$ that determines how 'typical' a given sequence is.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Let $s \equiv (s_1, \dots, s_M) \in \mathcal{A}^M$. Write $\underline{X}$ to denote the random vector $(X_t)_{t=1}^M$. The mutual independence of the $X_t$ implies
+$$
+\begin{align}
+\mathbb{P}( \, \underline{X} = s ) &amp;= \mathbb{P} (X_1 = s_1) \dots \mathbb{P}(X_M = s_M) \\
+&amp;= 2^{ \sum_{t=1}^M \log_2\mathbb{P}(X_t = s_t)}\\
+&amp;= 2^{ \sum_{i=1}^n n_i \log_2 m_i} \,,
+\end{align}
+$$
+where, in going from the second to third line, we have reindexed the sum over the alphabet, using that $m_i \equiv \mathbb{P}(X = a_i)$, and defining
+$$
+n_i := \# \{ \, t \in \{ 1, \dots, M \} : X_t = a_i \, \}.
+$$
+Thus, $n_i$ is the number of times symbol $a_i$ appears in the random signal $\underline{X}$. A typical message is one  in which the frequency of symbol $a_i$ is close to the corresponding probability $m_i$. Thus, for typical messages, we have $n_i \approx m_i M $, and the probability of such a message is approximately
+$$
+2^{ M \sum_{i=1}^n m_i \log m_i }
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-entropy-)"><strong>Definition.</strong> ( entropy )<a class="anchor-link" href="#Definition.-(-entropy-)"> </a></h3><p>$\quad$ Let $m$ be a probability measure on finite state space $\mathcal{A}$ with $\# \mathcal{A} = n$, corresponding to probability mass function $(m_1, \dots, m_n)$. The <strong>entropy</strong> of $m$ is 
+$$
+\textsf{S}(m) := - \sum_{i=1}^n m_i \log_2 m_i
+$$</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Note that $\textsf{S}(m) \geq 0$, and is $=0$ if and only if $m$ corresponds to a deterministic object, namely a $\delta$-mass at some symbol in the alphabet. In the above setting, we are imagining the length $M$ of the signal is much larger than the size $n$ of the alphabet $\mathcal{A}$. This is so that the law of large numbers has a chance to kick in for each symbol. In this setting, typical messages appear with probability on the order of $2^{-M \textsf{S}(m)}$. When $m$ is non-trivial, the positivity of $\textsf{S}(m)$ implies that typical signals are <em>exponentially rare</em>, in the signal length $M$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ A consquence of the intrinsic high-dimensionality of $\underline{X}$ -- which corresponds to a probability measure on $\mathbb{R}^M$, with $M$ large -- is that signals with symbol frequencies <em>close</em> to the corresponding $m_i$ are very common. The next definition formalizes this notion of closeness.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-$\epsilon$-typical-signal-)"><strong>Definition.</strong> ( $\epsilon$-typical signal )<a class="anchor-link" href="#Definition.-(-$\epsilon$-typical-signal-)"> </a></h3><p>For fixed $\epsilon &gt; 0$, we say $s \in \mathcal{A}^M$ is <strong>$\epsilon$-typical</strong> if
+$$
+\mathbb{P}( \, \underline{X} = s ) \in \left( 2^{-M(\textsf{S}(m) +\epsilon) }, \, 2^{-M(\textsf{S}(m) -\epsilon) } \right) \,,
+$$
+and the set of all $\epsilon$-typical signals is denoted $\mathcal{A}^M_\epsilon$.</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ As discussed, the goal is to efficiently compress signals $\underline{X}$ drawn from the measure $m$. The relevance of the above defininition to compression is:</p>
+<ol>
+<li><p>we first prove that $\underline{X}$ is $\epsilon$-typical with high probability</p>
+</li>
+<li><p>we will see that the set of typical signals is nonetheless small: the number of all possible signals is $\# \mathcal{A}^M \equiv n^M$, and there are only approximately $2^{M\textsf{S}(m)}$</p>
+</li>
+</ol>
+<p>these facts combine to form a compression strategy: when we see a typical message, we begin its binary encoding (towards defining the lossless compression function $f$) with <code>0</code>, and we use $M \textsf{S}(m)$ bits to compress it. If the message is atypical, we begin its binary encoding with a <code>1</code>, and are more sloppy with how many bits we use to store. The formal statement of the first point is as follows.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Theorem.-(Matic,-Theorem-1)"><strong>Theorem.</strong> (Matic, Theorem 1)<a class="anchor-link" href="#Theorem.-(Matic,-Theorem-1)"> </a></h3><p>$\quad$ For each $\delta &gt; 0$, there is $M_0 \in \mathbb{N}$ such that for every $M \geq M_0$ there is a lossless data compression $f$ in which the average length of a message satisfies</p>
+$$
+\mathbb{E} \textsf{length}_f ( \,\underline{X} ) \leq M \textsf{S}(m) + \delta 
+$$<hr />
+<p><em>( we defer recording the proof )</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Matic: <em>"The algorithm constructed (in the above proof) creates a lossless compression. It is very effective when the raw data consists of independent components. The <code>png</code> format uses a better algorithm."</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ To discuss this algorithm, Matic introduces what he calls <em>types</em>. These objects were previously introduced as the frequencies $n_i$ above.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Definition.-(-the-type-of-a-signal-)"><strong>Definition.</strong> ( the type of a signal )<a class="anchor-link" href="#Definition.-(-the-type-of-a-signal-)"> </a></h3><p>$\quad$ Given a signal $s \equiv (s_t)_{t=1}^M \in \mathcal{A}^M$, the <strong>type</strong> of $s$ is the following probability measure on $\mathcal{A}$, constructed through the symbol frequencies of $s$: for $a \in \mathcal{A}$, 
+$$
+m_s( \{ a \} ) := \frac{1}{M} \sum_{t = 1}^M \mathbf{1}\{ s_t = a \}
+$$</p>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ As a direct consequence of the above definition, two signals $s, \tilde{s} \in \mathcal{A}^M$ have the same type if and only if the coordinates of $\tilde{s}$ form a permutation of the coordinates of $s$. Let $\textsf{types}(\mathcal{A},M)$ denote the collection of all types induced by signals in $\mathcal{A}^M$. The map $\mathcal{A}^M \to \textsf{types}(\mathcal{A},M)$ is effectively a quotient map, and given a probability measure $m \in \textsf{types}( \mathcal{A}, M)$, we let $\textsf{signals}(m)$ denote the collection of signals whose type is $m$:
+$$
+\textsf{signals}(m) = \{ s \in \mathcal{A}^M : m_s \equiv m \}
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Theorem.-(-Matic,-Theorem-2-)"><strong>Theorem.</strong> ( Matic, Theorem 2 )<a class="anchor-link" href="#Theorem.-(-Matic,-Theorem-2-)"> </a></h3><p>Consider the set of types, namely $\textsf{types}( \mathcal{A}, M)$, with $\# \mathcal{A} = n$. One has</p>
+<ol>
+<li><p>$\#\, \textsf{types}( \mathcal{A},M) = {M + n -1 \choose M }$</p>
+</li>
+<li><p>$\# \, \textsf{types}( \mathcal{A}, M) \leq (M+1)^n$</p>
+</li>
+</ol>
+<hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Let $\mu$ be a general probability measure on $\mathcal{A}$, corresponding to a random variable $Y$ and let $\underline{Y} \equiv (Y_t)_{t=1}^M$ be a sequence of i.i.d. random variables. Given fixed signal $s \in \mathcal{A}^M$, one has
+$$
+\begin{align}
+\mathbb{P}( \, \underline{Y} = s ) &amp;= \prod_{t=1}^M \mu( Y_t = s_t) \\
+&amp;= 2^{ \sum_{t=1}^M \log_2 \mu( Y_t = s_t ) } \\
+&amp;= 2^{ \sum_{a \in \mathcal{A} } \sum_{t =1}^M \mathbf{1} \{ X_t = a \} \log_2 \mu(Y_t = s_t)} \\
+&amp;= 2^{ \sum_{a \in \mathcal{A} } \sum_{t =1}^M \mathbf{1} \{ X_t = a \} \log_2 \mu(Y_t = a)} \\ 
+&amp;= 2^{ M \left[ \sum_{a \in \mathcal{A} } \left( \frac{1}{M} \sum_{t =1}^M \mathbf{1} \{ X_t = a \} \right) \log_2 \mu(Y_t = a) \right]} \\
+&amp;= 2^{ M \left[m_s(a) \log_2 \mu(a) \right] }
+\end{align}
+$$</p>
+<p>The coefficient of $M$ in the exponent directly above can be written in terms of the relative entropy.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>next in section</em></p>
+<ul>
+<li>relative entropy or KL divergence</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<p><em>next sections</em></p>
+<ul>
+<li><p>Gibbs measures (Menon $\S$ 1.4)</p>
+</li>
+<li><p>derivation of the Gibbs distribution (from principles of information theory, continuing with Menon $\S$ 1.4)</p>
+</li>
+<li><p>decoding scrambled text (from a Bayesian perspective, Menon $\S$ 1.5)</p>
+</li>
+<li><p>sampling from a Gibbs distribution (Menon $\S$ 1.6)</p>
+</li>
+<li><p>the Metropolis algorithm (Menon $\S$ 1.7, also consulting parts of first chapter of Krauth on detailed balance and Metropolis, respectively $\S$ 1.1.4 and $\S$ 1.1.5)</p>
+</li>
+<li><p>Markov chains convergence to stationary distribution (Menon $\S$ 1.8, 1.9)</p>
+</li>
+</ul>
+<p><em>( For now, omit Krauth $\S$1.1.3 which analyzes the Buffon needle problem. In the long term, it would be nice to practice simulating either the RWs on the symmetric group discussed in a pair of examples, or the $(n+1)$-gram model.  )</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ The point of building up to this last section is that it lays the theoretical groundwork for how the MCMC method can be used to sample from a Gibbs distribution, which is an abstraction of the simulations run in the motivating <a href="http://bit-player.org/2021/three-months-in-monte-carlo">blog post</a>. What's next is to describe the Hamiltonian for the Ising model, from which the Gibbs measures and dynamics are automatically defined.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/stat-mech/2021/12/16/simulation.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/stat-mech/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/stat-mech/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/stat-mech/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>...</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/stat-mech/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/stat-mech/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
