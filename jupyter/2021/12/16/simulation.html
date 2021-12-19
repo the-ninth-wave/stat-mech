@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html" />
-<meta property="og:url" content="https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html" />
+<link rel="canonical" href="https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html" />
+<meta property="og:url" content="https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html" />
 <meta property="og:site_name" content="statistical mechanics and spin glasses" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-12-16T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"…","url":"https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html","@type":"BlogPosting","headline":"Markov chains, Monte Carlo methods, pattern theory","dateModified":"2021-12-16T00:00:00-06:00","datePublished":"2021-12-16T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://the-ninth-wave.github.io/stat-mech/2021/12/16/simulation.html"},"@context":"https://schema.org"}</script>
+{"description":"…","url":"https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html","@type":"BlogPosting","headline":"Markov chains, Monte Carlo methods, pattern theory","dateModified":"2021-12-16T00:00:00-06:00","datePublished":"2021-12-16T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/stat-mech/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://the-ninth-wave.github.io/stat-mech/feed.xml" title="statistical mechanics and spin glasses" /><link rel="shortcut icon" type="image/x-icon" href="/stat-mech/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -98,6 +98,13 @@ window.onload = wrap_img;
 </span></p>
 
     
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/stat-mech/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
 
     
       
@@ -124,7 +131,85 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#...-direct-sampling-...">... direct sampling ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#method-...-Unif">method ... Unif </a></li>
+<li class="toc-entry toc-h3"><a href="#Algorithm-1.1-...-direct_pi">Algorithm 1.1 ... direct_pi </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#...-Markov-chain-sampling-...">... Markov-chain sampling ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Algorithm.-...-markov-pi-(unmodified)">Algorithm. ... markov-pi (unmodified) </a></li>
+<li class="toc-entry toc-h3"><a href="#Algorithm.-...-markov-pi-(modified)">Algorithm. ... markov-pi (modified) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#...-discussion-...">... discussion ... </a></li>
+<li class="toc-entry toc-h2"><a href="#...-Markov-chains-...">... Markov chains ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-stochastic-process-)">Definition. ( stochastic process ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-Markov-chain-)">Definition. ( Markov chain ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-stationary-Markov-chain-)">Definition. ( stationary Markov chain ) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#...-equilibrium-measures,-ergodicity,-random-walks-...">... equilibrium measures, ergodicity, random walks ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-equilibrium-/-stationary-distribution-)">Definition. ( equilibrium / stationary distribution ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-ergodic-Markov-chain-)">Definition. ( ergodic Markov chain ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Example.-(-simple-random-walk-)">Example. ( simple random walk ) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Q(x,y)">Q(x,y) </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Example.-(-random-walks-in-the-permutation-group-)">Example. ( random walks in the permutation group ) </a></li>
+<li class="toc-entry toc-h2"><a href="#...-Shannon's-model-of-text-...">... Shannon&#39;s model of text ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-stationary-stochastic-process-)">Definition. ( stationary stochastic process ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Example.-(-digram-model-)">Example. ( digram model ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Example.-(-trigram-model-)">Example. ( trigram model ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Example.-(-$(n+1$)-gram-model-)">Example. ( $(n+1$)-gram model ) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#...-information-theory-...">... information theory ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-lossless-data-compression-)">Definition. ( lossless data compression ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-entropy-)">Definition. ( entropy ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-$\epsilon$-typical-signal-)">Definition. ( $\epsilon$-typical signal ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Theorem.-(Matic,-Theorem-1)">Theorem. (Matic, Theorem 1) </a></li>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-the-type-of-a-signal-)">Definition. ( the type of a signal ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Theorem.-(-Matic,-Theorem-2-)">Theorem. ( Matic, Theorem 2 ) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#...-Gibbs-measures-...">... Gibbs measures ... </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Definition.-(-Gibbs-measure-)">Definition. ( Gibbs measure ) </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#simulation">simulation </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#...-Ising-model-...">... Ising model ... </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Definition.-(-Ising-Hamiltonian-)">Definition. ( Ising Hamiltonian ) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#...-dynamics-...">... dynamics ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Algorithm.-(-Metropolis-Hastings-)">Algorithm. ( Metropolis-Hastings ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Algorithm.-(-Glauber-)">Algorithm. ( Glauber ) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#...-implementation-...">... implementation ... </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#method-...-Unif">method ... Unif </a></li>
+<li class="toc-entry toc-h3"><a href="#method-...-coin-toss">method ... coin toss </a></li>
+<li class="toc-entry toc-h3"><a href="#class-...-grid">class ... grid </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -133,48 +218,56 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ These notes serve as background for an ongoing project with a good friend, <a href="https://github.com/connorsempek">Connor Sempek</a>. We are following <a href="http://bit-player.org/2021/three-months-in-monte-carlo">this</a> blog post by <a href="http://bit-player.org/about-the-author">Brian Hayes</a>. Our current objective is to re-create Hayes' simulations of Ising model dynamics. The underlying canvas of the model is two-dimensional, so the simulation can be thought of as a way to generate a sequence of <code>100x100</code> pixel images, with possible pixel values given by a set of two distinct colors. The Ising model dynamics update the current image by changing the value of one pixel at a time. The purpose of these notes is to get a better understanding of how long the simulation must be run so that, for a sparse enough subsequence of the images:</p>
 <ul>
-<li><p>each is sampled approximately from the <a href="https://en.wikipedia.org/wiki/Gibbs_measure">Gibbs probability measure</a> governing the Ising model, and</p>
+<li>
+<p>each is sampled approximately from the <a href="https://en.wikipedia.org/wiki/Gibbs_measure">Gibbs probability measure</a> governing the Ising model, and</p>
 </li>
-<li><p>these samples are nearly independent.</p>
+<li>
+<p>these samples are nearly independent.</p>
 </li>
 </ul>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>a possible entrypoint to studying these questions is work of Lubetzky and Sly on <em>information percolation</em> (<a href="https://math.nyu.edu/~eyal/papers/cutoffbhZd.pdf">main article</a>, <a href="https://cims.nyu.edu/~eyal/papers/cutoffbh_expo.pdf">expository</a>) + the references within. This is a way to graphically represent the 'mixing' undergone by the Ising dynamics. Lubetzky and Sly use this perspective to deduce lower bounds on how long the simulation dynamics must be run in order to sample effectively from the Gibbs measure of the Ising model. So this is a tool relevant to both bullet points above, and could look cool to simulate and visualize.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The latter property is especially important for a longer term goal of the project, which is to use these subsequences of images as a computer vision dataset. Importantly, the Gibbs measure we are sampling from always depends on a global temperature parameter $T$, leading to natural classification and regression tasks.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Here is a starting point for formulating a classification task. Suppose that we can simulate Ising model dynamics well at two <em>distinct</em> temperatures. It feels natural to choose one of these, say $T_1$, above the critical temperature $T_c$ of the model, and the other, $T_2$ below it. We then create two image datasets $\mathcal{D}_1$ and $\mathcal{D}_2$ of equal size by simulating as described by the two points above. Merging these datasets to form what we call $\mathcal{D}$ leads to a natural classification problem: given an element $x \in \mathcal{D}$ chosen uniformly at random, determine whether it came from $\mathcal{D}_1$ or $\mathcal{D}_2$.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The relevance of the Ising model to vision has been explored heavily, it seems. A lot of the text below draws from Govind Menon's <a href="https://www.dam.brown.edu/people/menon/publications/pt-2020.pdf">pattern theory</a> notes, where a chapter is devoted to this "energetic" perspective applied to character recognition tasks. Menon's notes also reference a 1984 <a href="http://www.peterbeerli.com/classes/images/a/a1/Geman_geman_1984.pdf">paper</a> which develops a way to perform image restoration and enhancement using the Ising model. This makes it a natural model to experiment with, and there are a few directions we'd like to explore longer term:</p>
 <ol>
@@ -184,7 +277,8 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ol>
 <li>We will train a simple convolutional architecture on the dataset $\mathcal{D}$. Whether it is through pooling layers, or the local averaging inherent in the convolution operation, these architectures seem to apply a kind of <a href="https://en.wikipedia.org/wiki/Coarse-grained_modeling">coarse-graining</a> to input signals $x \in \mathcal{D}$. This has prompted investigation into the connections between deep learning and the <a href="https://en.wikipedia.org/wiki/Renormalization_group">renormalization group</a> of physics. The latter feels like a kind of microscope for theoretical physicists $-$ the renormalization group formalizes a sequence of scaling transformations acting on a physical system, typically zooming out and thereby coarse-graining the preceding image of the system. This parallels feeding the image of the system into a "deep" sequence of convolutional layers. Two references for this are a 2013 <a href="https://arxiv.org/abs/1301.3124">paper</a> of Cédric Bény, and a 2014 <a href="https://arxiv.org/abs/1410.3831v1">paper</a> of Pankaj Mehta and David Schwab, and we imagine there is more recent work on this to explore. Dataset $\mathcal{D}$ is both an image dataset and a natural input to the renormalization group. It will give us an opportunity to better understand these connections, in particular we can start by repeating the experiments the latter paper runs on the Ising model.</li>
@@ -193,22 +287,26 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <p><em>references</em></p>
 <ul>
-<li><p>Krauth (2006) <em>statistical mechanics: algorithms and computations</em></p>
+<li>
+<p>Krauth (2006) <em>statistical mechanics: algorithms and computations</em></p>
 </li>
-<li><p>Menon (2020) <em><a href="http://www.dam.brown.edu/people/menon/publications/pt-2020.pdf">pattern theory</a></em></p>
+<li>
+<p>Menon (2020) <em><a href="http://www.dam.brown.edu/people/menon/publications/pt-2020.pdf">pattern theory</a></em></p>
 </li>
 </ul>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The Monte Carlo method is increasingly becoming part of the discipline it is meant to study. The Monte Carlo method is a statistical (Krauth: <em>"almost experimental"</em>) approach to computing integrals using random positions, called <strong>samples</strong>. Some sampling techniques for continuous and discrete variables are discussed below. In probabilistic terms, the integrals we desire to approximate correespond to the expected value of some observable, $\mathcal{O} : \mathcal{S} \to \mathbb{R}$. Here we assume some implicit probability measure $m$ on $\mathcal{S}$, the latter called the <strong>state space</strong>. Formally, the expected value $\mathbb{E}_m \mathcal{O}$ corresponds to the integral
 $$
@@ -219,21 +317,27 @@ When $m$ is understood, we write this expectation either as $\mathbb{E} \mathcal
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We want to simulate most of the objects discussed throughout the notes, so we lose no generality in assuming that $\mathcal{S}$ is finite. $\mathcal{S}$ will be treated as a continuous object when it is more natural or convenient notationally. In the setting where $\mathcal{S}$ is finite, probability measures $m$ on $\mathcal{S}$ correspond to non-negative vectors $(m_i)_{i=1}^{\# \mathcal{S}}$ of length $\#\mathcal{S}$ whose entries sum to one. This vector is identical to the probability mass function (pmf) of $m$. We distinguish between two approaches for sampling from $m$: <strong>direct sampling</strong> and <strong>Markov chain sampling</strong>. We postpone giving the definition of a Markov chain.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-direct-sampling-...">... direct sampling ...<a class="anchor-link" href="#...-direct-sampling-..."> </a></h2><p><em>(Krauth $\S$ 1.1.1)</em></p>
+<h2 id="...-direct-sampling-...">
+<a class="anchor" href="#...-direct-sampling-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... direct sampling ...<a class="anchor-link" href="#...-direct-sampling-..."> </a>
+</h2>
+<p><em>(Krauth $\S$ 1.1.1)</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Krauth explains the concept of direct sampling through a game played with pebbles. The playing field is a large circle is inscribed into a large square, both drawn in the sand. In direct sampling, one has 'access' to the measure $m$ on $\mathcal{S}$. This means we can draw a collection of i.i.d. random variables $(X_i)_{i=1}^\infty$ taking values in $\mathcal{S}$, each with pmf corresponding to $m$. In the context of the game, we will assume we can directly sample from $m$, which here denotes the uniform measure on the square 
 $$
@@ -252,14 +356,16 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ A player throws pebbles at the square, successively. Through the direct sampling, these land uniformly at random. The sampling is performed independently across draws from $m$. In particular, no pebble throw ever misses the square. Let $S_1, \dots, S_N$ denote the collection of locations sampled from $\textsf{square}$ through the above procedure: each $S_i$ is a random ordered pair $S_i = (x_i, y_i) \in \textsf{square}$, where the collection of all coordinates, across all pairs, is mutually independent, with eeach coordinate a $\textrm{Unif}([-1,1])$ random variable.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ To describe how the samples $S_i$ are used to approximate the value of $\pi$, we introduce the <strong>empirical measure</strong> $m_N^{\textrm{direct}}$, a random probability measure on $\mathcal{S}$, defined so as to encode the locations $S_1, \dots, S_N$: 
 $$
@@ -278,7 +384,8 @@ The empirical measure $m_N^{\textrm{direct}}$, by definition, acts on sets $B \s
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ There is a sense in which the measures $m_N^{\textrm{direct}}$ 'converge' to $m$, and the game (or simulation) computes $\pi$ in a way which leverages this. Let us enumerate the states of $\mathcal{S} = \{s_1, \dots, s_M \}$. In practice, the size of $M$ will be determined by the resolution of the floating points used in sampling. In accordance with the observable $\mathcal{O}$, the set we choose for $B$ is $\textsf{disc}$. This is because
 $$
@@ -287,7 +394,7 @@ $$
 The sense in which $m_N^{\textrm{direct}}$ converges to $m$ implies, in particular, that the sequence of numbers $m_N^{\textrm{direct}}(\textsf{disc})$ converges to $m( \textsf{disc} )$ as $N \to \infty$. This convergence can also be seen as a consequence of a law of large numbers. The output of the first algorithm below is</p>
 $$
 4 \cdot m_N^{\textrm{direct}}(\textsf{disc}) \approx 4 \cdot m( \textsf{disc}) \equiv 4 \cdot \frac{ \pi}{4} 
-$$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the probability that a pebble sampled from $m$ lands in $\textsf{disc}$.</p>
+$$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the probability that a pebble sampled from $m$ lands in $\textsf{disc}$. Python imports:</p>
 
 </div>
 </div>
@@ -295,6 +402,9 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -310,31 +420,40 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The next function embodies the 'direct' sampling we supposedly have access to, with the independence assumptions described above.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="method-...-Unif">method ... Unif<a class="anchor-link" href="#method-...-Unif"> </a></h3>
+<hr>
+<h3 id="method-...-Unif">
+<a class="anchor" href="#method-...-Unif" aria-hidden="true"><span class="octicon octicon-link"></span></a>method ... Unif<a class="anchor-link" href="#method-...-Unif"> </a>
+</h3>
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">Unif</span><span class="p">():</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># uniform r.v. over interval [0,1]</span>
+<span class="k">def</span> <span class="nf">Unif</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
 </pre></div>
 
@@ -342,33 +461,42 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Algorithm 1.1 is translated from pseudocode (as it is presented in Krauth) to Python.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Algorithm-1.1-...-direct_pi">Algorithm 1.1 ... direct_pi<a class="anchor-link" href="#Algorithm-1.1-...-direct_pi"> </a></h3>
+<hr>
+<h3 id="Algorithm-1.1-...-direct_pi">
+<a class="anchor" href="#Algorithm-1.1-...-direct_pi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Algorithm 1.1 ... direct_pi<a class="anchor-link" href="#Algorithm-1.1-...-direct_pi"> </a>
+</h3>
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -377,14 +505,14 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
 
     <span class="n">N_hits</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    the for loop is basically about computing the sum in</span>
 <span class="sd">    \mu_N(disc), stored in N_hits</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
 
-        <span class="c1"># initialize Unif([-1,1]) r.v.&#39;s</span>
+        <span class="c1"># initialize Unif([-1,1]) r.v.'s</span>
         <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Unif</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Unif</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
 
@@ -393,9 +521,9 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
         <span class="k">if</span> <span class="n">rad_sq</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
 
             <span class="n">N_hits</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    \mu_N(disc) is then computed by dividing by N</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">ratio</span> <span class="o">=</span> <span class="n">N_hits</span> <span class="o">/</span> <span class="n">N</span>
 
     <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">ratio</span>
@@ -405,12 +533,22 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Running the above:</p>
 
 </div>
 </div>
@@ -418,6 +556,9 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -429,6 +570,7 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -448,11 +590,13 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ In Krauth, Table 1.1 gives results of five runs of the above with <code>N = 4000</code>. We return to this table later to compare with Monte Carlo methods. He remarks that none of the results of this table have fallen in the error bounds known since Archimedes.</p>
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>run</th>
 <th><code>N_hits</code></th>
 <th>estimate of $\pi$</th>
@@ -491,21 +635,27 @@ $$<p>Thus we are approximating $\pi$ by approximating $\pi/4$, which is the prob
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-Markov-chain-sampling-...">... Markov-chain sampling ...<a class="anchor-link" href="#...-Markov-chain-sampling-..."> </a></h2><p><em>( Krauth $\S$ 1.1.2 )</em></p>
+<h2 id="...-Markov-chain-sampling-...">
+<a class="anchor" href="#...-Markov-chain-sampling-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... Markov-chain sampling ...<a class="anchor-link" href="#...-Markov-chain-sampling-..."> </a>
+</h2>
+<p><em>( Krauth $\S$ 1.1.2 )</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Cconsider a new game played on the same field, but with different rules. We again take a birds-eye view of the playing field, so our state space is again $\mathcal{S} = \textsf{square}$. The game starts with a person at the corner of the helipad, corresponding to coordinates $(1,1)$ in $\mathcal{S}$. The walker takes a step (or attempts to) by adding independent, $\textrm{Unif}([-\delta, \delta])$ random variables to each coordinate. Thus it is possible for a next step which takes the person outside the square. If this is the case, instead of taking the step, the walker does nothing. This step still 'counts' in the aggregation to be performed. Krauth describes this procedure in terms of the pebbles: the person takes another pebble from their bag and places it on top of the one pebble (or perhaps pebble pile) marking their current location. After an 'in-bounds' step is taken, the walker places a pebble at their current position. Each walker is equipped with a bag of infinitely many pebbles. These two cases describe the way the new game is played.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ In the present setting, the <strong>samples</strong> $X_1, \dots, X_N$ are not independent, but rather have the structure of a Markov chain, specifically a random walk with independent increments. Let us use $\xi_1, \dots, \xi_N$ denote these independent increments. In Krauth's description, each of these is a $\textrm{Unif}([-\delta, \delta])$ random variable. For reasons that Krauth discusses later, and we will comment on this, we instead assume that each $\xi_j$ is a discrete random variable uniformly distributed on the two-element set $\{ -\delta, \delta \}$. We have distinguished the starting point of the sampling at $X_0 = (1,1)$. Following the above description, one then has
 $$
@@ -527,7 +677,8 @@ $$<p>for all $j = 1, \dots, N$.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ For this new sequence of random $X_i$, we can define the analogous object to $m_N^{\textrm{direct}}$, 
 $$
@@ -537,7 +688,8 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The algorithm below returns an approximation to $\pi$ via the same kind of ratio</p>
 $$
@@ -546,23 +698,30 @@ $$
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ To comment on avoiding random initial conditions, specifically those which assign independent $\textrm{Unif}([-1,1])$ random variables to the two coordinates: we avoid this because the Markov chain methods stand out when no direct sampling method exists. It is for exactly this reason that we also avoid directly sampling from $\textrm{Unif}([-\delta, \delta])$ random variables: such objects are a linear transformation away from directly sampling from the $\textrm{Unif}([-1,1])$ distribution, perhaps at lower resolution. So, our Markov-chain sampling simulations start at the corner $(1,1)$ for concreteness. They can also be assumed to start from where a previous simulation left off. Following this convention throughout these notes, we usually focus on going from configuration $i$ to configuration $i+1$. This is the defining property of (discrete-time) Markov chains: the transition probabilities of the process depend only on the current position.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Algorithm-1.2-...-markov-pi-(unmodified)">Algorithm 1.2 ... markov-pi (unmodified)<a class="anchor-link" href="#Algorithm-1.2-...-markov-pi-(unmodified)"> </a></h3>
+<hr>
+<h3 id="Algorithm.-...-markov-pi-(unmodified)">
+<a class="anchor" href="#Algorithm.-...-markov-pi-(unmodified)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Algorithm.</strong> ... markov-pi (unmodified)<a class="anchor-link" href="#Algorithm.-...-markov-pi-(unmodified)"> </a>
+</h3>
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -576,7 +735,7 @@ $$
 
     <span class="n">N_hits</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">num_rej_moves</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of &quot;rejected&quot; moves</span>
+    <span class="n">num_rej_moves</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of "rejected" moves</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
 
@@ -625,7 +784,7 @@ $$
     <span class="c1"># we add in this output to </span>
     <span class="c1"># better understand how to pick </span>
     <span class="c1"># delta</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;fraction of successful moves: &quot;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span> <span class="n">num_rej_moves</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">"fraction of successful moves: "</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span> <span class="n">num_rej_moves</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span> <span class="n">N_hits</span> <span class="o">/</span> <span class="n">N</span> <span class="p">)</span>
 </pre></div>
@@ -634,12 +793,22 @@ $$
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Running:</p>
 
 </div>
 </div>
@@ -647,6 +816,9 @@ $$
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -658,6 +830,7 @@ $$
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -685,28 +858,37 @@ $$
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ Let us discuss how to choose the  'throwing range' is $\delta$. It is akin to (largest possible) step size for the walker. Roughly, if $\delta$ is too small, the acceptance rate may be high, but the claim is that the walk will not be able to explore enough to well-approximate the integral. Choosing $\delta$ too large means the walk will have a hard time making successful moves, also hindering exploration. Krauth: <em>"The time-honored rule of thumb consists in choosing $\delta$ neither too large, nor too small, so that the acceptance rate turns our to be on the order of $\frac{1}{2}$."</em> I didn't observe results agreeing with their rule of thumb. I found much more success with $\delta = 0.05$ versus their recommendation of $0.3$. I did however observe the approximation worsen as the step size was taken larger past $\delta = 1$.</p>
+<p>$\quad$ Let's discuss the choice of 'throwing range', namely $\delta$. It is akin to (largest possible) step size for the walker. Roughly, if $\delta$ is too small, the acceptance rate may be high, but the claim is that the walk will not be able to explore enough to well-approximate the integral. Choosing $\delta$ too large means the walk will have a hard time making successful moves, also hindering exploration. Krauth: <em>"The time-honored rule of thumb consists in choosing $\delta$ neither too large, nor too small, so that the acceptance rate turns our to be on the order of $\frac{1}{2}$."</em> I didn't observe results agreeing with their rule of thumb. I found much more success with $\delta = 0.05$ versus their recommendation of $0.3$. I did however observe the approximation worsen as the step size was taken larger past $\delta = 1$.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Algorithm-1.2'-...-markov-pi-(modified)">Algorithm 1.2' ... markov-pi (modified)<a class="anchor-link" href="#Algorithm-1.2'-...-markov-pi-(modified)"> </a></h3>
+<hr>
+<h3 id="Algorithm.-...-markov-pi-(modified)">
+<a class="anchor" href="#Algorithm.-...-markov-pi-(modified)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Algorithm.</strong> ... markov-pi (modified)<a class="anchor-link" href="#Algorithm.-...-markov-pi-(modified)"> </a>
+</h3>
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">markov_pi_modified</span><span class="p">(</span> <span class="n">delta</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">40000</span> <span class="p">):</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># in this modification, steps are no longer uniform  </span>
+
+<span class="k">def</span> <span class="nf">markov_pi_modified</span><span class="p">(</span> <span class="n">delta</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">40000</span> <span class="p">):</span>
 
     <span class="c1"># initial conditions</span>
     <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
@@ -715,16 +897,16 @@ $$
 
     <span class="n">N_hits</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">num_rej_moves</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of &quot;rejected&quot; moves</span>
+    <span class="n">num_rej_moves</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of "rejected" moves</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        we use uniform random variables, out of convenience but not to</span>
 <span class="sd">        determine coordinate steps directly with these. Instead, we </span>
 <span class="sd">        extract a pair of fair coin tosses from two uniform random</span>
 <span class="sd">        variables. We use these coin tosses only to determine the sign</span>
 <span class="sd">        of the increment in each coordinate. </span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># generate indep uniforms</span>
         <span class="n">U_1</span> <span class="o">=</span> <span class="n">Unif</span><span class="p">()</span>
@@ -784,7 +966,7 @@ $$
     <span class="c1"># we add in this output to </span>
     <span class="c1"># better understand how to pick </span>
     <span class="c1"># delta</span>
-    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;fraction of successful moves: &quot;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span> <span class="n">num_rej_moves</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">"fraction of successful moves: "</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span> <span class="n">num_rej_moves</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span> <span class="n">N_hits</span> <span class="o">/</span> <span class="n">N</span> <span class="p">)</span>
 </pre></div>
@@ -793,12 +975,22 @@ $$
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ Running:</p>
 
 </div>
 </div>
@@ -806,6 +998,9 @@ $$
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -817,6 +1012,7 @@ $$
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -844,22 +1040,27 @@ $$
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <p><strong>Q</strong> $\quad$ In both the Glauber and Metropolis dynamics for the evolution of the Ising model, the spin variable to be updated ( i.e. the vertex $v \in \mathbb{T}$ sampled ) is chosen uniformly, through <em>direct sampling</em>. What if this is instead done through Markov-chain sampling? Also, instead of rejecting the moves outside the box, we can play with periodic boundary conditions for the walks in both simulations.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-discussion-...">... discussion ...<a class="anchor-link" href="#...-discussion-..."> </a></h2>
+<h2 id="...-discussion-...">
+<a class="anchor" href="#...-discussion-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... discussion ...<a class="anchor-link" href="#...-discussion-..."> </a>
+</h2>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The Monte Carlo 'games' described above epitomize the two basic approaches to sampling from a probability measure $\mu$ on some space $\mathcal{S}$. Both approaches to the sampling evaluate an observable $\mathcal{O} : \mathcal{S} \to \mathbb{R}$. In our examples, $\mathcal{S} = \textsf{square}$, and the observable $\mathcal{O}$ is the indicator function of the disc within the square:
 $$
@@ -872,7 +1073,8 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In either sampling case, we can define $\mathcal{O}_i := \mathcal{O}(X_i)$, and note that one evaluates</p>
 $$
@@ -882,7 +1084,8 @@ $$<p>where the brackets $\langle \, \cdot \, \rangle$ denote the expected value 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ In general, the pmf of $m$ doesn't appear in the approximation $\tfrac{1}{N} \sum_{i=1}^N \mathcal{O}_i$, Krauth: <em>"...rather than being evaluated, it is sampled. This is what defines the Monte Carlo method."</em> He goes on to point out that the multiple integrals also disappear: the expectation is formally an integral in two-variables, but we are approximating it by a path-integral indexed by time. <em>"This means that the Monte Carlo method allows the evaluation of high-dimensional integrals, such as appear in statistical physics and other domains, if we can only think of how to generate the samples."</em></p>
 <p>$\quad$ Integration in two variables doesn't feel like a good example a 'high-dimensional' integral to compute. On the other hand, we are already know, through the motivating <a href="http://bit-player.org/2021/three-months-in-monte-carlo">blog post</a>, of a kind of Markov chain on a high-dimensional space, namely the Glauber dynamics for the Ising model on $\mathbb{T}$, the two-dimensional torus $( \mathbb{Z}\, /\, (n\cdot \mathbb{Z}) )^2$, with $n = 100$ for concreteness. All in all, it seems that one is approximating an integral in an arbitrary number of dimensions (number of spins in the case of Ising model) through what is essentially a path integral. The path integral is a sum of observables of the system, as the system evolves.</p>
@@ -890,61 +1093,78 @@ $$<p>where the brackets $\langle \, \cdot \, \rangle$ denote the expected value 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Krauth: <em>"Notwithstanding the randomness in the problem, direct sampling, in computation, plays a role similar to exact solutions in analyitcal work, and the two are closely related. In direct sampling, there is no throwing-range issue, no worrying about initial conditions, and there is a straightforward error analysis -- at least if $m$ and $\mathcal{O}$ are well behaved. Many successsful Monte Carlo algorithms contain exact sampling as a key ingredient. Markov-chain sampling, on the other hand, forces us to be much more careful with all aspects of our calculation. The critical issue here is the correlation time, during which the position of the walker retains a memory of the starting configuration. This time can become astronomical. In the usual applications, one is often satisfied with a handful of independent samples, obtained through week-long calculations, but it can require much throught and experience to ensure that even this modest goal is achieved."</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-Markov-chains-...">... Markov chains ...<a class="anchor-link" href="#...-Markov-chains-..."> </a></h2><p><em>(Menon $\S$ 1.1, 1.2)</em></p>
+<h2 id="...-Markov-chains-...">
+<a class="anchor" href="#...-Markov-chains-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... Markov chains ...<a class="anchor-link" href="#...-Markov-chains-..."> </a>
+</h2>
+<p><em>(Menon $\S$ 1.1, 1.2)</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The perspective Menon starts his notes with: we model the world as a space of random signals. The world is filled with observers, which record part of these signals and then form inferences about the world. The process of inference is modeled with a Bayesian paradigm. We assume an observer has a stochastic model capable of generating signals similar to the true signal. These assumptions reduce inference to tuning the model parameters to obtain the best match between the generated and observed signals. For instance, if we know we are observing a simulation of the Ising model, inference reduces to estimating the temperature.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Menon's notes explore stochastic models of progressively increasing complexity, in tandem with numerical methods for optimization. The simplest class of stochastic models considered are Markov chains. Suppose we are given a finite set $\mathcal{S}$ called the <strong>state space</strong> of the Markov chain. This will sometimes (such as in text-modeling instances) be called the <strong>alphabet</strong>, in the context of language modeling. In the 'linguistic' interpretation of the Ising model dynamics, either Glauber or Metropolis dynamics are run to generate a sequence of spin configurations $s_1, \dots, s_N \in \mathcal{S}$. Each spin configuration (a binary image) is interpreted as a letter in the alphabet of some abstract language. An alphabet of astronomical size can seem useless, linguistically. The notion of a large alphabet, perhaps not astronomically so, seems to occur naturally when viewing language through a <em>coarse-grained</em> perspective. This is how we naturally read: not one letter at a time, but one word. The set of english words can then interpreted as an alphabet, one with around a million symbols. This touches upon the heirarchical structure of language (I'm not talking about Chomsky's heirarchy of languages, only the fact that our alphabet clusters into words, and those into sentences and so on).</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-stochastic-process-)"><strong>Definition.</strong> ( stochastic process )<a class="anchor-link" href="#Definition.-(-stochastic-process-)"> </a></h3><p>$\quad$ A (discrete-time) <strong>stochastic process</strong> is a sequence of random variables.</p>
-<hr />
+<hr>
+<h3 id="Definition.-(-stochastic-process-)">
+<a class="anchor" href="#Definition.-(-stochastic-process-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( stochastic process )<a class="anchor-link" href="#Definition.-(-stochastic-process-)"> </a>
+</h3>
+<p>$\quad$ A (discrete-time) <strong>stochastic process</strong> is a sequence of random variables.</p>
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We study a stochastic process $(X_t)_{t \in \mathbb{N}}$ taking values in the given finite set $\mathcal{S}$. Thus, the temporal (given by the index $t$ in the stochastic process) and the spatial (given by the state value in $\mathcal{S}$ of the process) aspects of this process are discrete.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-Markov-chain-)"><strong>Definition.</strong> ( Markov chain )<a class="anchor-link" href="#Definition.-(-Markov-chain-)"> </a></h3><p>$\quad$ The stochastic process $(X_t)_{t \in \mathbb{N}}$ is a <strong>Markov chain</strong> if for all $t,\,$ $\mathbb{P} ( X_{t +1} | X_1, \dots, X_t ) = \mathbb{P} (X_{t+1} | X_t )
+<hr>
+<h3 id="Definition.-(-Markov-chain-)">
+<a class="anchor" href="#Definition.-(-Markov-chain-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( Markov chain )<a class="anchor-link" href="#Definition.-(-Markov-chain-)"> </a>
+</h3>
+<p>$\quad$ The stochastic process $(X_t)_{t \in \mathbb{N}}$ is a <strong>Markov chain</strong> if for all $t,\,$ $\mathbb{P} ( X_{t +1} | X_1, \dots, X_t ) = \mathbb{P} (X_{t+1} | X_t )
 $.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ As the above definition indicates, the modeling assumption in Markov process theory is that the future of the process depends on the current state, but not the past. This is a probabilistic analogue of Newtonian determinism, encoded by the <em>forward equation</em> below. Stationary Markov chains are thus characterized by their <strong>transition matrix</strong> 
 $$
@@ -955,16 +1175,21 @@ with entries indexed by pairs of states $s, \tilde{s} \in \mathcal{S}$. Another 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-stationary-Markov-chain-)"><strong>Definition.</strong> ( stationary Markov chain )<a class="anchor-link" href="#Definition.-(-stationary-Markov-chain-)"> </a></h3><p>$\quad$ The Markov chain $(X_t)_{t \in \mathbb{N}}$ is <strong>stationary</strong> if for all $t$, $\mathbb{P}(X_{t+1} | X_t ) = \mathbb{P} (X_2 | X_1 )$.</p>
-<hr />
+<hr>
+<h3 id="Definition.-(-stationary-Markov-chain-)">
+<a class="anchor" href="#Definition.-(-stationary-Markov-chain-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( stationary Markov chain )<a class="anchor-link" href="#Definition.-(-stationary-Markov-chain-)"> </a>
+</h3>
+<p>$\quad$ The Markov chain $(X_t)_{t \in \mathbb{N}}$ is <strong>stationary</strong> if for all $t$, $\mathbb{P}(X_{t+1} | X_t ) = \mathbb{P} (X_2 | X_1 )$.</p>
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The most basic statistic associated to the Markov chain is the pmf of the random variable $X_t$. The mass assigned to state $s \in \mathcal{S}$ under this law is denoted
 $$
@@ -992,34 +1217,44 @@ and one of the central questions in Markov chain theory is to understand the beh
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-equilibrium-measures,-ergodicity,-random-walks-...">... equilibrium measures, ergodicity, random walks ...<a class="anchor-link" href="#...-equilibrium-measures,-ergodicity,-random-walks-..."> </a></h2><p><em>(Menon $\S$ 1.2)</em></p>
+<h2 id="...-equilibrium-measures,-ergodicity,-random-walks-...">
+<a class="anchor" href="#...-equilibrium-measures,-ergodicity,-random-walks-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... equilibrium measures, ergodicity, random walks ...<a class="anchor-link" href="#...-equilibrium-measures,-ergodicity,-random-walks-..."> </a>
+</h2>
+<p><em>(Menon $\S$ 1.2)</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-equilibrium-/-stationary-distribution-)"><strong>Definition.</strong> ( equilibrium / stationary distribution )<a class="anchor-link" href="#Definition.-(-equilibrium-/-stationary-distribution-)"> </a></h3><p>$\quad$ Let $Q$ be the transition matrix of a stationary Markov chain $(X_t)_{t \in \mathbb{N}}$ with state space $\mathcal{S}$, and let $m$ be a probability measure on $\mathcal{S}$, whose pmf we also denote $m$. The measure $m$ is an <strong>equilibrium distribution</strong> or equivalently, a <strong>stationary distribution</strong> for $(X_t)_{t \in \mathbb{N}}$ if 
+<hr>
+<h3 id="Definition.-(-equilibrium-/-stationary-distribution-)">
+<a class="anchor" href="#Definition.-(-equilibrium-/-stationary-distribution-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( equilibrium / stationary distribution )<a class="anchor-link" href="#Definition.-(-equilibrium-/-stationary-distribution-)"> </a>
+</h3>
+<p>$\quad$ Let $Q$ be the transition matrix of a stationary Markov chain $(X_t)_{t \in \mathbb{N}}$ with state space $\mathcal{S}$, and let $m$ be a probability measure on $\mathcal{S}$, whose pmf we also denote $m$. The measure $m$ is an <strong>equilibrium distribution</strong> or equivalently, a <strong>stationary distribution</strong> for $(X_t)_{t \in \mathbb{N}}$ if 
 $$
 m = m Q,
 $$
 and if $m$ satisfies the normalization conditions $m(s) \geq 0$ for all $s \in \mathcal{S}$ and $\sum_{s \in \mathcal{S}} m(s) =1$.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The above definition is central to our simulation goals. For Markov chains with a unique stationary distribution $m$, the measures $m_t \equiv \mathbb{P}(X_t = \cdot )$ converge to $m$, in an appropriate sense, as $t \to \infty$. When we simulate a Markov chain, we are sampling from $m_t$, and the idea is to run the simulation long enough (taking $t$ large enough) so that $m_t \approx m$. This is how a Markov chain Monte Carlo (MCMC) simulation can be used to approximate sampling from $m$. The MCMC method then requires <em>finding</em> a stationary ergodic Markov chain in $\mathcal{S}$, whose stationary measure coincides with some $m$ we started with, and wish to sample from.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Krauth discussed the initial conditions of a Markov chain in the context of simulation: in the second pebble game, the person playing always had to start at a prescribed corner of the square. These are <em>deterministic</em> initial conditions. In practice, we assume simulations will start deterministically, or from where a previous simulation left off. In theory, it is useful to have a mathematical object associated to the <strong>initial conditions</strong> of a Markov chain: a probability measure on $\mathcal{S}$, denoted $m_0$. When initial conditions are deterministic, and start at some distinguished state $s_* \in \mathcal{S}$, the probability measure $m_0$ corresponds to the $\delta$-mass $\delta_{s_*}$. When $m_0$ is general, it models starting from where some simulation left off, whose information we have no (or only partial) access to.</p>
 <p>$\quad$ The first equation in the above definition can be understood as describing the evolution of a Markov chain $(X_t)_{t \in \mathbb{N}}$ whose initial conditions are the stationary distribution $m$ associated to $(X_t)_{t \in \mathbb{N}}$. In this case $m_t = m$ for all $t$ if $m_1 = m$. That is, while the values of $X_t$ change with time (it's a stochastic process) its probability mass function does not. Menon: <em>"the equilibrium distribution of a Markov chain captures the intuitive idea of a dynamic equilibrium."</em></p>
@@ -1027,53 +1262,69 @@ and if $m$ satisfies the normalization conditions $m(s) \geq 0$ for all $s \in \
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Considering the task of computing $m$ given $Q$: $\,$ observe that $m$ is a left-eigenvector of $Q$ with eigenvalue $1$. Further, $1$ must always be an eigenvalue of $Q$ since it corresponds to the right-eigenvector $(1, \dots, 1)^T$. Thus, if we know how to solve for eigenvectors, we can determine $m$. Menon: <em>"what is interesting in practice is the converse: for large transition matrices, say when $\# \mathcal{S}$ is $10^6 \times 10^6$, it is more efficient to use Markov chains to approximate $m$, than to use naive linear algebra. This observation plays an important role in web crawlers and search engines."</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-ergodic-Markov-chain-)"><strong>Definition.</strong> ( ergodic Markov chain )<a class="anchor-link" href="#Definition.-(-ergodic-Markov-chain-)"> </a></h3><p>$\quad$ A stationary Markov chain $X$ with state space $\mathcal{S}$ and transition matrix $Q$ is <strong>ergodic</strong> if it has a unique equilibrium distribution. A sufficient condition for ergodicity of $X$ is if for every pair $s, \tilde{s} \in \mathcal{S}$ there is a positive integer $j(s,\tilde{s})$ such that $Q^{j(s,\tilde{s})} &gt;0 $.</p>
-<hr />
+<hr>
+<h3 id="Definition.-(-ergodic-Markov-chain-)">
+<a class="anchor" href="#Definition.-(-ergodic-Markov-chain-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( ergodic Markov chain )<a class="anchor-link" href="#Definition.-(-ergodic-Markov-chain-)"> </a>
+</h3>
+<p>$\quad$ A stationary Markov chain $X$ with state space $\mathcal{S}$ and transition matrix $Q$ is <strong>ergodic</strong> if it has a unique equilibrium distribution. A sufficient condition for ergodicity of $X$ is if for every pair $s, \tilde{s} \in \mathcal{S}$ there is a positive integer $j(s,\tilde{s})$ such that $Q^{j(s,\tilde{s})} &gt;0 $.</p>
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Many other conditions are known that ensure ergodicity. For example, if all terms of $Q$ are strictly positive, it is possible for any state to get to any other state, and this ensures that the Markov chain is ergodic. This assumption is too restrictive in practice, since we are mainly intersted in Markov chains making 'local' moves such as random walks in a large state space. This behavior is captured by the sufficient condition given in the above definition. Intuitively, it means that every state can visit every other state <em>given enough time</em>. We assume this property always holds.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Physicsts define the term ergodic ( describing Markov chain $(X_t)_{t\in \mathbb{N}}$ ) to mean the following.</p>
 $$
 \lim_{T \to \infty} \sum_{t =1}^T \mathcal{O}(X_t) = \mathbb{E}_m\mathcal{O},
 $$<p>where $m = m Q$ and $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is arbitrary. This formulation has the interpretation that a Markov chain is ergodic when the left-hand side, the <em>time-average</em>, is equal to the <em>spatial-average</em> (with respect to the equilibrium measure), which is the right hand side. Menon notes the following bottlenecks and simplifications:</p>
 <ul>
-<li><p>$\mathcal{S}$ may be very large. For example (in shuffling dynamics we soon describe), $\mathcal{S}$ may be the permutation group.</p>
+<li>
+<p>$\mathcal{S}$ may be very large. For example (in shuffling dynamics we soon describe), $\mathcal{S}$ may be the permutation group.</p>
 </li>
-<li><p>$Q$ may be a sparse matrix.</p>
+<li>
+<p>$Q$ may be a sparse matrix.</p>
 </li>
-<li><p>As discussed previously, we often don't need $m$ explicitly, we instead want to evaluate $\mathbb{E}_m \mathcal{O}$, where $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is some observable.</p>
+<li>
+<p>As discussed previously, we often don't need $m$ explicitly, we instead want to evaluate $\mathbb{E}_m \mathcal{O}$, where $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is some observable.</p>
 </li>
 </ul>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Example.-(-simple-random-walk-)"><strong>Example.</strong> ( simple random walk )<a class="anchor-link" href="#Example.-(-simple-random-walk-)"> </a></h3><p>$\quad$ Let $G = (\textrm{V},\textrm{E})$ be a finite graph with vertex set $\textrm{V}$ and edge set $\textrm{E}$. Given $x,y \in \textrm{V}$, write $x \sim y$ if the edge $\{ x, y \}$ lies in $\textrm{E}$. Let $\textrm{deg}(x) \triangleq \sum_{x \sim y } 1$ be the degree of vertex $x$. A <strong>simple random walk</strong> on $G$ is a Markov chain with state space $\textrm{V}$ and transition matrix
+<hr>
+<h3 id="Example.-(-simple-random-walk-)">
+<a class="anchor" href="#Example.-(-simple-random-walk-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( simple random walk )<a class="anchor-link" href="#Example.-(-simple-random-walk-)"> </a>
+</h3>
+<p>$\quad$ Let $G = (\textrm{V},\textrm{E})$ be a finite graph with vertex set $\textrm{V}$ and edge set $\textrm{E}$. Given $x,y \in \textrm{V}$, write $x \sim y$ if the edge $\{ x, y \}$ lies in $\textrm{E}$. Let $\textrm{deg}(x) \triangleq \sum_{x \sim y } 1$ be the degree of vertex $x$. A <strong>simple random walk</strong> on $G$ is a Markov chain with state space $\textrm{V}$ and transition matrix
 $$</p>
-<h1 id="Q(x,y)">Q(x,y)<a class="anchor-link" href="#Q(x,y)"> </a></h1>
+<h1 id="Q(x,y)">
+<a class="anchor" href="#Q(x,y)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Q(x,y)<a class="anchor-link" href="#Q(x,y)"> </a>
+</h1>
 <pre><code>    \begin{cases}
     \frac{1}{\textrm{deg}(x)}, &amp; \quad \text{ if } x \sim y \\
     0 &amp; \quad \text{ otherwise. }
@@ -1081,38 +1332,49 @@ $$</p>
 </code></pre>
 <p>$$
 We leave the initial conditions ambiguous in this definition.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Example.-(-random-walks-in-the-permutation-group-)"><strong>Example.</strong> ( random walks in the permutation group )<a class="anchor-link" href="#Example.-(-random-walks-in-the-permutation-group-)"> </a></h3><p>$\quad$ Let $\mathfrak{S}_n$ denote the symmetric group on $n$ symbols, the collection of permutations on the set 
+<hr>
+<h3 id="Example.-(-random-walks-in-the-permutation-group-)">
+<a class="anchor" href="#Example.-(-random-walks-in-the-permutation-group-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( random walks in the permutation group )<a class="anchor-link" href="#Example.-(-random-walks-in-the-permutation-group-)"> </a>
+</h3>
+<p>$\quad$ Let $\mathfrak{S}_n$ denote the symmetric group on $n$ symbols, the collection of permutations on the set 
 $$
 [n] := \{ \, 1, \dots, n \, \},
 $$ A permutation on $[n]$ is a bijective function from $[n]$ to itself, and the group structure is given by function composition. Below we describe two <em>distinct</em> Markovian dynamics on $\mathfrak{S}_n$ with the same stationary measure. These dynamics arise from putting distinct graph structures (writing $\sim'$ and $\sim''$ in this example) on a set of vertices indexed by $\mathfrak{S}_n$, and considering the associated simple random walk.</p>
 <ol>
-<li><p>We declare permutations $\sigma$ and $\tau$ adjacent and write $\sigma \sim' \tau$ if $\sigma$ and $\tau$ are related by a transposition of adjacent elements. The $'$-degree of each permutation in this graph is $n-1$.</p>
+<li>
+<p>We declare permutations $\sigma$ and $\tau$ adjacent and write $\sigma \sim' \tau$ if $\sigma$ and $\tau$ are related by a transposition of adjacent elements. The $'$-degree of each permutation in this graph is $n-1$.</p>
 </li>
-<li><p>We declare permutations $\sigma$ and $\tau$ adjacent and write $\sigma \sim'' \tau$ if $\sigma$ and $\tau$ are related by a transposition, not necessarily of adjacent elements. The $''$-degree of each permutation in this graph is ${n \choose 2}$.</p>
+<li>
+<p>We declare permutations $\sigma$ and $\tau$ adjacent and write $\sigma \sim'' \tau$ if $\sigma$ and $\tau$ are related by a transposition, not necessarily of adjacent elements. The $''$-degree of each permutation in this graph is ${n \choose 2}$.</p>
 </li>
 </ol>
 <p>These are examples of <em>distinct</em> ergodic random walks on the same state space, namely $\mathfrak{S}_n$, both of which have the uniform measure as their equilibrium measure. The simulation 'purpose' of both random walks is thus to sample from this uniform measure, and the distinctness of the two walks raises the question of whether one method does the sampling better. This is a well-studied question, when $n = 52$ these two walks describe simple procedures for shuffling a deck of cards.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-Shannon's-model-of-text-...">... Shannon's model of text ...<a class="anchor-link" href="#...-Shannon's-model-of-text-..."> </a></h2><p><em>( Menon $\S$ 1.3 )</em></p>
+<h2 id="...-Shannon's-model-of-text-...">
+<a class="anchor" href="#...-Shannon's-model-of-text-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... Shannon's model of text ...<a class="anchor-link" href="#...-Shannon's-model-of-text-..."> </a>
+</h2>
+<p><em>( Menon $\S$ 1.3 )</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The main idea in Shannon's model (of text / written language) is that text is text is a stationary, ergodic stochastic process $(X_t)$ taking values in an alphabet
 $$
@@ -1123,21 +1385,26 @@ We use $\mathcal{A}$ for this specific alphabet for clarity in examples which fo
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-stationary-stochastic-process-)"><strong>Definition.</strong> ( stationary stochastic process )<a class="anchor-link" href="#Definition.-(-stationary-stochastic-process-)"> </a></h3><p>$\quad$ A discrete time stochastic process $X \equiv (X_t)$ is <strong>stationary</strong> if all abitrarily large, but finite, marginal probabilities are invariant under arbitrary shifts in time. More precisely,</p>
+<hr>
+<h3 id="Definition.-(-stationary-stochastic-process-)">
+<a class="anchor" href="#Definition.-(-stationary-stochastic-process-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( stationary stochastic process )<a class="anchor-link" href="#Definition.-(-stationary-stochastic-process-)"> </a>
+</h3>
+<p>$\quad$ A discrete time stochastic process $X \equiv (X_t)$ is <strong>stationary</strong> if all abitrarily large, but finite, marginal probabilities are invariant under arbitrary shifts in time. More precisely,</p>
 $$
 \mathbb{P} (\, X_1 = s_1, \dots, X_n = s_n\,) 
     = 
         \mathbb{P} ( \,X_{1+k} = s_1, \dots, X_{n+k} = s_n \,)
 $$<p>for all positive integers $k$ and $n$.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Stationarity means that if we were to observe strings of length $n$, their statistics are not changed by shifting them forward in time by an integer $k$. For such processes, the notion of ergodicity again means that <em>time averages</em> are equal to <em>spatial averages</em>. From the perspective of observables $\mathcal{O} : \mathcal{S}^n \to \mathbb{R}$, which through the above definition requires have an arbitrarily large 'memory' $n$ of the process, one has
 $$
@@ -1148,14 +1415,16 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Any discussion above of language and heirarchy was probably motivated by Menon, who among other things says:  <em>"the above assumptions are introduced to conform to the idea that written text contains many heirarchical structures: letters are joined by phonetic rules to form words, words are linked by the rules of grammar into sentences, sentences are organized into paragraphs, and so on. Strange as it may seem at first sight, these rules can be effectively modeled as a stochastic process. The use of stationary ergodic processes provides us with a definition flexible enough to include heirarchical structures (though these may be complex to write down), and simple enough to computationally test."</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ As discussed, written text is modeled by a stationary stochastic process $Y$, whose law is denoted
 $$
@@ -1166,30 +1435,39 @@ The subscript '$\textrm{true}$' indicates that we view $Y$ not as an approximati
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Example.-(-digram-model-)"><strong>Example.</strong> ( digram model )<a class="anchor-link" href="#Example.-(-digram-model-)"> </a></h3><p><em>( or 2-gram model )</em></p>
+<hr>
+<h3 id="Example.-(-digram-model-)">
+<a class="anchor" href="#Example.-(-digram-model-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( digram model )<a class="anchor-link" href="#Example.-(-digram-model-)"> </a>
+</h3>
+<p><em>( or 2-gram model )</em></p>
 <p>$\quad$ This is a Markov chain with state space $\mathcal{A} = \{ \, a,\, b, \, c, \, \dots \, , \,z, \, \_ \}$.</p>
 $$
 Q^{(2)}(x,y) = \mathbb{P}_{\textrm{true}} (\,X_2 = y | X_1 = x\,),
 $$<p>which is to say, we form the character-to-character transition probabilities of a Markov process using the marginals of the full stationary process being approximated.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We can get better approximations by allowing the Markov chain above to retain more of its history by augmenting the state space to $\mathcal{A}^n$ for some $ n \geq 2$. When $n=2$, we obtain the so-called trigram model.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Example.-(-trigram-model-)"><strong>Example.</strong> ( trigram model )<a class="anchor-link" href="#Example.-(-trigram-model-)"> </a></h3><p><em>( or 3-gram model )</em></p>
+<hr>
+<h3 id="Example.-(-trigram-model-)">
+<a class="anchor" href="#Example.-(-trigram-model-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( trigram model )<a class="anchor-link" href="#Example.-(-trigram-model-)"> </a>
+</h3>
+<p><em>( or 3-gram model )</em></p>
 <p>$\quad$ This is a Markov chain with state space $\mathcal{A}^2$, which we style as</p>
 $$
 \{ aa, \,ab,\,, \dots, az, \dots, \_a, \, \dots, \, \_\,\_ \} 
@@ -1204,17 +1482,22 @@ Q^{(3)} (x,y)
 \mathbb{P}_{\textrm{true}} (a_1 a_2) 
 }
 $$<p>and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
-<blockquote><p>Because of the compatability requirement of $a_2 = b_1$, the above Markov chain can still be viewed as a stochastic process taking values in $\mathcal{A}$, it is just no longer a Markov chain from this perspective. This is the sense, however, in which this model is approximating $\mathbb{P}_{\textrm{true}}$.</p>
+<blockquote>
+<p>Because of the compatability requirement of $a_2 = b_1$, the above Markov chain can still be viewed as a stochastic process taking values in $\mathcal{A}$, it is just no longer a Markov chain from this perspective. This is the sense, however, in which this model is approximating $\mathbb{P}_{\textrm{true}}$.</p>
 </blockquote>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Example.-(-$(n+1$)-gram-model-)"><strong>Example.</strong> ( $(n+1$)-gram model )<a class="anchor-link" href="#Example.-(-$(n+1$)-gram-model-)"> </a></h3><p>$\quad$ A Markov chain with state space $\mathcal{A}^{n}$. A state $x$, say $x = (a_1, \dots, a_n)$ can be followed by a string $y = (b_1, \dots, b_n)$ only if $a_2 = b_1, a_3 = b_2, \dots, a_n = b_{n-1}$. This induces transition matrix</p>
+<hr>
+<h3 id="Example.-(-$(n+1$)-gram-model-)">
+<a class="anchor" href="#Example.-(-%24(n+1%24)-gram-model-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( $(n+1$)-gram model )<a class="anchor-link" href="#Example.-(-%24(n+1%24)-gram-model-)"> </a>
+</h3>
+<p>$\quad$ A Markov chain with state space $\mathcal{A}^{n}$. A state $x$, say $x = (a_1, \dots, a_n)$ can be followed by a string $y = (b_1, \dots, b_n)$ only if $a_2 = b_1, a_3 = b_2, \dots, a_n = b_{n-1}$. This induces transition matrix</p>
 $$
 Q^{(n+1)} (x,y) 
 = 
@@ -1225,27 +1508,33 @@ Q^{(n+1)} (x,y)
 \mathbb{P}_{\textrm{true}} (a_1 a_2 \dots a_n) 
 }
 $$<p>as above.</p>
-<blockquote><p>Following the previous remark, for similar compatibility reasons, this Markov chain can also be interpreted as a stationary stochastic process taking values in $\mathcal{A}$, and as before, this is the sense in which the above process approximates $\mathbb{P}_{\textrm{true}}$.</p>
-<hr />
+<blockquote>
+<p>Following the previous remark, for similar compatibility reasons, this Markov chain can also be interpreted as a stationary stochastic process taking values in $\mathcal{A}$, and as before, this is the sense in which the above process approximates $\mathbb{P}_{\textrm{true}}$.</p>
+<hr>
 </blockquote>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Menon: <em>"Shannon proved that as $n \to \infty$, the law of text generated by the above Markov approximations converges to the law of the true language. Note however that a good proof may not correspond to a good algorithm. For example, as $n$ increases, the size of the state space ( of the approximating Markov process ) grows exponentially. Thus the dimensions of the transition matrix are $\#\mathcal{A}^{2n}$, and worse yet, the size of the training data ( to determine $Q^{(n+1)}$ by mining ) also expands exponentially. This follows the rules of everyday language. Once $n$ gets large enough, say $5$ or $6$ in practice, it is much more efficient to make our fundamental unit words, rather than letters, since the number of true words of length $5$ is much lower than the $26^5$ combinations that are possible. This reflects the true nature of the space $\</em>$ character. In effect, we are still using the digram model, though we have switched to a new 'alphabet' whose fundamental units are words."_</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-information-theory-...">... information theory ...<a class="anchor-link" href="#...-information-theory-..."> </a></h2>
+<h2 id="...-information-theory-...">
+<a class="anchor" href="#...-information-theory-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... information theory ...<a class="anchor-link" href="#...-information-theory-..."> </a>
+</h2>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>references</em></p>
 <ul>
@@ -1255,7 +1544,8 @@ $$<p>as above.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Before going further, let us return to the object $\mathbb{P}_{\textrm{true}}$, playing the role of $m$ in previous examples. When recalling previous examples, we identifid $m$ as the uniform measure on $\mathcal{S}$, in either case. To be formal, $m = \mathbb{P}_{\textsf{true}}$ is a probability measure on $\mathcal{S} \equiv \mathcal{A}^\infty$, where
 $$
@@ -1266,67 +1556,81 @@ the space of infinite sequences of elements of $\mathcal{A}$. Any discrete-time 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The digram model naturally gives rise to a Markov chain with state space $\mathcal{A}$. Let us say that it induces measure $\mathbb{P}_{(2)}$ on $\mathcal{A}^\infty$. The trigram model is defined as a Markov chain with state space $\mathcal{A}^2$, but following the above remark, it can also be interpreted as a stationary stochastic process taking values in $\mathcal{A}$, inducing a measure $\mathbb{P}_{(3)}$ on the path-space $\mathcal{A}^\infty$. In general, the $(n+1)$-gram model induces measure $\mathbb{P}_{(n+1)}$ on $\mathcal{A}^\infty$. Our interpretation of what Menon says at the beginning of the most recent quote, is <em>"Shannon proved that..."</em> $\mathbb{P}_{(n+1)}$ converges to $\mathbb{P}_{\textrm{true}}$, in an appropriate sense.</p>
-<blockquote><p>The approximation of $\mathbb{P}_{\textrm{true}}$ by $\mathbb{P}_{(n+1)}$ does <em>not at all</em> seeem to be an approximation of the same nature was is described in Krauth. By this I mean that $\mathcal{A}$-valued Markov chains do not play the same role in each case. In earlier cases, they served as a way to approximately sample from a probability measure on $\mathcal{A}$. In the present context, these objects induce a probability measure on the <em>path-space</em> $\mathcal{A}^\infty$, towards approximating $\mathbb{P}_{\textrm{true}}$, the probability measure on $\mathcal{A}^\infty$ encoding the '$\textrm{true}$' language.</p>
+<blockquote>
+<p>The approximation of $\mathbb{P}_{\textrm{true}}$ by $\mathbb{P}_{(n+1)}$ does <em>not at all</em> seeem to be an approximation of the same nature was is described in Krauth. By this I mean that $\mathcal{A}$-valued Markov chains do not play the same role in each case. In earlier cases, they served as a way to approximately sample from a probability measure on $\mathcal{A}$. In the present context, these objects induce a probability measure on the <em>path-space</em> $\mathcal{A}^\infty$, towards approximating $\mathbb{P}_{\textrm{true}}$, the probability measure on $\mathcal{A}^\infty$ encoding the '$\textrm{true}$' language.</p>
 </blockquote>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Some notes of <a href="https://mfe.baruch.cuny.edu/maticivan/">Ivan Matic</a> add to the above discussion, as well as to Menon's upcoming discussion of entropy. Menon: <em>"the entropy of a random variable describes its uncertainty. In particular, the notion of an optimal code tells us that entropy describes the optimal search procedure to determine the value of $X$ through a series of yes / no questions."</em> Matic's notes touch on this optimality, from the perspective of data compression.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ To integrate Matic's perspective, he starts by imagining <em>"...we want to store some big quantity of data, such as a picture, a text document, or a book. We start with a collection of uncompressed data, and we identify the smallest building blocks of each datum as symbols. The set of all symbols is called the alphabet."</em> Matic also denotes this alphabet as $\mathcal{A}$.</p>
-<blockquote><p>It feels worth remarking that languages like Chinese are pictoral, and that Chinese characters can be decomposed into 'brushstrokes'. A space character <code>_</code> perhaps corresponds to moving to the next character. I think this lends itself to the notion that pictoral data can be decomposed into symbols. For images in general, I think 'contours' become the analogue of brushstrokes. Perhaps an efficient way to use a space character <code>_</code> is as denoting the start of a new transparent canvas layer, sitting over the previously drawn layers (copying the functionality of applications like photoshop). My impression of $3$-dim spatial data (e.g. virtual environments for games) is that environment information is efficiently stored in surfaces, the higher-dimensional analogue (by one dimension) of contours.</p>
+<blockquote>
+<p>It feels worth remarking that languages like Chinese are pictoral, and that Chinese characters can be decomposed into 'brushstrokes'. A space character <code>_</code> perhaps corresponds to moving to the next character. I think this lends itself to the notion that pictoral data can be decomposed into symbols. For images in general, I think 'contours' become the analogue of brushstrokes. Perhaps an efficient way to use a space character <code>_</code> is as denoting the start of a new transparent canvas layer, sitting over the previously drawn layers (copying the functionality of applications like photoshop). My impression of $3$-dim spatial data (e.g. virtual environments for games) is that environment information is efficiently stored in surfaces, the higher-dimensional analogue (by one dimension) of contours.</p>
 </blockquote>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>The above decomposition reminds me of something I heard about the clustering algorithm <a href="https://towardsdatascience.com/t-sne-clearly-explained-d84c537f53a">t-SNE</a>: when applid to MNIST, the number of clusters the algorithm found was more than the number of categories (labeled by digits $0 - 9$). Some digits corresponded to multiple clusters <em>because</em> of there being distinct ways to write this digit, with or without a horizontal slash in the case of $7$, for example. In a sense, the clustering works too well.</p>
+<blockquote>
+<p>The above decomposition reminds me of something I heard about the clustering algorithm <a href="https://towardsdatascience.com/t-sne-clearly-explained-d84c537f53a">t-SNE</a>: when applid to MNIST, the number of clusters the algorithm found was more than the number of categories (labeled by digits $0 - 9$). Some digits corresponded to multiple clusters <em>because</em> of there being distinct ways to write this digit, with or without a horizontal slash in the case of $7$, for example. In a sense, the clustering works too well.</p>
 </blockquote>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Uncompressed data is called a <strong>signal</strong>. Mathematically, we model signals as elements of $\mathcal{A}^M$. Ideally, the signal is sampled from the measure $\mathbb{P}_{\mathcal{L}}$ on $\mathcal{A}^\infty$ corresponding to abstract language $\mathcal{L}$ over alphabet $\mathcal{A}$. This measure corresponds to a stochastic process $(X_t)_{t \in \mathbb{N}}$, which we suppose is stationary. Because of the 'optimal encoding' perspective, it is important to be able to quantify the relationship between the lengths of a signal and its encoding. In particular, we assume some upper bound $M$ on the signal length to begin with, modeling signals as elements of $\mathcal{A}^M$ for some $M \in \mathbb{N}$. When referring to $\mathbb{P}_{\mathcal{L}}$ in this context, it is understood as the projection of this measure onto $\mathcal{A}^M$, corresponding to the 'truncated' process $(X_t)_{t = 1}^{M}$, which is a random signal.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Our analysis takes place within an even simpler setting versus the language models discussed. Suppose $\mathbb{P}_{\mathcal{L}}$ corresponds to an i.i.d. sequence of random variables $(X_t)_{t = 1}^M$, where each $X_t$ has the same distribution as some 'model' random variable $X$, corresponding to probability measure $m$ on $\mathcal{A}$. Because $\mathcal{A}$ is finite, so is the space of signals $\mathcal{A}^M$. A lossless data compression is an injective function on this signal space.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-lossless-data-compression-)"><strong>Definition.</strong> ( lossless data compression )<a class="anchor-link" href="#Definition.-(-lossless-data-compression-)"> </a></h3><p>$\quad$ A <strong>lossless data compression</strong> is an injective function
+<hr>
+<h3 id="Definition.-(-lossless-data-compression-)">
+<a class="anchor" href="#Definition.-(-lossless-data-compression-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( lossless data compression )<a class="anchor-link" href="#Definition.-(-lossless-data-compression-)"> </a>
+</h3>
+<p>$\quad$ A <strong>lossless data compression</strong> is an injective function
 $$
 f : \mathcal{A}^M \to \bigcup_{j=1}^N \{ 0 , 1 \} ^j
 $$
 for some $N \in \mathbb{N}$.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Given some lossless data compression $f$, and for each signal $s \equiv (s_1, \dots, s_M) \in \mathcal{A}^M$, we let $\textsf{length}_f(s)$ denote the length of the signal encoding $f(s)$. Letting $\mathbb{E}$ denote expectation with respect to the 'model' random variable $X$, desirable propereties of the compression $f$ make
 $$
@@ -1337,14 +1641,16 @@ as small as possible. Heuristically, this means <strong>(1)</strong> identifying
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Let us use $m$ to denote the probability measure on $\mathcal{A}$ induced by the random variable $X$, our template for the i.i.d. sequence. Enumerating $\mathcal{A}$ as $\{ a_1, \dots, a_n\}$, let us write $m_i$ for the number $m( \{ a_i \})$. We identify $m$ with the vector $(m_1, \dots, m_n)$, which is the probability mass function of $X$. It is $m$ that determines how 'typical' a given sequence is.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Let $s \equiv (s_1, \dots, s_M) \in \mathcal{A}^M$. Write $\underline{X}$ to denote the random vector $(X_t)_{t=1}^M$. The mutual independence of the $X_t$ implies
 $$
@@ -1366,52 +1672,65 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-entropy-)"><strong>Definition.</strong> ( entropy )<a class="anchor-link" href="#Definition.-(-entropy-)"> </a></h3><p>$\quad$ Let $m$ be a probability measure on finite state space $\mathcal{A}$ with $\# \mathcal{A} = n$, corresponding to probability mass function $(m_1, \dots, m_n)$. The <strong>entropy</strong> of $m$ is 
+<hr>
+<h3 id="Definition.-(-entropy-)">
+<a class="anchor" href="#Definition.-(-entropy-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( entropy )<a class="anchor-link" href="#Definition.-(-entropy-)"> </a>
+</h3>
+<p>$\quad$ Let $m$ be a probability measure on finite state space $\mathcal{A}$ with $\# \mathcal{A} = n$, corresponding to probability mass function $(m_1, \dots, m_n)$. The <strong>entropy</strong> of $m$ is 
 $$
 \textsf{S}(m) := - \sum_{i=1}^n m_i \log_2 m_i
 $$</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Note that $\textsf{S}(m) \geq 0$, and is $=0$ if and only if $m$ corresponds to a deterministic object, namely a $\delta$-mass at some symbol in the alphabet. In the above setting, we are imagining the length $M$ of the signal is much larger than the size $n$ of the alphabet $\mathcal{A}$. This is so that the law of large numbers has a chance to kick in for each symbol. In this setting, typical messages appear with probability on the order of $2^{-M \textsf{S}(m)}$. When $m$ is non-trivial, the positivity of $\textsf{S}(m)$ implies that typical signals are <em>exponentially rare</em>, in the signal length $M$.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ A consquence of the intrinsic high-dimensionality of $\underline{X}$ -- which corresponds to a probability measure on $\mathbb{R}^M$, with $M$ large -- is that signals with symbol frequencies <em>close</em> to the corresponding $m_i$ are very common. The next definition formalizes this notion of closeness.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-$\epsilon$-typical-signal-)"><strong>Definition.</strong> ( $\epsilon$-typical signal )<a class="anchor-link" href="#Definition.-(-$\epsilon$-typical-signal-)"> </a></h3><p>$\quad$ For fixed $\epsilon &gt; 0$, we say $s \in \mathcal{A}^M$ is <strong>$\epsilon$-typical</strong> if
+<hr>
+<h3 id="Definition.-(-$\epsilon$-typical-signal-)">
+<a class="anchor" href="#Definition.-(-%24%5Cepsilon%24-typical-signal-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( $\epsilon$-typical signal )<a class="anchor-link" href="#Definition.-(-%24%5Cepsilon%24-typical-signal-)"> </a>
+</h3>
+<p>$\quad$ For fixed $\epsilon &gt; 0$, we say $s \in \mathcal{A}^M$ is <strong>$\epsilon$-typical</strong> if
 $$
 \mathbb{P}( \, \underline{X} = s ) \in \left( 2^{-M(\textsf{S}(m) +\epsilon) }, \, 2^{-M(\textsf{S}(m) -\epsilon) } \right) \,,
 $$
 and the set of all $\epsilon$-typical signals is denoted $\mathcal{A}^M_\epsilon$.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ As discussed, the goal is to efficiently compress signals $\underline{X}$ drawn from the measure $m$. The relevance of the above defininition to compression is:</p>
 <ol>
-<li><p>we first prove that $\underline{X}$ is $\epsilon$-typical with high probability</p>
+<li>
+<p>we first prove that $\underline{X}$ is $\epsilon$-typical with high probability</p>
 </li>
-<li><p>we will see that the set of typical signals is nonetheless small: the number of all possible signals is $\# \mathcal{A}^M \equiv n^M$, and there are only approximately $2^{M\textsf{S}(m)}$</p>
+<li>
+<p>we will see that the set of typical signals is nonetheless small: the number of all possible signals is $\# \mathcal{A}^M \equiv n^M$, and there are only approximately $2^{M\textsf{S}(m)}$</p>
 </li>
 </ol>
 <p>these facts combine to form a compression strategy: when we see a typical message, we begin its binary encoding (towards defining the lossless compression function $f$) with <code>0</code>, and we use $M \textsf{S}(m)$ bits to compress it. If the message is atypical, we begin its binary encoding with a <code>1</code>, and are more sloppy with how many bits we use to store. The formal statement of the first point is as follows.</p>
@@ -1419,38 +1738,48 @@ and the set of all $\epsilon$-typical signals is denoted $\mathcal{A}^M_\epsilon
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Theorem.-(Matic,-Theorem-1)"><strong>Theorem.</strong> (Matic, Theorem 1)<a class="anchor-link" href="#Theorem.-(Matic,-Theorem-1)"> </a></h3><p>$\quad$ For each $\delta &gt; 0$, there is $M_0 \in \mathbb{N}$ such that for every $M \geq M_0$ there is a lossless data compression $f$ in which the average length of a message satisfies</p>
+<hr>
+<h3 id="Theorem.-(Matic,-Theorem-1)">
+<a class="anchor" href="#Theorem.-(Matic,-Theorem-1)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Theorem.</strong> (Matic, Theorem 1)<a class="anchor-link" href="#Theorem.-(Matic,-Theorem-1)"> </a>
+</h3>
+<p>$\quad$ For each $\delta &gt; 0$, there is $M_0 \in \mathbb{N}$ such that for every $M \geq M_0$ there is a lossless data compression $f$ in which the average length of a message satisfies</p>
 $$
 \mathbb{E} \textsf{length}_f ( \,\underline{X} ) \leq M \textsf{S}(m) + \delta 
-$$<hr />
+$$<hr>
 <p><em>( we defer recording the proof )</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Matic: <em>"The algorithm constructed (in the above proof) creates a lossless compression. It is very effective when the raw data consists of independent components. The <code>png</code> format uses a better algorithm."</em> To discuss this algorithm, Matic introduces what he calls <em>types</em>. These objects were previously introduced as the frequencies $n_i$ above.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Definition.-(-the-type-of-a-signal-)"><strong>Definition.</strong> ( the type of a signal )<a class="anchor-link" href="#Definition.-(-the-type-of-a-signal-)"> </a></h3><p>$\quad$ Given a signal $s \equiv (s_t)_{t=1}^M \in \mathcal{A}^M$, the <strong>type</strong> of $s$ is the following probability measure on $\mathcal{A}$, constructed through the symbol frequencies of $s$: for $a \in \mathcal{A}$, 
+<hr>
+<h3 id="Definition.-(-the-type-of-a-signal-)">
+<a class="anchor" href="#Definition.-(-the-type-of-a-signal-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( the type of a signal )<a class="anchor-link" href="#Definition.-(-the-type-of-a-signal-)"> </a>
+</h3>
+<p>$\quad$ Given a signal $s \equiv (s_t)_{t=1}^M \in \mathcal{A}^M$, the <strong>type</strong> of $s$ is the following probability measure on $\mathcal{A}$, constructed through the symbol frequencies of $s$: for $a \in \mathcal{A}$, 
 $$
 m_s( \{ a \} ) := \frac{1}{M} \sum_{t = 1}^M \mathbf{1}\{ s_t = a \}
 $$</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ As a direct consequence of the above definition, two signals $s, \tilde{s} \in \mathcal{A}^M$ have the same type if and only if the coordinates of $\tilde{s}$ form a permutation of the coordinates of $s$. Let $\textsf{types}(\mathcal{A},M)$ denote the collection of all types induced by signals in $\mathcal{A}^M$. The map $\mathcal{A}^M \to \textsf{types}(\mathcal{A},M)$ is effectively a quotient map, and given a probability measure $m \in \textsf{types}( \mathcal{A}, M)$, we let $\textsf{signals}(m)$ denote the collection of signals whose type is $m$:
 $$
@@ -1460,22 +1789,29 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h3 id="Theorem.-(-Matic,-Theorem-2-)"><strong>Theorem.</strong> ( Matic, Theorem 2 )<a class="anchor-link" href="#Theorem.-(-Matic,-Theorem-2-)"> </a></h3><p>Consider the set of types, namely $\textsf{types}( \mathcal{A}, M)$, with $\# \mathcal{A} = n$. One has</p>
+<hr>
+<h3 id="Theorem.-(-Matic,-Theorem-2-)">
+<a class="anchor" href="#Theorem.-(-Matic,-Theorem-2-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Theorem.</strong> ( Matic, Theorem 2 )<a class="anchor-link" href="#Theorem.-(-Matic,-Theorem-2-)"> </a>
+</h3>
+<p>Consider the set of types, namely $\textsf{types}( \mathcal{A}, M)$, with $\# \mathcal{A} = n$. One has</p>
 <ol>
-<li><p>$\#\, \textsf{types}( \mathcal{A},M) = {M + n -1 \choose M }$</p>
+<li>
+<p>$\#\, \textsf{types}( \mathcal{A},M) = {M + n -1 \choose M }$</p>
 </li>
-<li><p>$\# \, \textsf{types}( \mathcal{A}, M) \leq (M+1)^n$</p>
+<li>
+<p>$\# \, \textsf{types}( \mathcal{A}, M) \leq (M+1)^n$</p>
 </li>
 </ol>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Let $\mu$ be a general probability measure on $\mathcal{A}$, corresponding to a random variable $Y$ and let $\underline{Y} \equiv (Y_t)_{t=1}^M$ be a sequence of i.i.d. random variables. Given fixed signal $s \in \mathcal{A}^M$, one has
 $$
@@ -1493,7 +1829,8 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>next in section</em></p>
 <ul>
@@ -1503,33 +1840,41 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-Gibbs-measures-...">... Gibbs measures ...<a class="anchor-link" href="#...-Gibbs-measures-..."> </a></h2><p><em>( Menon $\S$ 1.4 )</em></p>
+<h2 id="...-Gibbs-measures-...">
+<a class="anchor" href="#...-Gibbs-measures-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... Gibbs measures ...<a class="anchor-link" href="#...-Gibbs-measures-..."> </a>
+</h2>
+<p><em>( Menon $\S$ 1.4 )</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Let us abstract away from the above settings, briefly. In particular, we forget everything about the state space $\mathcal{S}$, except that it is a finite set, let us say $\# \mathcal{S} = N$, and we enumerate the states of $\mathcal{S}$ as 
 $$
 s_1, \dots, s_N .
 $$</p>
-<blockquote><p>In the context of the Ising model simulation, $N = 2^{\# \mathbb{T}} \equiv 2^{100^2}$.</p>
+<blockquote>
+<p>In the context of the Ising model simulation, $N = 2^{\# \mathbb{T}} \equiv 2^{100^2}$.</p>
 </blockquote>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We suppose there is a distinguished function, $h : \mathcal{S} \to \mathbb{R}$, called the <strong>Hamiltonian</strong>. The Hamiltonian assigns to each state $s_i$ a corresponding <strong>energy</strong> $h(s_i)$. A Gibbs measure is a probability measure on $\mathcal{S}$, defined from $h$, designed to favor the sampling of low-energy states. In practice, one cares about how the collective behavior of the system changes as a function of the amount of thermal noise. It is traditional to parametrize the amount of thermal noise by an <strong>inverse temperature</strong> parameter $\beta \in [0, \infty ]$, which is the multiplicative inverse of the system's temperature. Thus $\beta = 0$ corresponds to an infinite temperature limit, and taking $\beta \to \infty$ corresponds to approaching absolute zero.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ To equip $\mathcal{S}$ with a $\beta$-dependent probability measure $m_\beta$, it suffices to specify a collection of functions of $\beta$
 $$
@@ -1540,18 +1885,23 @@ corresponding to the probability mass function of $m_\beta$. These depend implic
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h4 id="Definition.-(-Gibbs-measure-)"><strong>Definition.</strong> ( Gibbs measure )<a class="anchor-link" href="#Definition.-(-Gibbs-measure-)"> </a></h4><p>$\quad$ The <strong>Gibbs measure</strong> on $\mathcal{S}$ associated to Hamiltonian $h$ and inverse temperature $\beta &gt; 0$, is defined by</p>
+<hr>
+<h4 id="Definition.-(-Gibbs-measure-)">
+<a class="anchor" href="#Definition.-(-Gibbs-measure-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( Gibbs measure )<a class="anchor-link" href="#Definition.-(-Gibbs-measure-)"> </a>
+</h4>
+<p>$\quad$ The <strong>Gibbs measure</strong> on $\mathcal{S}$ associated to Hamiltonian $h$ and inverse temperature $\beta &gt; 0$, is defined by</p>
 $$
 p_i( \beta) \propto \exp\left( - \beta h( s_i) \right)
-$$<hr />
+$$<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Above, $\propto$ is denotes 'proportional to'. The implicit proportionality constant is non-ambiguous because of the constraint that these numbers sum to one. Being more explicit leads to an object of central importance called the partition function. The <strong>partition function</strong> is:
 $$
@@ -1561,7 +1911,8 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We can thus write the $p_i(\beta)$ in the above definition explicitly as
 $$
@@ -1575,54 +1926,70 @@ $$<p>and one can check that as $\beta \to 0$, namely in the "infinite-temperatur
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ On the other hand, in the zero-temperature limit $\beta \to \infty$, The measures $m_\beta$ tend towards concentrating all of their mass on the first state, which has lowest energy. In the limit, we do not even get a random object, provided that the above strict inequalities hold. A state with lowest energy is called a <strong>ground state</strong>. In the above setting, there is a unique ground state. In general, it's possible for the set of ground states to be larger than one, this can arise naturally from symmetries in the model. For instance, the Ising model always has two ground states, corresponding to all $(+1)$ spins and all $(-1)$ spins.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <p><em>next sections</em></p>
 <ul>
-<li><p>derivation of the Gibbs distribution (continuing Menon $\S$ 1.4)</p>
+<li>
+<p>derivation of the Gibbs distribution (continuing Menon $\S$ 1.4)</p>
 </li>
-<li><p>decoding scrambled text (Menon $\S$ 1.5)</p>
+<li>
+<p>decoding scrambled text (Menon $\S$ 1.5)</p>
 </li>
-<li><p>sampling from a Gibbs distribution (Menon $\S$ 1.6)</p>
+<li>
+<p>sampling from a Gibbs distribution (Menon $\S$ 1.6)</p>
 </li>
-<li><p>the Metropolis algorithm (Menon $\S$ 1.7, Krauth $\S$ 1.1.4 and $\S$ 1.1.5)</p>
+<li>
+<p>the Metropolis algorithm (Menon $\S$ 1.7, Krauth $\S$ 1.1.4 and $\S$ 1.1.5)</p>
 </li>
-<li><p>Markov chains convergence to stationary distribution (Menon $\S$ 1.8, 1.9)</p>
+<li>
+<p>Markov chains convergence to stationary distribution (Menon $\S$ 1.8, 1.9)</p>
 </li>
 </ul>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>The point of building up to this last section is that it lays the theoretical groundwork for how the MCMC method can be used to sample from a Gibbs distribution, abstracting the simulations run in the motivating <a href="http://bit-player.org/2021/three-months-in-monte-carlo">blog post</a>. What's next is to describe the Hamiltonian for the Ising model, from which the Gibbs measures and dynamics are automatically defined.</p>
+<blockquote>
+<p>The point of building up to this last section is that it lays the theoretical groundwork for how the MCMC method can be used to sample from a Gibbs distribution, abstracting the simulations run in the motivating <a href="http://bit-player.org/2021/three-months-in-monte-carlo">blog post</a>. What's next is to describe the Hamiltonian for the Ising model, from which the Gibbs measures and dynamics are automatically defined.</p>
 </blockquote>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="simulation">simulation<a class="anchor-link" href="#simulation"> </a></h1>
+<h1 id="simulation">
+<a class="anchor" href="#simulation" aria-hidden="true"><span class="octicon octicon-link"></span></a>simulation<a class="anchor-link" href="#simulation"> </a>
+</h1>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-Ising-model-...">... Ising model ...<a class="anchor-link" href="#...-Ising-model-..."> </a></h2>
+<h2 id="...-Ising-model-...">
+<a class="anchor" href="#...-Ising-model-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... Ising model ...<a class="anchor-link" href="#...-Ising-model-..."> </a>
+</h2>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We are simulating the Ising model on the discrete, two-dimensional torus, of side-length 100:</p>
 $$
@@ -1632,7 +1999,8 @@ $$<p>The torus is displayed as a large square grid, with the understanding of "p
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ In the Ising model, where the <strong>spin</strong> at a given vertex $v \in \mathbb{T}$ is a random variable, $s(v)$, taking values in $\{ \pm 1 \}$. A <strong>state</strong> of the Ising model is a possible realization of every $s(v)$, for $v \in \mathbb{T}$. The <strong>state space</strong> of the Ising model is</p>
 $$
@@ -1645,19 +2013,24 @@ $$<p>We do not define the random variables $s(v)$ individually -- instead, we eq
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h4 id="Definition.-(-Ising-Hamiltonian-)"><strong>Definition.</strong> ( Ising Hamiltonian )<a class="anchor-link" href="#Definition.-(-Ising-Hamiltonian-)"> </a></h4><p>The <strong>Ising Hamiltonian</strong> (in its simplest form) is defined as</p>
+<hr>
+<h4 id="Definition.-(-Ising-Hamiltonian-)">
+<a class="anchor" href="#Definition.-(-Ising-Hamiltonian-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( Ising Hamiltonian )<a class="anchor-link" href="#Definition.-(-Ising-Hamiltonian-)"> </a>
+</h4>
+<p>The <strong>Ising Hamiltonian</strong> (in its simplest form) is defined as</p>
 $$
 H_{\textrm{Ising}}(s) = - \sum_{ v \sim w } s(v) s(w) 
 $$<p>for $s \equiv ( s(v) : v \in \mathbb{T} ) \in \mathcal{S}_{\textrm{Ising}}$.</p>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ The coefficient of $-1$ in each summand is sometimes written $-J$, for some <em>coupling constant</em> $J &gt; 0$. Here we are setting $J = 1$. The sum is indexed by the edges $e = \{v,w\} \in \textrm{E}(\mathbb{T})$ of $\mathbb{T}$. The negative sign is what makes this a model of <em>ferromagnetism</em>, in which neighboring spins are encouraged to align. To see why, note that for the associated Gibbs measure $m_{\,\textrm{Ising},\beta}$, and for $s \in \mathcal{S}_{\textrm{Ising}}$,</p>
 $$
@@ -1667,18 +2040,21 @@ $$<p>where the negative sign in the Hamiltonian has cancelled with the negative 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Regardless of $\beta$, the exponent in the above display is maximized at two configurations: the first in which $s(v) \equiv 1$ for each $v \in \mathbb{T}$, and the second in which $s(v) \equiv -1$ for each $v \in \mathbb{T}$. We call these states $s_+$ and $s_-$ respectively. That there are two ground states is due to the invariance of the Hamiltonian under 'spin-flip symmetry', i.e. the transformation taking each spin of a configuration to its negative.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Moreover, the system is always biased towards these two ground states when $\beta &gt; 0$, it's just that the degree of this bias is mediated by $\beta$. One can interpret this in a 'signal-to-noise' framework: the ground states are like signals, and $\beta$ controls the signal-to-noise ratio. The measures $m_\beta$ exhibit qualitatively different behavior for different ranges of $\beta$, effectively the concept of a phase transition. The Ising model is one of the simplest models that can exhibit this behavior. In particular, there is a <strong>critical inverse temperature</strong>, $\beta_c$, such that the Ising model exhibits distinct behavior for $\beta &gt; \beta_c$ and $\beta &lt; \beta_c$. This value implicitly depends on the fact that we are working with the Ising Hamiltonian on the specific graph $\mathbb{T}$. The case $\beta = \beta_c$ is special, and for now we only concern ourselves with the two regimes away from the critical point. _(If it's the case that simulation becomes more difficult near the critical point, how close to $\beta_c$ does one start to become seriously impeded by these difficulties?)_</p>
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>..... $\beta$ range .....</th>
 <th>temperature range</th>
 <th>name of regime</th>
@@ -1701,20 +2077,25 @@ $$<p>where the negative sign in the Hamiltonian has cancelled with the negative 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-dynamics-...">... dynamics ...<a class="anchor-link" href="#...-dynamics-..."> </a></h2>
+<h2 id="...-dynamics-...">
+<a class="anchor" href="#...-dynamics-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... dynamics ...<a class="anchor-link" href="#...-dynamics-..."> </a>
+</h2>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We revisit the description of the dynamics. We always need some initial conditions in the form of spin configuration in $\mathcal{S}_{\textrm{Ising}}$. A spin configuration $s \in \mathcal{S}_{\textrm{Ising}}$ is a function $\mathbb{T} \to \{ \pm 1\}$, and we choose to store this data in the computer as an $n \times n$ matrix. We also call this matrix $s$. The periodicity will be encoded in the Hamiltonian, as well as in the dynamics (the neighboring vertices of each site are defined according to this periodicity).</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Let us first suppose that updates to the configuration happen at discrete, integer times 
 $$
@@ -1729,7 +2110,8 @@ We avoid using $T$, because it already has the meaning of temperature, $T \equiv
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ In the case that it is later easier to think of updates as happening in continuous time (according to some collection of $\textrm{Exponential}$ clocks, for instance), we will write</p>
 $$
@@ -1739,27 +2121,32 @@ $$<p>for the sequence of update times. The final time $\mathfrak{t}$ may no long
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ From an earlier <a href="http://bit-player.org/2019/glaubers-dynamics">blog post</a> of Brian Hayes: <em>"There’s no evidence Glauber was thinking of his method as an algorithm suitable for computer implementation. The subject of simulation doesn’t come up in his 1963 paper, where his primary aim is to find analytic expressions for the distribution of up and down spins as a function of time. (He did this only for the one-dimensional model.) Nevertheless, Glauber dynamics offers an elegant approach to programming an interactive version of the Ising model. "</em> What Hayes calls 'Glauber' dynamics in the first post is actually 'Metropolis-Hastings' dynamics $-$ this was pointed out in the comments. Hayes wanted to understand the distinction between the two better, and the more recent blog post linked to at the top is the really nice result.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <p><em>important simulation ingredients and notation</em></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><p>$\quad$ Write $\# \mathbb{T}$ for the number of sites ('pixels') in the torus $\mathbb{T}$.</p>
+<li>
+<p>$\quad$ Write $\# \mathbb{T}$ for the number of sites ('pixels') in the torus $\mathbb{T}$.</p>
 </li>
-<li><p>$\quad$ For $v \in \mathbb{T}$, let $\textsf{neigh}(v)$ denote the neighbors of $v$ within $\mathbb{T}$. On a torus, every vertex has four neighbors. In contrast to the blog (which uses $\sigma$ to denote spin configurations, where we use $s$), we use $\sigma$ to denote the random field obtained from $s$ by, at each $v \in \mathbb{T}$, assigning the local aggregation
+<li>
+<p>$\quad$ For $v \in \mathbb{T}$, let $\textsf{neigh}(v)$ denote the neighbors of $v$ within $\mathbb{T}$. On a torus, every vertex has four neighbors. In contrast to the blog (which uses $\sigma$ to denote spin configurations, where we use $s$), we use $\sigma$ to denote the random field obtained from $s$ by, at each $v \in \mathbb{T}$, assigning the local aggregation
 $$
 \sigma(v) := \sum_{ w \, \in \, \textsf{neigh}(v) } s(w)\,,
 $$
@@ -1770,10 +2157,12 @@ so that each $\sigma(v) \in \{ -4, -2, 0 , 2, 4\}$.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><p>$\quad$ The dynamics rely on comparing the current energy of the lattice with the energy resulting from flipping the spin at $v$. We wish to write down the energy difference concisely. To this end, let $s^{[v]}$ denote the spin configuration obtained from $s$ via
+<li>
+<p>$\quad$ The dynamics rely on comparing the current energy of the lattice with the energy resulting from flipping the spin at $v$. We wish to write down the energy difference concisely. To this end, let $s^{[v]}$ denote the spin configuration obtained from $s$ via
 $$
 s^{[v]} = \begin{cases}
 s(w) &amp; \quad \text{ if } w \neq v\\
@@ -1781,7 +2170,8 @@ s(w) &amp; \quad \text{ if } w \neq v\\
 \end{cases}
 $$</p>
 </li>
-<li><p>$\quad$ Let $\delta_v H_{\textrm{Ising}}$ denote the change in energy in going from $H_{\textrm{Ising}}(s)$ to $H_{\textrm{Ising}}(s^{[v]})$:
+<li>
+<p>$\quad$ Let $\delta_v H_{\textrm{Ising}}$ denote the change in energy in going from $H_{\textrm{Ising}}(s)$ to $H_{\textrm{Ising}}(s^{[v]})$:
 $$
 \delta_v H_{\textrm{Ising}}(s) = H_{\textrm{Ising}}(s^{[v]}) - H_{\textrm{Ising}}(s)  
 $$</p>
@@ -1791,15 +2181,17 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 <p>_on computing $\delta_vH(s)$_</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ Let us see why we have the following equality, which is used in the pseudocode below. 
 $$
@@ -1818,18 +2210,26 @@ and when we compute the analogous quantity for $H_{\textrm{Ising}}(s^{[v]})$, th
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h4 id="Algorithm.-(-Metropolis-Hastings-)"><strong>Algorithm.</strong> ( Metropolis-Hastings )<a class="anchor-link" href="#Algorithm.-(-Metropolis-Hastings-)"> </a></h4><p>Repeat $\# \mathbb{T}$ times:</p>
+<hr>
+<h3 id="Algorithm.-(-Metropolis-Hastings-)">
+<a class="anchor" href="#Algorithm.-(-Metropolis-Hastings-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Algorithm.</strong> ( Metropolis-Hastings )<a class="anchor-link" href="#Algorithm.-(-Metropolis-Hastings-)"> </a>
+</h3>
+<p>Repeat $\# \mathbb{T}$ times:</p>
 <ol>
-<li><p>Choose a site $v \in \mathbb{T}$ uniformly at random.</p>
+<li>
+<p>Choose a site $v \in \mathbb{T}$ uniformly at random.</p>
 </li>
-<li><p>Compute $\sigma(v)$ by summing the spins of all vertices neighboring $v$.</p>
+<li>
+<p>Compute $\sigma(v)$ by summing the spins of all vertices neighboring $v$.</p>
 </li>
-<li><p>Compute $\delta_v H_{\textrm{Ising}}(s) = 2 s(v) \sigma(v)$,</p>
+<li>
+<p>Compute $\delta_v H_{\textrm{Ising}}(s) = 2 s(v) \sigma(v)$,</p>
 </li>
-<li><p>Spin flip protocol:</p>
+<li>
+<p>Spin flip protocol:</p>
 <p>a. If $\delta_v H_{\textrm{Ising}}(s) &lt; 0$, set $s(v) = -s(v)$. This ensures that we visit the configuration $s^{[v]}$ whenever flipping the spin at $v$ lowers the energy of the spin configuration</p>
 <p>b. If $\delta_v H_{\textrm{Ising}}(s) \geq 0$, flip the spin at $v$ with probability 
  $$
@@ -1837,48 +2237,70 @@ and when we compute the analogous quantity for $H_{\textrm{Ising}}(s^{[v]})$, th
  $$</p>
 </li>
 </ol>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h4 id="Algorithm.-(-Glauber-)"><strong>Algorithm.</strong> ( Glauber )<a class="anchor-link" href="#Algorithm.-(-Glauber-)"> </a></h4><p>Repeat $\#\mathbb{T}$ times:</p>
+<hr>
+<h3 id="Algorithm.-(-Glauber-)">
+<a class="anchor" href="#Algorithm.-(-Glauber-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Algorithm.</strong> ( Glauber )<a class="anchor-link" href="#Algorithm.-(-Glauber-)"> </a>
+</h3>
+<p>Repeat $\#\mathbb{T}$ times:</p>
 <ol>
-<li><p>Choose a site $v \in \mathbb{T}$ uniformly at random.</p>
+<li>
+<p>Choose a site $v \in \mathbb{T}$ uniformly at random.</p>
 </li>
-<li><p>Compute $\sigma(v)$</p>
+<li>
+<p>Compute $\sigma(v)$</p>
 </li>
-<li><p>Compute $\delta_v H_{\textrm{Ising}}(s) = 2s(v) \sigma(v)$</p>
+<li>
+<p>Compute $\delta_v H_{\textrm{Ising}}(s) = 2s(v) \sigma(v)$</p>
 </li>
-<li><p>Flip the spin at $v$ with probability
+<li>
+<p>Flip the spin at $v$ with probability
 $$
 \frac{ \exp(\, - \beta \delta_v H_{\textrm{Ising}}(s) \,) }{1 + \exp( \, -\beta \delta_vH_{\textrm{Ising}}(s)\,)}
 $$</p>
 </li>
 </ol>
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="...-implementation-...">... implementation ...<a class="anchor-link" href="#...-implementation-..."> </a></h2>
+<h2 id="...-implementation-...">
+<a class="anchor" href="#...-implementation-..." aria-hidden="true"><span class="octicon octicon-link"></span></a>... implementation ...<a class="anchor-link" href="#...-implementation-..."> </a>
+</h2>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>more resources</em></p>
 <ul>
-<li><p><a href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.uniform.html">https://numpy.org/doc/stable/reference/random/generated/numpy.random.uniform.html</a></p>
+<li>
+<p><a href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.uniform.html">https://numpy.org/doc/stable/reference/random/generated/numpy.random.uniform.html</a></p>
 </li>
-<li><p><a href="https://numpy.org/doc/stable/reference/random/index.html#random-quick-start">https://numpy.org/doc/stable/reference/random/index.html#random-quick-start</a></p>
+<li>
+<p><a href="https://numpy.org/doc/stable/reference/random/index.html#random-quick-start">https://numpy.org/doc/stable/reference/random/index.html#random-quick-start</a></p>
 </li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>imports</em></p>
 
 </div>
 </div>
@@ -1886,6 +2308,9 @@ $$</p>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -1901,24 +2326,32 @@ $$</p>
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h4 id="method-...-Unif">method ... Unif<a class="anchor-link" href="#method-...-Unif"> </a></h4>
+<hr>
+<h3 id="method-...-Unif">
+<a class="anchor" href="#method-...-Unif" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>method</strong> ... Unif<a class="anchor-link" href="#method-...-Unif"> </a>
+</h3>
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">Unif</span><span class="p">():</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># uniform r.v. over interval [0,1]</span>
+<span class="k">def</span> <span class="nf">Unif</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
 </pre></div>
 
@@ -1926,26 +2359,34 @@ $$</p>
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h4 id="method-...-coin-toss">method ... coin toss<a class="anchor-link" href="#method-...-coin-toss"> </a></h4>
+<hr>
+<h3 id="method-...-coin-toss">
+<a class="anchor" href="#method-...-coin-toss" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>method</strong> ... coin toss<a class="anchor-link" href="#method-...-coin-toss"> </a>
+</h3>
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -1965,26 +2406,34 @@ $$</p>
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
-<h4 id="class-...-grid">class ... grid<a class="anchor-link" href="#class-...-grid"> </a></h4>
+<hr>
+<h3 id="class-...-grid">
+<a class="anchor" href="#class-...-grid" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>class</strong> ... grid<a class="anchor-link" href="#class-...-grid"> </a>
+</h3>
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -1997,7 +2446,7 @@ $$</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
                  <span class="n">temperature</span><span class="p">,</span>
                  <span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> 
-                 <span class="n">starting_spin_config</span> <span class="o">=</span> <span class="s1">&#39;inf_temp&#39;</span><span class="p">):</span>
+                 <span class="n">starting_spin_config</span> <span class="o">=</span> <span class="s1">'inf_temp'</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span> 
         <span class="c1">#   ^ side-length of torus</span>
@@ -2016,14 +2465,14 @@ $$</p>
         <span class="c1"># initial conditions</span>
         <span class="c1">#</span>
         <span class="c1"># starting_spin_config =</span>
-        <span class="c1">#     * &#39;inf_temp&#39;</span>
-        <span class="c1">#     * &#39;plus&#39;</span>
-        <span class="c1">#     * &#39;minus&#39;</span>
+        <span class="c1">#     * 'inf_temp'</span>
+        <span class="c1">#     * 'plus'</span>
+        <span class="c1">#     * 'minus'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">starting</span> <span class="o">=</span> <span class="n">starting_spin_config</span>
         
         <span class="c1">##</span>
-        <span class="c1">#   &#39;inf_temp&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting</span> <span class="o">==</span> <span class="s1">&#39;inf_temp&#39;</span><span class="p">:</span>
+        <span class="c1">#   'inf_temp'</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting</span> <span class="o">==</span> <span class="s1">'inf_temp'</span><span class="p">:</span>
 
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 
@@ -2040,8 +2489,8 @@ $$</p>
                         <span class="bp">self</span><span class="o">.</span><span class="n">spins</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
         <span class="c1">##</span>
-        <span class="c1">#    &#39;plus&#39;</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting</span> <span class="o">==</span> <span class="s1">&#39;plus&#39;</span><span class="p">:</span>
+        <span class="c1">#    'plus'</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting</span> <span class="o">==</span> <span class="s1">'plus'</span><span class="p">:</span>
 
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 
@@ -2050,8 +2499,8 @@ $$</p>
                     <span class="bp">self</span><span class="o">.</span><span class="n">spins</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="c1">##</span>
-        <span class="c1">#    &#39;minus&#39;</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting</span> <span class="o">==</span> <span class="s1">&#39;minus&#39;</span><span class="p">:</span>
+        <span class="c1">#    'minus'</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting</span> <span class="o">==</span> <span class="s1">'minus'</span><span class="p">:</span>
 
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 
@@ -2059,10 +2508,10 @@ $$</p>
 
                     <span class="bp">self</span><span class="o">.</span><span class="n">spins</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        later we implement some kind of loading</span>
 <span class="sd">        from the end of a previous simulation</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># regardless of the initial conditions,</span>
         <span class="c1"># we need a starting temperature, because</span>
@@ -2072,12 +2521,12 @@ $$</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span>
 
         <span class="c1"># we need this to implement code related to</span>
-        <span class="c1"># github author&#39;s &quot;note on boltzmann weight&quot;</span>
+        <span class="c1"># github author's "note on boltzmann weight"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span>
 
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        on storing dynamics history.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># we will track how many microsteps</span>
         <span class="c1"># the dynamics take. Number of microsteps</span>
@@ -2147,7 +2596,7 @@ $$</p>
         <span class="c1"># return</span>
         <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">site_spin</span> <span class="o">*</span> <span class="n">sigma_v</span>
 
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 
 <span class="sd">    ( from the first github program, why we </span>
 <span class="sd">      introduce self.max_size )</span>
@@ -2160,7 +2609,7 @@ $$</p>
 <span class="sd">    is &gt; 10^347. JavaScript barfs on anything greater </span>
 <span class="sd">    than 10^308.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1">##</span>
     <span class="c1">#   this function returns the boltzmann weight</span>
@@ -2203,10 +2652,10 @@ $$</p>
         <span class="k">return</span> <span class="n">first_coord</span><span class="p">,</span> <span class="n">second_coord</span>
 
     <span class="c1">##</span>
-    <span class="c1">#   we perform one step ( a &quot;microstep&quot; )</span>
+    <span class="c1">#   we perform one step ( a "microstep" )</span>
     <span class="c1">#   of the metropolis dynamics. This will </span>
     <span class="c1">#   later be repeated N times to form a </span>
-    <span class="c1">#   &quot;macrostep&quot;</span>
+    <span class="c1">#   "macrostep"</span>
     <span class="c1">#</span>
     <span class="k">def</span> <span class="nf">metropolis_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -2256,7 +2705,7 @@ $$</p>
 
     <span class="c1">##</span>
     <span class="c1"># Now we do the analogous thing for Glauber,</span>
-    <span class="c1"># the following is one &quot;microstep&quot; of Glauber </span>
+    <span class="c1"># the following is one "microstep" of Glauber </span>
     <span class="c1"># dynamics</span>
     <span class="c1">#</span>
     <span class="k">def</span> <span class="nf">glauber_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2298,7 +2747,7 @@ $$</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_state</span><span class="p">()</span>
 
 
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    before introducing methods that run a macrostep</span>
 <span class="sd">    of each type of dynamics, we first provide a method</span>
 <span class="sd">    that stores the current state of the system.</span>
@@ -2308,7 +2757,7 @@ $$</p>
 <span class="sd">    `current_time_step` .. these numbers will serve </span>
 <span class="sd">    as keys for the dictionary that stores the</span>
 <span class="sd">    history of the dynamics</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="nf">write_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="n">dict_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_time_step</span> <span class="p">)</span>
@@ -2323,25 +2772,27 @@ $$</p>
     <span class="c1"># we store as .json </span>
 
     <span class="k">def</span> <span class="nf">write_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">):</span>
-      <span class="sd">&quot;&quot;&quot;dump the results of the simulation stored in `self.history` as json</span>
+      <span class="sd">"""dump the results of the simulation stored in `self.history` as json</span>
 <span class="sd">      to the output file path specfied by the parameter `fp`</span>
-<span class="sd">      &quot;&quot;&quot;</span>
+<span class="sd">      """</span>
       <span class="kn">import</span> <span class="nn">json</span>
-      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Wrote results of simulation as json to </span><span class="si">{</span><span class="n">fp</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Wrote results of simulation as json to </span><span class="si">{</span><span class="n">fp</span><span class="si">}</span><span class="s1">.'</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr />
+<hr>
 
 </div>
 </div>
@@ -2377,7 +2828,8 @@ $$</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>$\quad$ We run the simulation for 10 microsteps of Metropolis dynamics, to test.</p>
 
@@ -2396,7 +2848,7 @@ $$</p>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
   <span class="n">g</span><span class="o">.</span><span class="n">metropolis_step</span><span class="p">()</span>
 
-<span class="n">g</span><span class="o">.</span><span class="n">write_history</span><span class="p">(</span> <span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;./test.json&quot;</span> <span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">write_history</span><span class="p">(</span> <span class="n">fp</span> <span class="o">=</span> <span class="s2">"./test.json"</span> <span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2429,15 +2881,15 @@ $$</p>
     <div class="input_area">
 <div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 
-<span class="n">fil</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span> <span class="s2">&quot;./test.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span> <span class="p">)</span>
+<span class="n">fil</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span> <span class="s2">"./test.json"</span><span class="p">,</span> <span class="s1">'r'</span> <span class="p">)</span>
 
 <span class="n">history_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span> <span class="n">fil</span> <span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span> <span class="nb">type</span><span class="p">(</span><span class="n">history_dict</span><span class="p">)</span> <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">history_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Value: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">Key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Value: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="n">fil</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
@@ -2452,7 +2904,7 @@ $$</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;class &#39;dict&#39;&gt;
+<pre>&lt;class 'dict'&gt;
 
 
 Key: 0
@@ -2533,7 +2985,7 @@ Value: [[-1, -1, 1, 1, -1, -1, -1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, -1,
 
 
 
-  </div><a class="u-url" href="/stat-mech/2021/12/16/simulation.html" hidden></a>
+  </div><a class="u-url" href="/stat-mech/jupyter/2021/12/16/simulation.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
