@@ -165,17 +165,29 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Shannon's-model-of-text">Shannon&#39;s model of text </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-stationary-stochastic-process-)">Definition. ( stationary stochastic process ) </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#\mathbb{P}-(\,-X_1-=-s_1,-\dots,-X_n-=-s_n\,)-">\mathbb{P} (\, X_1 = s_1, \dots, X_n = s_n\,)  </a>
+<ul>
 <li class="toc-entry toc-h3"><a href="#Example.-(-digram-model-)">Example. ( digram model ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Example.-(-trigram-model-)">Example. ( trigram model ) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Q^{(3)}-(x,y)-">Q^{(3)} (x,y)  </a>
+<ul>
 <li class="toc-entry toc-h3"><a href="#Example.-(-$(n+1$)-gram-model-)">Example. ( $(n+1$)-gram model ) </a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h1"><a href="#Q^{(n+1)}-(x,y)-">Q^{(n+1)} (x,y)  </a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#information-theory">information theory </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-lossless-data-compression-)">Definition. ( lossless data compression ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-entropy-)">Definition. ( entropy ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-$\epsilon$-typical-signal-)">Definition. ( $\epsilon$-typical signal ) </a></li>
-<li class="toc-entry toc-h3"><a href="#Theorem.-(Matic,-Theorem-1)">Theorem. (Matic, Theorem 1) </a></li>
+<li class="toc-entry toc-h3"><a href="#Theorem.-(-Matic,-Theorem-1)">Theorem. ( Matic, Theorem 1) </a></li>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-the-type-of-a-signal-)">Definition. ( the type of a signal ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Theorem.-(-Matic,-Theorem-2-)">Theorem. ( Matic, Theorem 2 ) </a></li>
 </ul>
@@ -1339,10 +1351,11 @@ and if $m$ satisfies the normalization conditions $m(s) \geq 0$ for all $s \in \
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ Physicsts define the term ergodic ( describing Markov chain $(X_t)_{t\in \mathbb{N}}$ ) to mean the following.</p>
+<p>$\quad$ Physicsts define the term ergodic ( describing Markov chain $(X_t)_{t\in \mathbb{N}}$ ) to mean the following.
 $$
 \lim_{T \to \infty} \sum_{t =1}^T \mathcal{O}(X_t) = \mathbb{E}_m\mathcal{O},
-$$<p>where $m = m Q$ and $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is arbitrary. This formulation has the interpretation that a Markov chain is ergodic when the left-hand side, the <em>time-average</em>, is equal to the <em>spatial-average</em> (with respect to the equilibrium measure), which is the right hand side. Menon notes the following bottlenecks and simplifications:</p>
+$$
+where $m = m Q$ and $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is arbitrary. This formulation has the interpretation that a Markov chain is ergodic when the left-hand side, the <em>time-average</em>, is equal to the <em>spatial-average</em> (with respect to the equilibrium measure), which is the right hand side. Menon notes the following bottlenecks and simplifications:</p>
 <ul>
 <li>
 <p>$\mathcal{S}$ may be very large. For example (in shuffling dynamics we soon describe), $\mathcal{S}$ may be the permutation group.</p>
@@ -1434,12 +1447,15 @@ We use $\mathcal{A}$ for this specific alphabet for clarity in examples which fo
 <h3 id="Definition.-(-stationary-stochastic-process-)">
 <a class="anchor" href="#Definition.-(-stationary-stochastic-process-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( stationary stochastic process )<a class="anchor-link" href="#Definition.-(-stationary-stochastic-process-)"> </a>
 </h3>
-<p>$\quad$ A discrete time stochastic process $X \equiv (X_t)$ is <strong>stationary</strong> if all abitrarily large, but finite, marginal probabilities are invariant under arbitrary shifts in time. More precisely,</p>
-$$
-\mathbb{P} (\, X_1 = s_1, \dots, X_n = s_n\,) 
-    = 
-        \mathbb{P} ( \,X_{1+k} = s_1, \dots, X_{n+k} = s_n \,)
-$$<p>for all positive integers $k$ and $n$.</p>
+<p>$\quad$ A discrete time stochastic process $X \equiv (X_t)$ is <strong>stationary</strong> if all abitrarily large, but finite, marginal probabilities are invariant under arbitrary shifts in time. More precisely,
+$$</p>
+<h1 id="\mathbb{P}-(\,-X_1-=-s_1,-\dots,-X_n-=-s_n\,)-">
+<a class="anchor" href="#%5Cmathbb%7BP%7D-(%5C,-X_1-=-s_1,-%5Cdots,-X_n-=-s_n%5C,)-" aria-hidden="true"><span class="octicon octicon-link"></span></a>\mathbb{P} (\, X_1 = s_1, \dots, X_n = s_n\,) <a class="anchor-link" href="#%5Cmathbb%7BP%7D-(%5C,-X_1-=-s_1,-%5Cdots,-X_n-=-s_n%5C,)-"> </a>
+</h1>
+<pre><code>    \mathbb{P} ( \,X_{1+k} = s_1, \dots, X_{n+k} = s_n \,)
+</code></pre>
+<p>$$
+for all positive integers $k$ and $n$.</p>
 <hr>
 
 </div>
@@ -1485,10 +1501,11 @@ The subscript '$\textrm{true}$' indicates that we view $Y$ not as an approximati
 <a class="anchor" href="#Example.-(-digram-model-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( digram model )<a class="anchor-link" href="#Example.-(-digram-model-)"> </a>
 </h3>
 <p><em>( or 2-gram model )</em></p>
-<p>$\quad$ This is a Markov chain with state space $\mathcal{A} = \{ \, a,\, b, \, c, \, \dots \, , \,z, \, \_ \}$.</p>
+<p>$\quad$ This is a Markov chain with state space $\mathcal{A} = \{ \, a,\, b, \, c, \, \dots \, , \,z, \, \_ \}$. 
 $$
 Q^{(2)}(x,y) = \mathbb{P}_{\textrm{true}} (\,X_2 = y | X_1 = x\,),
-$$<p>which is to say, we form the character-to-character transition probabilities of a Markov process using the marginals of the full stationary process being approximated.</p>
+$$
+which is to say, we form the character-to-character transition probabilities of a Markov process using the marginals of the full stationary process being approximated.</p>
 <hr>
 
 </div>
@@ -1510,20 +1527,23 @@ $$<p>which is to say, we form the character-to-character transition probabilitie
 <a class="anchor" href="#Example.-(-trigram-model-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( trigram model )<a class="anchor-link" href="#Example.-(-trigram-model-)"> </a>
 </h3>
 <p><em>( or 3-gram model )</em></p>
-<p>$\quad$ This is a Markov chain with state space $\mathcal{A}^2$, which we style as</p>
+<p>$\quad$ This is a Markov chain with state space $\mathcal{A}^2$, which we style as
 $$
 \{ aa, \,ab,\,, \dots, az, \dots, \_a, \, \dots, \, \_\,\_ \} 
-$$<p>Let $x = a_1a_2$ and $y = b_1b_2$. In order to form a text of three letters from $x$ and $y$, we must ensure that $x$ and $y$ agree on their overlap, that is when $a_2 = b_1$, so that $x$ and $y$ combine to give us the string $a_1a_2b_2$. With this restriction on $x$ and $y$, we obtain the associated transition matrix</p>
 $$
-Q^{(3)} (x,y) 
-= 
-\frac{
-\mathbb{P}_{\textrm{true}} ( a_1 a_2 b_2 )
+Let $x = a_1a_2$ and $y = b_1b_2$. In order to form a text of three letters from $x$ and $y$, we must ensure that $x$ and $y$ agree on their overlap, that is when $a_2 = b_1$, so that $x$ and $y$ combine to give us the string $a_1a_2b_2$. With this restriction on $x$ and $y$, we obtain the associated transition matrix
+$$</p>
+<h1 id="Q^{(3)}-(x,y)-">
+<a class="anchor" href="#Q%5E%7B(3)%7D-(x,y)-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Q^{(3)} (x,y) <a class="anchor-link" href="#Q%5E%7B(3)%7D-(x,y)-"> </a>
+</h1>
+<p>\frac{
+\mathbb{P}_{\textrm{true}} ( a_1 a_2 b<em>2 )
 }
 {
-\mathbb{P}_{\textrm{true}} (a_1 a_2) 
+\mathbb{P}</em>{\textrm{true}} (a_1 a_2) 
 }
-$$<p>and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
+$$
+and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
 <blockquote>
 <p>Because of the compatability requirement of $a_2 = b_1$, the above Markov chain can still be viewed as a stochastic process taking values in $\mathcal{A}$, it is just no longer a Markov chain from this perspective. This is the sense, however, in which this model is approximating $\mathbb{P}_{\textrm{true}}$.</p>
 </blockquote>
@@ -1539,17 +1559,19 @@ $$<p>and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
 <h3 id="Example.-(-$(n+1$)-gram-model-)">
 <a class="anchor" href="#Example.-(-%24(n+1%24)-gram-model-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( $(n+1$)-gram model )<a class="anchor-link" href="#Example.-(-%24(n+1%24)-gram-model-)"> </a>
 </h3>
-<p>$\quad$ A Markov chain with state space $\mathcal{A}^{n}$. A state $x$, say $x = (a_1, \dots, a_n)$ can be followed by a string $y = (b_1, \dots, b_n)$ only if $a_2 = b_1, a_3 = b_2, \dots, a_n = b_{n-1}$. This induces transition matrix</p>
-$$
-Q^{(n+1)} (x,y) 
-= 
-\frac{
-\mathbb{P}_{\textrm{true}} ( a_1 a_2 \dots a_n b_n )
+<p>$\quad$ A Markov chain with state space $\mathcal{A}^{n}$. A state $x$, say $x = (a_1, \dots, a_n)$ can be followed by a string $y = (b_1, \dots, b_n)$ only if $a_2 = b_1, a_3 = b_2, \dots, a_n = b_{n-1}$. This induces transition matrix
+$$</p>
+<h1 id="Q^{(n+1)}-(x,y)-">
+<a class="anchor" href="#Q%5E%7B(n+1)%7D-(x,y)-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Q^{(n+1)} (x,y) <a class="anchor-link" href="#Q%5E%7B(n+1)%7D-(x,y)-"> </a>
+</h1>
+<p>\frac{
+\mathbb{P}_{\textrm{true}} ( a_1 a_2 \dots a_n b<em>n )
 }
 {
-\mathbb{P}_{\textrm{true}} (a_1 a_2 \dots a_n) 
+\mathbb{P}</em>{\textrm{true}} (a_1 a_2 \dots a_n) 
 }
-$$<p>as above.</p>
+$$
+as above.</p>
 <blockquote>
 <p>Following the previous remark, for similar compatibility reasons, this Markov chain can also be interpreted as a stationary stochastic process taking values in $\mathcal{A}$. As before, this is the sense in which the above process approximates $\mathbb{P}_{\textrm{true}}$.</p>
 <hr>
@@ -1785,8 +1807,8 @@ and the set of all $\epsilon$-typical signals is denoted $\mathcal{A}^M_\epsilon
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="Theorem.-(Matic,-Theorem-1)">
-<a class="anchor" href="#Theorem.-(Matic,-Theorem-1)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Theorem.</strong> (Matic, Theorem 1)<a class="anchor-link" href="#Theorem.-(Matic,-Theorem-1)"> </a>
+<h3 id="Theorem.-(-Matic,-Theorem-1)">
+<a class="anchor" href="#Theorem.-(-Matic,-Theorem-1)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Theorem.</strong> ( Matic, Theorem 1)<a class="anchor-link" href="#Theorem.-(-Matic,-Theorem-1)"> </a>
 </h3>
 <p>$\quad$ For each $\delta &gt; 0$, there is $M_0 \in \mathbb{N}$ such that for every $M \geq M_0$ there is a lossless data compression $f$ in which the average length of a message satisfies</p>
 $$
