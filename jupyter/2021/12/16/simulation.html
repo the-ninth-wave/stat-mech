@@ -4,9 +4,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Markov chains, Monte Carlo methods, pattern theory | statistical mechanics and spin glasses</title>
+<title>Ising model dynamics | statistical mechanics and spin glasses</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Markov chains, Monte Carlo methods, pattern theory" />
+<meta property="og:title" content="Ising model dynamics" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-12-16T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"…","url":"https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html","@type":"BlogPosting","headline":"Markov chains, Monte Carlo methods, pattern theory","dateModified":"2021-12-16T00:00:00-06:00","datePublished":"2021-12-16T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html"},"@context":"https://schema.org"}</script>
+{"description":"…","url":"https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html","@type":"BlogPosting","headline":"Ising model dynamics","dateModified":"2021-12-16T00:00:00-06:00","datePublished":"2021-12-16T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/stat-mech/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://the-ninth-wave.github.io/stat-mech/feed.xml" title="statistical mechanics and spin glasses" /><link rel="shortcut icon" type="image/x-icon" href="/stat-mech/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,7 +87,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Markov chains, Monte Carlo methods, pattern theory</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-16T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Ising model dynamics</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-16T00:00:00-06:00" itemprop="datePublished">
         Dec 16, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -132,10 +132,12 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Markov-chains,-Monte-Carlo-methods,-pattern-theory">Markov chains, Monte Carlo methods, pattern theory </a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#direct-sampling">direct sampling </a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#method-...-Unif">method ... Unif </a></li>
-<li class="toc-entry toc-h3"><a href="#Algorithm-1.1-...-direct_pi">Algorithm 1.1 ... direct_pi </a></li>
+<li class="toc-entry toc-h3"><a href="#Unif">Unif </a></li>
+<li class="toc-entry toc-h3"><a href="#Algorithm.-...-direct_pi">Algorithm. ... direct_pi </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Markov-chain-sampling">Markov-chain sampling </a>
@@ -183,6 +185,8 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Definition.-(-Gibbs-measure-)">Definition. ( Gibbs measure ) </a></li>
 </ul>
 </li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#simulation">simulation </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#Ising-model">Ising model </a>
@@ -198,7 +202,6 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h2"><a href="#implementation">implementation </a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#Unif">Unif </a></li>
 <li class="toc-entry toc-h3"><a href="#coin_toss">coin_toss </a></li>
 <li class="toc-entry toc-h3"><a href="#grid">grid </a></li>
 </ul>
@@ -313,6 +316,15 @@ window.onload = wrap_img;
 <li>We will train a simple convolutional architecture on the dataset $\mathcal{D}$. Whether it is through pooling layers, or the local averaging inherent in the convolution operation, these architectures seem to apply a kind of <a href="https://en.wikipedia.org/wiki/Coarse-grained_modeling">coarse-graining</a> to input signals $x \in \mathcal{D}$. This has prompted investigation into the connections between deep learning and the <a href="https://en.wikipedia.org/wiki/Renormalization_group">renormalization group</a> of physics. The latter feels like a kind of microscope for theoretical physicists $-$ the renormalization group formalizes a sequence of scaling transformations acting on a physical system, typically zooming out and thereby coarse-graining the preceding image of the system. This parallels feeding the image of the system into a "deep" sequence of convolutional layers. Two references for this are a 2013 <a href="https://arxiv.org/abs/1301.3124">paper</a> of Cédric Bény, and a 2014 <a href="https://arxiv.org/abs/1410.3831v1">paper</a> of Pankaj Mehta and David Schwab, and we imagine there is more recent work on this to explore. Dataset $\mathcal{D}$ is both an image dataset and a natural input to the renormalization group. It's an opportunity to better understand these connections. In particular one can start by repeating the experiments the latter paper runs on the Ising model.</li>
 </ol>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Markov-chains,-Monte-Carlo-methods,-pattern-theory">
+<a class="anchor" href="#Markov-chains,-Monte-Carlo-methods,-pattern-theory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Markov chains, Monte Carlo methods, pattern theory<a class="anchor-link" href="#Markov-chains,-Monte-Carlo-methods,-pattern-theory"> </a>
+</h1>
 </div>
 </div>
 </div>
@@ -466,8 +478,8 @@ Thus we are approximating $\pi$ by approximating $\pi/4$, which is the probabili
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="method-...-Unif">
-<a class="anchor" href="#method-...-Unif" aria-hidden="true"><span class="octicon octicon-link"></span></a>method ... Unif<a class="anchor-link" href="#method-...-Unif"> </a>
+<h3 id="Unif">
+<a class="anchor" href="#Unif" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unif<a class="anchor-link" href="#Unif"> </a>
 </h3>
 </div>
 </div>
@@ -515,8 +527,8 @@ Thus we are approximating $\pi$ by approximating $\pi/4$, which is the probabili
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="Algorithm-1.1-...-direct_pi">
-<a class="anchor" href="#Algorithm-1.1-...-direct_pi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Algorithm 1.1 ... direct_pi<a class="anchor-link" href="#Algorithm-1.1-...-direct_pi"> </a>
+<h3 id="Algorithm.-...-direct_pi">
+<a class="anchor" href="#Algorithm.-...-direct_pi" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Algorithm.</strong> ... direct_pi<a class="anchor-link" href="#Algorithm.-...-direct_pi"> </a>
 </h3>
 </div>
 </div>
@@ -2358,47 +2370,6 @@ $$</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-<h3 id="Unif">
-<a class="anchor" href="#Unif" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unif<a class="anchor-link" href="#Unif"> </a>
-</h3>
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<details class="description">
-      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
-        <p></p>
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># uniform r.v. over interval [0,1]</span>
-<span class="k">def</span> <span class="nf">Unif</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-    </details>
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
