@@ -1514,12 +1514,13 @@ which is to say, we form the character-to-character transition probabilities of 
 $$
 \{ aa, \,ab,\,, \dots, az, \dots, \_a, \, \dots, \, \_\,\_ \} 
 $$
-Let $x = a_1a_2$ and $y = b_1b_2$. In order to form a text of three letters from $x$ and $y$, we must ensure that $x$ and $y$ agree on their overlap, that is when $a_2 = b_1$, so that $x$ and $y$ combine to give us the string $a_1a_2b_2$. With this restriction on $x$ and $y$, we obtain the associated transition matrix</p>
+Let $x = a_1a_2$ and $y = b_1b_2$. In order to form a text of three letters from $x$ and $y$, we must ensure that $x$ and $y$ agree on their overlap, that is when $a_2 = b_1$, so that $x$ and $y$ combine to give us the string $a_1a_2b_2$. With this restriction on $x$ and $y$, we obtain the associated transition matrix
 $$
 Q^{(3)} (x,y) 
 = \frac{\mathbb{P}_{\textrm{true}} ( a_1 a_2 b_2 ) }{
 \mathbb{P}_{\textrm{true}}(a_1 a_2) }
-$$<p>and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
+$$
+and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
 <blockquote>
 <p>Because of the compatability requirement of $a_2 = b_1$, the above Markov chain can still be viewed as a stochastic process taking values in $\mathcal{A}$, it is just no longer a Markov chain from this perspective. This is the sense, however, in which this model is approximating $\mathbb{P}_{\textrm{true}}$.</p>
 </blockquote>
