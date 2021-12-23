@@ -1252,16 +1252,16 @@ with entries indexed by pairs of states $s, \tilde{s} \in \mathcal{S}$. Another 
 $$
 m_t(s) := \mathbb{P}(X_t = s) \,,
 $$
-and one obtains the following recurrence relation using the so-called law of total probability, along with the definitions of $m_t$ and $Q$:
-$$
+and one obtains the following recurrence relation using the so-called law of total probability, along with the definitions of $m_t$ and $Q$:</p>
+<p>$
 \begin{align}
 m_{t+1}(\tilde{s}) &amp;= \mathbb{P} ( X_{t+1} = \tilde{s}) \\
 &amp;= \sum_{s \in \mathcal{S}} \mathbb{P}( X_{t+1} = \tilde{s}, \, X_t = s ) \\
 &amp;= \sum_{s \in \mathcal{S}} \mathbb{P} (X_{t+1} = \tilde{s} | X_t = s ) \mathbb{P}(X_t = s)  \\
 &amp;= \sum_{s \in \mathcal{S}} Q(s,\tilde{s}) m_t(s)\,,
 \end{align}
-$$
-when we assume the chain is stationary. This calculation yields the <strong>forward equation</strong> 
+$</p>
+<p>when we assume the chain is stationary. This calculation yields the <strong>forward equation</strong> 
 $$
 m_{t+1} = m_t Q , \quad t \in \mathbb{N}
 $$
@@ -1722,7 +1722,7 @@ $$
 \begin{align}
 \mathbb{P}( \, \underline{X} = s ) &amp;= \mathbb{P} (X_1 = s_1) \dots \mathbb{P}(X_M = s_M) \\
 &amp;= 2^{ \sum_{t=1}^M \log_2\mathbb{P}(X_t = s_t)}\\
-&amp;= 2^{ \sum_{i=1}^n n_i \log_2 m_i} \,,
+&amp;= 2^{ \sum_{i=1}^n n_i \log_2 m_i}
 \end{align}
 $$
 where, in going from the second to third line, we have reindexed the sum over the alphabet, using that $m_i \equiv \mathbb{P}(X = a_i)$, and defining
