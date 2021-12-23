@@ -167,13 +167,9 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Definition.-(-stationary-stochastic-process-)">Definition. ( stationary stochastic process ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Example.-(-digram-model-)">Example. ( digram model ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Example.-(-trigram-model-)">Example. ( trigram model ) </a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#Q^{(3)}-(x,y)-">Q^{(3)} (x,y)  </a>
-<ul>
 <li class="toc-entry toc-h3"><a href="#Example.-(-$(n+1$)-gram-model-)">Example. ( $(n+1$)-gram model ) </a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#Q^{(n+1)}-(x,y)-">Q^{(n+1)} (x,y)  </a>
@@ -1480,7 +1476,7 @@ $$</p>
 $$
 \mathbb{P}_{\textrm{true}} .
 $$
-The subscript '$\textrm{true}$' indicates that we view $Y$ not as an approximation to language, but as a stream of 'correct' English text, generated in real-time. This idealization is vague, but the main point is to identify the written language $\mathcal{L}$, in this case English, with a concrete mathematical object: the stationary, stochastic process $Y$. The law $\mathbb{P}_{\textrm{true}}$ of this process is the analogue of $m$ in two previous contexts: the uniform measure on $\mathcal{S} = \textsf{square}$, and the uniform measure on $\mathcal{S} = \mathfrak{S}_{52}$. In either previous case, the purpose of the Markov chains involved was to approximately sample from $m$. Below, we discuss a family of Markov chains for approximately sampling from $m = \mathbb{P}_{\textrm{true}}$. The way in which this sampling happens here seems distinct from before, and is remarked on after we introducing the Markov chains approximating $\mathcal{L}$ below. Menon: <em>"In practice, the probabilities relative to $\mathbb{P}</em>{\textrm{true}}$ below are approximated by mining a large corpus (e.g. the works of Shakespeare) to approximate $\mathbb{P}_{\textrm{true}}(a_1, \dots, a_n)$ for an arbitrary string $(a_1, \dots, a<em>n) \in \mathcal{A}^n$."</em></p>
+The subscript '$\textrm{true}$' indicates that we view $Y$ not as an approximation to language, but as a stream of 'correct' English text, generated in real-time. This idealization is vague, but the main point is to identify the written language $\mathcal{L}$, in this case English, with a concrete mathematical object: the stationary, stochastic process $Y$. The law $\mathbb{P}_{\textrm{true}}$ of this process is the analogue of $m$ in two previous contexts: the uniform measure on $\mathcal{S} = \textsf{square}$, and the uniform measure on $\mathcal{S} = \mathfrak{S}_{52}$. In either previous case, the purpose of the Markov chains involved was to approximately sample from $m$. Below, we discuss a family of Markov chains for approximately sampling from $m = \mathbb{P}_{\textrm{true}}$. The way in which this sampling happens here seems distinct from before, and is remarked on after we introducing the Markov chains approximating $\mathcal{L}$ below. Menon: "In practice, the probabilities relative to $\mathbb{P}_{\textrm{true}}$ below are approximated by mining a large corpus (e.g. the works of Shakespeare) to approximate $\mathbb{P}_{\textrm{true}}(a_1, \dots, a_n)$ for an arbitrary string $(a_1, \dots, a_n) \in \mathcal{A}^n$."</p>
 
 </div>
 </div>
@@ -1523,19 +1519,12 @@ which is to say, we form the character-to-character transition probabilities of 
 $$
 \{ aa, \,ab,\,, \dots, az, \dots, \_a, \, \dots, \, \_\,\_ \} 
 $$
-Let $x = a_1a_2$ and $y = b_1b_2$. In order to form a text of three letters from $x$ and $y$, we must ensure that $x$ and $y$ agree on their overlap, that is when $a_2 = b_1$, so that $x$ and $y$ combine to give us the string $a_1a_2b_2$. With this restriction on $x$ and $y$, we obtain the associated transition matrix
-$$</p>
-<h1 id="Q^{(3)}-(x,y)-">
-<a class="anchor" href="#Q%5E%7B(3)%7D-(x,y)-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Q^{(3)} (x,y) <a class="anchor-link" href="#Q%5E%7B(3)%7D-(x,y)-"> </a>
-</h1>
-<p>\frac{
-\mathbb{P}_{\textrm{true}} ( a_1 a_2 b<em>2 )
-}
-{
-\mathbb{P}</em>{\textrm{true}} (a_1 a_2) 
-}
+Let $x = a_1a_2$ and $y = b_1b_2$. In order to form a text of three letters from $x$ and $y$, we must ensure that $x$ and $y$ agree on their overlap, that is when $a_2 = b_1$, so that $x$ and $y$ combine to give us the string $a_1a_2b_2$. With this restriction on $x$ and $y$, we obtain the associated transition matrix</p>
 $$
-and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
+Q^{(3)} (x,y) 
+= \frac{\mathbb{P}_{\textrm{true}} ( a_1 a_2 b_2 ) }{
+\mathbb{P}_{\textrm{true}}(a_1 a_2) }
+$$<p>and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
 <blockquote>
 <p>Because of the compatability requirement of $a_2 = b_1$, the above Markov chain can still be viewed as a stochastic process taking values in $\mathcal{A}$, it is just no longer a Markov chain from this perspective. This is the sense, however, in which this model is approximating $\mathbb{P}_{\textrm{true}}$.</p>
 </blockquote>
