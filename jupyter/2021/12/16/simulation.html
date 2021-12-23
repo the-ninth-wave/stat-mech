@@ -157,11 +157,9 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Definition.-(-equilibrium-/-stationary-distribution-)">Definition. ( equilibrium / stationary distribution ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-ergodic-Markov-chain-)">Definition. ( ergodic Markov chain ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Example.-(-simple-random-walk-)">Example. ( simple random walk ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Example.-(-random-walks-in-the-permutation-group-)">Example. ( random walks in the permutation group ) </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#Q(x,y)">Q(x,y) </a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#Example.-(-random-walks-in-the-permutation-group-)">Example. ( random walks in the permutation group ) </a></li>
 <li class="toc-entry toc-h2"><a href="#Shannon's-model-of-text">Shannon&#39;s model of text </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-stationary-stochastic-process-)">Definition. ( stationary stochastic process ) </a></li>
@@ -183,8 +181,6 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Gibbs-measures">Gibbs measures </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-Gibbs-measure-)">Definition. ( Gibbs measure ) </a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#simulation">simulation </a>
@@ -1355,16 +1351,13 @@ $$<p>where $m = m Q$ and $\mathcal{O}: \mathcal{S} \to \mathbb{R}$ is arbitrary.
 <a class="anchor" href="#Example.-(-simple-random-walk-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( simple random walk )<a class="anchor-link" href="#Example.-(-simple-random-walk-)"> </a>
 </h3>
 <p>$\quad$ Let $G = (\textrm{V},\textrm{E})$ be a finite graph with vertex set $\textrm{V}$ and edge set $\textrm{E}$. Given $x,y \in \textrm{V}$, write $x \sim y$ if the edge $\{ x, y \}$ lies in $\textrm{E}$. Let $\textrm{deg}(x) \triangleq \sum_{x \sim y } 1$ be the degree of vertex $x$. A <strong>simple random walk</strong> on $G$ is a Markov chain with state space $\textrm{V}$ and transition matrix
-$$</p>
-<h1 id="Q(x,y)">
-<a class="anchor" href="#Q(x,y)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Q(x,y)<a class="anchor-link" href="#Q(x,y)"> </a>
-</h1>
-<pre><code>    \begin{cases}
-    \frac{1}{\textrm{deg}(x)}, &amp; \quad \text{ if } x \sim y \\
-    0 &amp; \quad \text{ otherwise. }
-    \end{cases}
-</code></pre>
-<p>$$
+$$
+Q(x,y)=
+\begin{cases}
+\frac{1}{\textrm{deg}(x)}, &amp; \quad \text{ if } x \sim y \\
+0 &amp; \quad \text{ otherwise. }
+\end{cases}
+$$
 We leave the initial conditions ambiguous in this definition.</p>
 <hr>
 
