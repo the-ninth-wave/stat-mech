@@ -1247,9 +1247,9 @@ $$
 and one obtains the following recurrence relation using the so-called law of total probability, along with the definitions of $m_t$ and $Q$:
 $$
 \begin{aligned}
-m_{t+1}(\tilde{s}) &amp;= \mathbb{P} ( X_{t+1} = \tilde{s}) \\\
-&amp;= \sum_{s \in \mathcal{S}} \mathbb{P}( X_{t+1} = \tilde{s}, \, X_t = s ) \\\\\\
-&amp;= \sum_{s \in \mathcal{S}} \mathbb{P} (X_{t+1} = \tilde{s} | X_t = s ) \mathbb{P}(X_t = s)  \\\\\\
+m_{t+1}(\tilde{s}) &amp;= \mathbb{P} ( X_{t+1} = \tilde{s}) \\
+&amp;= \sum_{s \in \mathcal{S}} \mathbb{P}( X_{t+1} = \tilde{s}, \, X_t = s ) \\
+&amp;= \sum_{s \in \mathcal{S}} \mathbb{P} (X_{t+1} = \tilde{s} | X_t = s ) \mathbb{P}(X_t = s)  \\
 &amp;= \sum_{s \in \mathcal{S}} Q(s,\tilde{s}) m_t(s)\,,
 \end{aligned}
 $$
