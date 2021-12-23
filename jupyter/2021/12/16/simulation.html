@@ -1119,10 +1119,11 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In either sampling case, we can define $\mathcal{O}_i := \mathcal{O}(X_i)$, and note that one evaluates</p>
+<p>In either sampling case, we can define $\mathcal{O}_i := \mathcal{O}(X_i)$, and note that one evaluates
 $$
-\frac{N_{\textrm{hits}}}{N} = \frac{1}{N} \sum_{i=1}^N \mathcal{O}_i \approx \mathbb{E} \mathcal{O},
-$$<p>where the brackets $\langle \, \cdot \, \rangle$ denote the expected value taken with respect to the probability measure $m$, in this case (as before) uniform on $[-1,1]^2$.</p>
+\frac{N_{\textrm{hits}}}{N} = \frac{1}{N} \sum_{i=1}^N \mathcal{O}_i \approx \mathbb{E}_m \mathcal{O},
+$$
+where $\mathbb{E}_m$ denotes the expected value taken with respect to the probability measure $m$, in this case (as before) uniform on $[-1,1]^2$.</p>
 
 </div>
 </div>
