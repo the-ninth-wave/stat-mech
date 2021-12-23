@@ -170,10 +170,6 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Example.-(-$(n+1$)-gram-model-)">Example. ( $(n+1$)-gram model ) </a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#Q^{(n+1)}-(x,y)-">Q^{(n+1)} (x,y)  </a>
-<ul>
 <li class="toc-entry toc-h2"><a href="#information-theory">information theory </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-lossless-data-compression-)">Definition. ( lossless data compression ) </a></li>
@@ -1540,16 +1536,9 @@ $$<p>and $Q(x,y) =0$ when $a_2 \neq b_1$.</p>
 <a class="anchor" href="#Example.-(-%24(n+1%24)-gram-model-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Example.</strong> ( $(n+1$)-gram model )<a class="anchor-link" href="#Example.-(-%24(n+1%24)-gram-model-)"> </a>
 </h3>
 <p>$\quad$ A Markov chain with state space $\mathcal{A}^{n}$. A state $x$, say $x = (a_1, \dots, a_n)$ can be followed by a string $y = (b_1, \dots, b_n)$ only if $a_2 = b_1, a_3 = b_2, \dots, a_n = b_{n-1}$. This induces transition matrix
-$$</p>
-<h1 id="Q^{(n+1)}-(x,y)-">
-<a class="anchor" href="#Q%5E%7B(n+1)%7D-(x,y)-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Q^{(n+1)} (x,y) <a class="anchor-link" href="#Q%5E%7B(n+1)%7D-(x,y)-"> </a>
-</h1>
-<p>\frac{
-\mathbb{P}_{\textrm{true}} ( a_1 a_2 \dots a_n b<em>n )
-}
-{
-\mathbb{P}</em>{\textrm{true}} (a_1 a_2 \dots a_n) 
-}
+$$
+Q^{(n+1)} (x,y) 
+= \frac{\mathbb{P}_{\textrm{true}} ( a_1 a_2 \dots a_n b_n )}{\mathbb{P}_{\textrm{true}} (a_1 a_2 \dots a_n) }
 $$
 as above.</p>
 <blockquote>
