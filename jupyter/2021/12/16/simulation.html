@@ -1241,14 +1241,12 @@ $$
 m_t(s) := \mathbb{P}(X_t = s) \,,
 $$
 and one obtains the following recurrence relation using the so-called law of total probability, along with the definitions of $m_t$ and $Q$:
-$$
-\begin{aligned}
+\begin{align}
 m_{t+1}(\tilde{s}) &amp;= \mathbb{P} ( X_{t+1} = \tilde{s}) \\\\\\
 &amp;= \sum_{s \in \mathcal{S}} \mathbb{P}( X_{t+1} = \tilde{s}, \, X_t = s ) \\\\\\
 &amp;= \sum_{s \in \mathcal{S}} \mathbb{P} (X_{t+1} = \tilde{s} | X_t = s ) \mathbb{P}(X_t = s)  \\\\\\
 &amp;= \sum_{s \in \mathcal{S}} Q(s,\tilde{s}) m_t(s)\,,
-\end{aligned}
-$$
+\end{align}
 when we assume the chain is stationary. This calculation yields the <strong>forward equation</strong> 
 $$
 m_{t+1} = m_t Q , \quad t \in \mathbb{N}
