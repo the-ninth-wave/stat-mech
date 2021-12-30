@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      67 min read
+      70 min read
     
 </span></p>
 
@@ -229,7 +229,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ These notes supplement an ongoing project with a good friend, <a href="https://github.com/connorsempek">Connor Sempek</a>. Our main objective is to re-create the simulations of Ising model dynamics in <a href="http://bit-player.org/2021/three-months-in-monte-carlo">this</a> blog post by <a href="http://bit-player.org/about-the-author">Brian Hayes</a>. The underlying 'canvas' of the model is two-dimensional, and the simulation generates a sequence of two-color <code>100x100</code> pixel images. The two colors represent the two possible <em>spin</em> values in the Ising model, $+1$ and $-1$ (though the term spin is used, nothing about the model is quantum-mechanical). The magnetic interpretation is of the model is that each pixel is an atomic site in some atomic lattice, and the value of each pixel describes one of two opposite magnetic orientations of the site. This is like a microscopic picture of a bar of iron. Ferromagnetism specifically means that spins at neighboring sites are encouraged to align.</p>
+<p>$\quad$ These notes supplement an ongoing project with a good friend, <a href="https://github.com/connorsempek">Connor Sempek</a>. Our main objective is to re-create simulations of Ising model dynamics from <a href="http://bit-player.org/2021/three-months-in-monte-carlo">this</a> blog post by <a href="http://bit-player.org/about-the-author">Brian Hayes</a>. The underlying 'canvas' of the model is two-dimensional, and the simulation generates a sequence of two-color <code>100x100</code> pixel images. The two colors represent the two possible <em>spin</em> values of the <a href="https://www.unige.ch/math/folks/velenik/smbook/Ising_Model.pdf">Ising model</a>, $+1$ and $-1$ (though the term spin is used, the model is not quantum-mechanical). The magnetic interpretation is of the model is that each pixel is some atomic site in a crystal lattice, and the color value of each pixel describes one of two opposing magnetic orientations the atom can posess. At a given temperature $T$, a sample from the Ising model (in our context) corresponds to a randomly generated image. The dynamics of the Ising model correspond to a movie formed by a sequence of these images. Each image is obtained from the previous in the sequence by randomly updating the spin $\equiv$ color at a randomly selected pixel, updating one pixel at a time. This movie is analogous to viewing a bar of iron under a microscope, in slow motion.</p>
 
 </div>
 </div>
@@ -237,7 +237,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ Importantly, the Ising model comes with a tunable temperature parameter $T &gt; 0$. The model is nicer mathematically when parametrizing it by the <em>inverse temperature</em> $\beta \equiv T^{-1}$, so we do this below. Parameter $\beta$ controls the <em>degree</em> to which the Ising model exhibits ferromagnetic behavior. At high enough temperatures, making $\beta$ close to zero, the impulse neighboring spins feel to align is nearly washed away by thermal noise. The Ising model exhibits radically different 'collective' behavior at lower temperatures, i.e. when $\beta$ is very large. This behavior change happens at a specific inverse temperature $\beta_c$, corresponding to some <em>critical temperature</em> $T_c \equiv \beta_c^{-1}$.</p>
+<p>$\quad$ Parameter $T &gt; 0$ controls the degree of structure in the random images generated. At high enough temperatures, any impulse neighboring spins feel to align is nearly washed away by thermal noise. In this regime, the simulation should look very much like static. At low temperatures, the spins exhibit collective alignment, and the simulation should depict large patches of sites all with the same color. The qualitative behavior of the system changes as it crosses a specific <em>critical temperature</em> $T_c$. For the same phenomenon in iron, this $T_c$ is called the Curie temperature, and corresponds to the bar glowing a dull red. A bar of magnetized iron will lose its magnetization when heated above $T_c$. When its temperature is lowered back below $T_c$, the bar is again susceptible to magnetization: immersing the bar in a strong enough magnetic field causes its spins to align with the field.</p>
 
 </div>
 </div>
@@ -245,7 +245,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ For the same phenomenon in iron, this $T_c$ corresponds to the bar glowing a dull red. An unmagnetized iron bar heated above $T_c$, which is then immersed in a strong enough magnetic field will align itself with the field. Cooling the iron below $T_c$, the bar remains aligned with the field even after it's shut off. This is a way to think about the phase transition, though one doesn't need an external field to formulate this, and our initial simulation will not use one. What is changing about the system across the two temperature regimes is the way in which the spins collectively align.</p>
+<p>$\quad$ The above description of the phase transition occuring in iron requires that we observe the behavior of the iron bar as its temperature changes over time. This is natural in reality, where time appears to flow at a constant rate. However, as discussed, a sample from the Ising model at some temperature $T$ is a static picture. In order to simulate in the Ising model what we describe doing to the iron bar, one must first describe how to set the Ising model into motion. There will be two ways of doing this at a fixed temperature $T$, described by two distinct Markovian dynamics defined on the state space of the Ising model. These are so-called <em>Glauber</em> and <em>Metropolis</em> dynamics. One goal of the <a href="http://bit-player.org/2021/three-months-in-monte-carlo">motivating blog post</a> was to explore how these dynamics differ, and indeed they are visibly different in the simulation.</p>
 
 </div>
 </div>
@@ -253,13 +253,21 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ The Ising model dynamics considered update the image one pixel value at a time. The purpose of these notes is to develop an understanding of how long the simulation must be run so that, for a sparse enough subsequence of the images:</p>
+<p>$\quad$ Hayes' simulation is quite versitile: in real-time, one can adjust the temperature, as well as the 'mode' of the dynamics (Glauber or Metropolis). There is no external magnetic field present, but this is something one could easily insert, so his simulation is robust enough to reproduce the procedure with the iron bar. The first incarnation of our simulation will not be, but this is partly because there are some important questions to address even before scheduling a gradual change in temperature during the simulation, or making it more interactive.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ It is written in Python, later to be migrated to javascript. We can currently simulates either type of Ising dynamics for a fixed number of steps, and at a fixed temperature. We do not yet include an external magnetic field. In either type of dynamics, the system (or image) is updated one pixel at a time, and we will perform a large number of updates, let us call this $N$. The output of the simulation is stored in dict format as a <code>.json</code> file. The purpose of the notes below (leading up to the simulation) is to develop some of the theory underlying the Monte Carlo method. Then we will be equipped to address the aforementioned questions, which are: how long the simulation must be run so that, for a sparse enough subsequence of the images:</p>
 <ul>
 <li>
 <p>Each is sampled approximately from the <a href="https://en.wikipedia.org/wiki/Gibbs_measure">Gibbs probability measure</a> governing the Ising model, and</p>
 </li>
 <li>
-<p>these samples are nearly independent.</p>
+<p>these samples are nearly independent?</p>
 </li>
 </ul>
 
@@ -269,7 +277,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ The latter property is especially important for a longer term goal of the project, which is to use these subsequences of images as a computer vision dataset. Importantly, the Gibbs measure we are sampling from always depends on a global temperature parameter $T$, leading to natural classification and regression tasks.</p>
+<p>$\quad$ The latter property is especially important for a longer term goal of the project, which is to use these subsequences of images as the dataset for a computer vision project. Importantly, the Gibbs measure we are sampling from always depends on a global temperature parameter $T$, leading to natural classification and regression tasks.</p>
 
 </div>
 </div>
@@ -286,7 +294,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ Here is a starting point for formulating a classification task. Suppose that we can simulate Ising model dynamics well at two <em>distinct</em> temperatures. It feels natural to choose one of these, say $T_1$, above the critical temperature $T_c$ of the model, and the other, $T_2$ below it. We then create two image datasets $\mathcal{D}_1$ and $\mathcal{D}_2$ of equal size by simulating as described by the two points above. Merging these datasets to form what we call $\mathcal{D}$ leads to a natural classification problem: given an element $x \in \mathcal{D}$ chosen uniformly at random, determine whether it came from $\mathcal{D}_1$ or $\mathcal{D}_2$.</p>
+<p>$\quad$ Here is a starting point for formulating a classification task. Suppose that we can simulate Ising model dynamics well $-$ so that both bullet points above are satisfied $-$ at two <em>distinct</em> temperatures. It feels natural to choose one of these, say $T_1$, above the critical temperature $T_c$ of the model, and the other, $T_2$ below it. We then create two image datasets $\mathcal{D}_1$ and $\mathcal{D}_2$ of equal size by simulating as described by the two points above. Merging these datasets to form what we call $\mathcal{D}$ leads to a natural classification problem: given an element $x \in \mathcal{D}$ chosen uniformly at random, determine whether it came from $\mathcal{D}_1$ or $\mathcal{D}_2$.</p>
 
 </div>
 </div>
@@ -294,7 +302,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ It seems the relevance of the Ising model to vision has been explored. A lot of the text below draws from Govind Menon's <a href="https://www.dam.brown.edu/people/menon/publications/pt-2020.pdf">pattern theory</a> notes, where a chapter is devoted to this 'energetic' perspective applied to character recognition tasks. Menon's notes also reference a 1984 <a href="http://www.peterbeerli.com/classes/images/a/a1/Geman_geman_1984.pdf">paper</a> which develops a way to perform image restoration and enhancement using the Ising model. This makes it a natural model to experiment with, and there are a few directions to explore longer term:</p>
+<p>$\quad$ It seems the relevance of the Ising model to vision has been explored in depth. A lot of the text below draws from Govind Menon's <a href="https://www.dam.brown.edu/people/menon/publications/pt-2020.pdf">pattern theory</a> notes, where a chapter is devoted to this: specifically an 'energetic' perspective applied to character recognition tasks. Menon's notes also reference a 1984 <a href="http://www.peterbeerli.com/classes/images/a/a1/Geman_geman_1984.pdf">paper</a> which develops a way to perform image restoration and enhancement using the Ising model. This makes it a natural model to experiment with, and there are a few natural ML directions to play with longer term:</p>
 
 </div>
 </div>
@@ -313,7 +321,7 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ol>
-<li>We will train a simple convolutional architecture on the dataset $\mathcal{D}$. Whether it is through pooling layers, or the local averaging inherent in the convolution operation, these architectures seem to apply a kind of <a href="https://en.wikipedia.org/wiki/Coarse-grained_modeling">coarse-graining</a> to input signals $x \in \mathcal{D}$. This has prompted investigation into the connections between deep learning and the <a href="https://en.wikipedia.org/wiki/Renormalization_group">renormalization group</a> of physics. The latter feels like a kind of microscope for theoretical physicists $-$ the renormalization group formalizes a sequence of scaling transformations acting on a physical system, typically zooming out and thereby coarse-graining the preceding image of the system. This parallels feeding the image of the system into a "deep" sequence of convolutional layers. Two references for this are a 2013 <a href="https://arxiv.org/abs/1301.3124">paper</a> of Cédric Bény, and a 2014 <a href="https://arxiv.org/abs/1410.3831v1">paper</a> of Pankaj Mehta and David Schwab, and we imagine there is more recent work on this to explore. Dataset $\mathcal{D}$ is both an image dataset and a natural input to the renormalization group. It's an opportunity to better understand these connections. In particular one can start by repeating the experiments the latter paper runs on the Ising model.</li>
+<li>We will train a simple convolutional architecture on the dataset $\mathcal{D}$. Whether it is through pooling layers, or the local averaging inherent in the convolution operation, these architectures seem to apply a kind of <a href="https://en.wikipedia.org/wiki/Coarse-grained_modeling">coarse-graining</a> to input signals $x \in \mathcal{D}$. This has prompted investigation into the connections between deep learning and the <a href="https://en.wikipedia.org/wiki/Renormalization_group">renormalization group</a> of physics. The latter feels like a kind of microscope for theoretical physicists: the renormalization group formalizes a sequence of scaling transformations acting on a physical system, typically zooming out and thereby coarse-graining (lowering the resolution of) the preceding image of the system. This parallels the transformations undergone by an image fed into a "deep" sequence of convolutional layers, as this input signal propagates from one layer to the next. Two references exploring connections between renormalization and ML are a 2013 <a href="https://arxiv.org/abs/1301.3124">paper</a> of Cédric Bény, and a 2014 <a href="https://arxiv.org/abs/1410.3831v1">paper</a> of Pankaj Mehta and David Schwab. We imagine there is also more recent work on this to explore. Dataset $\mathcal{D}$ is both an image dataset and a natural input to the renormalization group. It's an opportunity to better understand these connections. In particular one can start by repeating the experiments the latter paper runs on the Ising model.</li>
 </ol>
 
 </div>
@@ -2913,7 +2921,7 @@ $$</p>
       </div>
     </div>
 
-    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/stat-mech/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/stat-mech/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/stat-mech/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/stat-mech/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
 </div>
 
   </div>
