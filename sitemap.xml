@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://the-ninth-wave.github.io/stat-mech/jupyter/2019/04/01/M450-Lec1.html</loc>
-<lastmod>2019-04-01T00:00:00-05:00</lastmod>
-</url>
-<url>
-<loc>https://the-ninth-wave.github.io/stat-mech/jupyter/2019/04/03/M450-Lec2.html</loc>
-<lastmod>2019-04-03T00:00:00-05:00</lastmod>
-</url>
-<url>
-<loc>https://the-ninth-wave.github.io/stat-mech/jupyter/2019/04/05/M450-Lec3.html</loc>
-<lastmod>2019-04-05T00:00:00-05:00</lastmod>
-</url>
-<url>
-<loc>https://the-ninth-wave.github.io/stat-mech/jupyter/2019/04/08/M450-Lec4.html</loc>
-<lastmod>2019-04-08T00:00:00-05:00</lastmod>
-</url>
-<url>
 <loc>https://the-ninth-wave.github.io/stat-mech/jupyter/2021/12/16/simulation.html</loc>
 <lastmod>2021-12-16T00:00:00-06:00</lastmod>
 </url>
