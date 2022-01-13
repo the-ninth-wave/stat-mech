@@ -178,6 +178,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Theorem.-(-Matic,-Theorem-1)">Theorem. ( Matic, Theorem 1) </a></li>
 <li class="toc-entry toc-h3"><a href="#Definition.-(-the-type-of-a-signal-)">Definition. ( the type of a signal ) </a></li>
 <li class="toc-entry toc-h3"><a href="#Theorem.-(-Matic,-Theorem-2-)">Theorem. ( Matic, Theorem 2 ) </a></li>
+<li class="toc-entry toc-h3"><a href="#Definition.-(-relative-entropy,-or-KL-divergence-)">Definition. ( relative entropy, or KL divergence ) </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Gibbs-measures">Gibbs measures </a>
@@ -1581,7 +1582,11 @@ as above.</p>
 <p><em>references</em></p>
 <ul>
 <li>
-<a href="https://mfe.baruch.cuny.edu/maticivan/">Ivan Matic</a>, <em>Information Theory and Sanov's Theorem</em> (<a href="https://the-ninth-wave.github.io/matic.pdf">his notes</a> from July 21, 2018)</li>
+<p><a href="https://mfe.baruch.cuny.edu/maticivan/">Ivan Matic</a>, <em>Information Theory and Sanov's Theorem</em> (<a href="https://the-ninth-wave.github.io/matic.pdf">his notes</a> from July 21, 2018)</p>
+</li>
+<li>
+<p>Thomas Cover, <em>Elements of information theory, Ch. 2</em></p>
+</li>
 </ul>
 
 </div>
@@ -1734,7 +1739,7 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ Note that $\textsf{S}(m) \geq 0$, and is $=0$ if and only if $m$ corresponds to a deterministic object, namely a $\delta$-mass at some symbol in the alphabet. In the above setting, we are imagining the length $M$ of the signal is much larger than the size $n$ of the alphabet $\mathcal{A}$. This is so that the law of large numbers has a chance to kick in for each symbol. In this setting, typical messages appear with probability on the order of $2^{-M \textsf{S}(m)}$. When $m$ is non-trivial, the positivity of $\textsf{S}(m)$ implies that typical signals are <em>exponentially rare</em>, in the signal length $M$.</p>
+<p>$\quad$ Let $X$ be a random element of $\mathcal{S}$ corresponding to the probability measure $m$. Cover has the following remark: <em>"Note that entropy is a functional of the distribution of $X$. It does not depend on the actual values taken by the r.v. $X$, only on the probabilities."</em></p>
 
 </div>
 </div>
@@ -1742,7 +1747,15 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\quad$ A consquence of the intrinsic high-dimensionality of $\underline{X}$ -- which corresponds to a probability measure on $\mathbb{R}^M$, with $M$ large -- is that signals with symbol frequencies <em>close</em> to the corresponding $m_i$ are very common. The next definition formalizes this notion of closeness.</p>
+<p>$\quad$ Note that $\textsf{S}(m) \geq 0$, and is $=0$ if and only if $m$ corresponds to a deterministic object, namely a $\delta$-mass at some symbol in the alphabet, using the convention $0 \log 0 = 0$. In the above setting, we are imagining the length $M$ of the signal is much larger than the size $n$ of the alphabet $\mathcal{A}$. This is so that the law of large numbers has a chance to kick in for each symbol. In this setting, typical messages appear with probability on the order of $2^{-M \textsf{S}(m)}$. When $m$ is non-trivial, the positivity of $\textsf{S}(m)$ implies that typical signals are <em>exponentially rare</em>, in the signal length $M$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\quad$ A consquence of the intrinsic high-dimensionality of $\underline{X}$ -- which corresponds to a probability measure on $\mathbb{R}^M$, with $M$ large -- is that signals with symbol frequencies <em>close</em> to the corresponding $m_i$ are very common. The next definition formalizes this.</p>
 
 </div>
 </div>
@@ -1866,6 +1879,19 @@ $$</p>
 &amp;= 2^{ M \left[m_s(a) \log_2 \mu(a) \right] }
 \end{align}
 The coefficient of $M$ in the exponent directly above can be written in terms of the relative entropy.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Definition.-(-relative-entropy,-or-KL-divergence-)">
+<a class="anchor" href="#Definition.-(-relative-entropy,-or-KL-divergence-)" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Definition.</strong> ( relative entropy, or KL divergence )<a class="anchor-link" href="#Definition.-(-relative-entropy,-or-KL-divergence-)"> </a>
+</h3>
+<p>$\quad$ Let $m$ and $\mu$ be probability measures on some finite state space $\mathcal{S}$.</p>
+<hr>
 
 </div>
 </div>
